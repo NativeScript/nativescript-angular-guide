@@ -193,6 +193,7 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
     │   └── ...
     ├── node_modules
     │   ├── angular2
+    │   ├── nativescript-angular
     │   ├── tns-core-modules
     │   └── ...
     ├── package.json
@@ -203,7 +204,9 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
 <ul>
 <li><strong>app</strong>: This folder contains all the development resources you need to build your app. You&#39;ll be spending most of your time editing the files in here.</li>
 <li><strong>node_modules</strong>: This folder contains your app&#39;s npm module dependencies, including Angular 2, TypeScript, and the other modules NativeScript needs to build your app.</li>
-<li><strong>node_modules/tns-core-modules</strong>: This folder contains your app&#39;s NativeScript modules, which are a series of NativeScript-provided JavaScript modules you&#39;ll use to build your app. Each module contains the platform-specific code needed to implement some feature—the camera, http calls, the file system, and so forth—exposed through a platform-agnostic API (e.g. <code>camera.takePicture()</code>). We&#39;ll look at some examples momentarily.</li>
+<li><strong>node_modules/angular2</strong>: This folder contains the Angular 2 source code. NativeScript does not alter the core Angular 2 source code in any way.</li>
+<li><strong>node_modules/nativescript-angular</strong>: This folder contains the module that builds on top of Angular 2 to integrate NativeScript-specific functionality. The source code for this module lives at <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>.</li>
+<li><strong>node_modules/tns-core-modules</strong>: This folder contains your app&#39;s NativeScript modules, which are a series of NativeScript-provided JavaScript modules you&#39;ll use to build your app. Each module contains the platform-specific code needed to implement some feature—the camera, http calls, the file system, and so forth—exposed through a platform-agnostic API (e.g. <code>camera.takePicture()</code>). We&#39;ll look at some examples momentarily. The source code for these modules lives at <a href="https://github.com/NativeScript/nativescript">https://github.com/NativeScript/nativescript</a>.</li>
 <li><strong>package.json</strong>: This file contains your app&#39;s configuration details, such as your app id, the version of NativeScript you&#39;re using, and also which npm modules your app uses. We&#39;ll take a closer look at how to use this file when we talk about using npm modules in <a href="#plugins-and-npm-modules">chapter 5</a>.</li>
 <li><strong>platforms</strong>: This folder contains the platform-specific code NativeScript needs to build native iOS and Android apps. For example in the <code>android</code> folder you&#39;ll find things like your project&#39;s <code>AndroidManifest.xml</code> and .apk executable files. Similarly, the <code>ios</code> folder contains the Groceries&#39; Xcode project and .ipa executables. Note, users on Windows machines will not have an <code>ios</code> folder.</li>
 </ul>
@@ -215,14 +218,15 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
     │   ├── App_Resources
     │   │   ├── Android
     │   │   └── iOS
-    │   ├── shared
-    │   │   └── ...
-    │   ├── views
+    │   ├── pages
     │   │   └── login
     │   │       ├── login.js
     │   │       └── login.xml
+    │   ├── shared
+    │   │   └── ...
     │   ├── app.css
-    │   ├── app.js
+    │   ├── app.component.ts
+    │   ├── main.ts
     │   └── ...
     └── ...
 </code></pre><p>Here&#39;s what these various files and folders do:</p>
@@ -243,188 +247,6 @@ applicationModule.start();
 <p><strong>TIP</strong>: JavaScript modules in NativeScript follow the <a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS specification</a>. This means you can use the <a href="http://wiki.commonjs.org/wiki/Modules/1.1#Module_Context"><code>require()</code> method</a> to import modules, as is done above, as well as use the <code>export</code> keyword to expose a module&#39;s properties and methods, which we&#39;ll look at later in this chapter. These are the same constructs Node.js uses for JavaScript modules, so if you know how to use Node.js modules, you already know how to use NativeScript modules.</p>
 </blockquote>
 <p>Now that your app is ready for development, let&#39;s add some UI components to make your login screen show more than some basic text.</p>
-<h3 id="adding-ui-components">Adding UI components</h3>
-<p>Let&#39;s dig into the files used to create your app&#39;s UI, which reside in the <code>app/views</code> folder. Each folder in <code>app/views</code> contains the code for one of the three pages in Groceries: <code>list</code>, <code>login</code>, and <code>register</code>. If you look in the <code>app/views/login</code> folder, you&#39;ll see three files: <code>login.css</code>, <code>login.js</code>, and the <code>login.xml</code> file we updated in the previous chapter. When you open <code>login.xml</code> again you should see the following code:</p>
-<pre><code class="lang-XML">&lt;Page&gt;
-    &lt;Label text=&quot;hello NativeScript&quot; /&gt;
-&lt;/Page&gt;
-</code></pre>
-<p>This page currently contains two UI components: a <code>&lt;Page&gt;</code> and a <code>&lt;Label&gt;</code>. To make this page look more like a login page, let&#39;s add a few additional components, namely two <code>&lt;TextField&gt;</code> elements and two <code>&lt;Button&gt;</code> elements.</p>
-<h4 class="exercise-start">
-    <b>Exercise</b>: Add UI components to <code>login.xml</code>
-</h4>
-
-<p>Open <code>app/views/login/login.xml</code> and replace the existing <code>&lt;Label&gt;</code> with the following code:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot; /&gt;
-&lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot; /&gt;
-
-&lt;Button text=&quot;Sign in&quot; /&gt;
-&lt;Button text=&quot;Sign up for Groceries&quot; /&gt;
-</code></pre>
-<div class="exercise-end"></div>
-
-<p>NativeScript UI components provide attributes to let you configure their behavior and appearance. The code you just added uses the following attributes:</p>
-<ul>
-<li><code>&lt;TextField&gt;</code><ul>
-<li><code>hint</code>: Shows placeholder text that tells the user what to type.</li>
-<li><code>keyboardType</code>: The type of keyboard to present to the user for input. <code>keyboardType=&quot;email&quot;</code> shows a keyboard optimized for entering email addresses. NativeScript currently supports <a href="{{site.baseurl}}/ApiReference/ui/enums/KeyboardType/README">five types of keyboards</a> for text fields.</li>
-<li><code>autocorrect</code>: A boolean attribute that determines whether the mobile operating system should autocorrect user input. In the case of email address text fields, the autocorrect behavior is undesirable.</li>
-<li><code>autocapitalizationType</code>: Determines how the operating system should autocapitalize user input. <code>autocapitalizationType=&quot;none&quot;</code> turns autocapitalization off altogether. NativeScript supports <a href="{{site.baseurl}}/ApiReference/ui/enums/AutocapitalizationType/README.html">four autocapitalization types</a> on text fields.</li>
-<li><code>secure</code>: A boolean attribute that determines whether the TextField&#39;s text should be masked, which is commonly done on password fields.</li>
-</ul>
-</li>
-<li><code>&lt;Button&gt;</code><ul>
-<li><code>text</code>: Controls the text displayed within the button.</li>
-</ul>
-</li>
-</ul>
-<p>After you <a href="#development-workflow">run your app</a> with this change, you will see a single <code>&lt;Button&gt;</code> component on the screen:</p>
-<p><img src="{{site.baseurl}}/img/cli-getting-started/chapter2/ios/1.png" alt="login 1">
-<img src="{{site.baseurl}}/img/cli-getting-started/chapter2/android/1.png" alt="login 1"></p>
-<p>Currently you only see a single button because you need to tell NativeScript how to layout your page’s UI components. Let&#39;s look at how to use NativeScript layouts to arrange these components on the screen.</p>
-<blockquote>
-<p><strong>TIP</strong>: The NativeScript docs include a <a href="{{site.baseurl}}/ui-with-xml">full list of the UI components and attributes</a> with which you can build your apps. You can even <a href="{{site.baseurl}}/ui-with-xml#custom-components">build your own, custom UI components</a>.</p>
-</blockquote>
-<h3 id="layouts">Layouts</h3>
-<p>NativeScript provides several different layout containers that allow you to place UI components precisely where you want them to appear. </p>
-<ul>
-<li>The <a href="{{site.baseurl}}/ApiReference/ui/layouts/absolute-layout/HOW-TO.html">Absolute Layout</a> lets you position elements using explicit x and y coordinates. This is useful when you need to place elements in exact locations, for example showing an activity indicator widget in the top-left corner of your app.</li>
-<li>The <a href="{{site.baseurl}}/ApiReference/ui/layouts/dock-layout/HOW-TO.html">Dock Layout</a> is useful for placing UI elements at the outer edges of your app. For example, a container docked at the bottom of the screen would be a good location for an ad.</li>
-<li>The <a href="{{site.baseurl}}/ApiReference/ui/layouts/grid-layout/HOW-TO.html">Grid Layout</a> lets you divide your interface into a series of rows and columns, much like a <code>&lt;table&gt;</code> in HTML markup.</li>
-<li>The <a href="{{site.baseurl}}/ApiReference/ui/layouts/stack-layout/HOW-TO.html">Stack Layout</a> lets you stack child UI components either vertically or horizontally.</li>
-<li>The <a href="{{site.baseurl}}/ApiReference/ui/layouts/wrap-layout/HOW-TO.html">Wrap Layout</a> lets child UI components flow from one row or column to the next when space is filled.</li>
-</ul>
-<p>For your login screen, all you need is a simple <code>&lt;StackLayout&gt;</code> to stack the UI components on top of each other. In later sections, you&#39;ll use some of the more advanced layouts.</p>
-<h4 class="exercise-start">
-    <b>Exercise</b>: Add a stack layout to the login screen
-</h4>
-
-<p>In <code>login.xml</code>, add the <code>&lt;StackLayout&gt;</code> component within the <code>&lt;Page&gt;</code> component. <code>login.xml</code> should look like this:</p>
-<pre><code class="lang-XML">&lt;Page&gt;
-    &lt;StackLayout orientation=&quot;vertical&quot;&gt;
-
-        &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot; /&gt;
-        &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot; /&gt;
-
-        &lt;Button text=&quot;Sign in&quot; /&gt;
-        &lt;Button text=&quot;Sign up for Groceries&quot; /&gt;
-
-    &lt;/StackLayout&gt;
-&lt;/Page&gt;
-</code></pre>
-<div class="exercise-end"></div>
-
-<p>The stack layout is a UI component, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> components you used in the previous section. Here, the <code>orientation=&quot;vertical&quot;</code> attribute tells the stack layout to arrange its child components vertically.</p>
-<p>After you run your app with this change, you&#39;ll see that your login page&#39;s UI components stack up:</p>
-<p><img src="{{site.baseurl}}/img/cli-getting-started/chapter2/ios/2.png" alt="login 2">
-<img src="{{site.baseurl}}/img/cli-getting-started/chapter2/android/2.png" alt="login 2"></p>
-<p>Although the UI components are in the correct order, they could use some spacing and color to make the app look a bit nicer. To do that let&#39;s look at another NativeScript feature: CSS.</p>
-<blockquote>
-<p><strong>TIP</strong>:</p>
-<ul>
-<li>Refer to the NativeScript docs for a <a href="/layouts">more detailed look at how NativeScript layouts work</a> and the various things you can do to configure them.</li>
-<li>Check out Jen Looper&#39;s article on <a href="https://www.nativescript.org/blog/demystifying-nativescript-layouts">demystifying NativeScript layouts</a> for a more thorough look at NativeScript layouts in action.</li>
-</ul>
-</blockquote>
-<h3 id="css">CSS</h3>
-<p>NativeScript uses a <a href="/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="/styling#application-wide-css">application-wide CSS</a> (<code>app.css</code>), <a href="/styling#page-specific-css">page-specific CSS</a>, and an <a href="/styling#inline-css">inline <code>style</code> attribute</a>.</p>
-<blockquote>
-<p><strong>TIP</strong>:</p>
-<ul>
-<li>Place CSS rules that should apply to all pages in your <code>app.css</code>, and CSS rules that apply to a single page in a page-specific CSS file (e.g. <code>login.css</code>). </li>
-<li>Although inline styles are great for quick testing—e.g. <code>&lt;Page style=&quot;background-color: green;&quot;&gt;</code> you should avoid them in general because the <code>style</code> attributes tend to clutter up XML files, especially if you need to apply multiple rules.</li>
-</ul>
-</blockquote>
-<p>Let&#39;s start by adding a few application-wide CSS rules.</p>
-<h4 class="exercise-start">
-    <b>Exercise</b>: Create global styles
-</h4>
-
-<p>Paste the following code in the <code>app.css</code> file:</p>
-<pre><code class="lang-CSS">Page {
-    background-color: white;
-    font-size: 17;
-}
-TextField {
-    margin: 10;
-    padding: 10;
-}
-Image {
-    margin-top: 20;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 80;
-}
-Button {
-    margin: 10;
-    padding: 10;
-}
-</code></pre>
-<div class="exercise-end"></div>
-
-<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select four UI components (Page, TextField, Image, and Button) by their tag name, and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
-<p>Let&#39;s make one more change. Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
-<h4 class="exercise-start">
-    <b>Exercise</b>: Add platform-specific CSS
-</h4>
-
-<p>Add the following as the first line of your app&#39;s <code>app.css</code> file:</p>
-<pre><code class="lang-CSS">@import { url(&#39;~/platform.css&#39;) };
-</code></pre>
-<blockquote>
-<p><strong>IMPORTANT</strong>: NativeScript is consistent with browser implementations, in that <code>@import</code> statements must precede all other CSS rules in a file.</p>
-</blockquote>
-<p>Next, add a <code>class=&quot;link&quot;</code> attribute to the sign up button in <code>login.xml</code>. The button&#39;s markup should look like this:</p>
-<pre><code class="lang-XML">&lt;Button text=&quot;Sign up for Groceries&quot; class=&quot;link&quot; /&gt;
-</code></pre>
-<div class="exercise-end"></div>
-
-<p>Let&#39;s break down what just happened. First, NativeScript supports CSS&#39;s <code>@import</code> statement for importing one CSS file into another. So this new line of code imports the CSS rules from <code>platform.css</code> into <code>app.css</code>. But, you might have noticed that Groceries does not have a file named <code>platform.css</code>—only <code>app/platform.android.css</code> and <code>app/platform.ios.css</code> exist. What&#39;s going on here?</p>
-<p><a id="platform-specific-files"></a>When you execute <code>tns run</code>, or <code>tns livesync</code>, the NativeScript CLI takes your code from the <code>app</code> folder and places it in the native projects located in the <code>platforms/ios</code> and <code>platforms/android</code> folders. Here the naming convention comes in: while moving files, the CLI intelligently selects <code>.android.*</code> and <code>.ios.*</code> files. To give a specific example, the CLI moves <code>platform.ios.css</code> into <code>platforms/ios</code> and renames it to <code>platform.css</code>; similarly, the CLI moves <code>platform.android.css</code> into <code>platforms/android</code>, and again renames it to <code>platform.css</code>. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it&#39;s supported for any type of file in NativeScript—not just CSS files. You&#39;ll see a few more examples of this convention later in this guide.</p>
-<p>There&#39;s one other change here we need to discuss, and that&#39;s the <code>class</code> attribute you added to this button:</p>
-<pre><code class="lang-XML">&lt;Button text=&quot;Sign up for Groceries&quot; class=&quot;link&quot; /&gt;
-</code></pre>
-<p>NativeScript uses the <code>class</code> attribute for adding CSS class names to UI components. The class name is used to give the sign up button a slightly different look than the sign in button. You can find the CSS rules associated with this class name in <code>platform.ios.css</code> and <code>platform.android.css</code>:</p>
-<pre><code class="lang-CSS">/* From platform.android.css */
-.link {
-    background-color: transparent;
-}
-
-/* From platform.ios.css */
-.link {
-    border-width: 0;
-}
-</code></pre>
-<blockquote>
-<p><strong>TIP</strong>: NativeScript also supports selecting elements by the <code>id</code> attribute. Refer to the docs for <a href="/styling#supported-selectors">a full list of the supported selectors</a>.</p>
-</blockquote>
-<p>With these changes in place, you&#39;ll notice that the app looks halfway decent now, and also has a distinctly different look on iOS and Android:</p>
-<p><img src="{{site.baseurl}}/img/cli-getting-started/chapter2/ios/3.png" alt="login 1">
-<img src="{{site.baseurl}}/img/cli-getting-started/chapter2/android/3.png" alt="login 1"></p>
-<p>Feel free to take some time to play with the look of this app before moving on. You can try adding some additional CSS class names, or adding some page-specific styles in your <code>login.css</code> file. When you&#39;re ready, let&#39;s move on and add an image to this login screen.</p>
-<h3 id="images">Images</h3>
-<p>In NativeScript you use the <code>&lt;Image&gt;</code> UI component and its <code>src</code> attribute to add images to your pages. The <code>src</code> attribute lets you specify your image in three ways. The first (and simplest) way is to point at the URL of an image:</p>
-<pre><code class="lang-XML">&lt;Image src=&quot;https://www.nativescript.org/images/default-source/landingpages/logo.png&quot; /&gt;
-</code></pre>
-<p>The second way is to point at an image that lives within your app&#39;s <code>app</code> folder. For example if you have an image at <code>app/images/logo.png</code>, you can use it with:</p>
-<pre><code class="lang-XML">&lt;Image src=&quot;~/images/logo.png&quot; /&gt;
-</code></pre>
-<p>The third way, and the one Groceries uses, is to use platform-specific image resources. Let&#39;s add an image to the login screen and then discuss exactly what&#39;s happening.</p>
-<h4 class="exercise-start">
-    <b>Exercise</b>: Add a logo
-</h4>
-
-<p>In <code>login.xml</code>, add the <code>&lt;Image&gt;</code> below as the first child of the existing <code>&lt;StackLayout&gt;</code> tag:</p>
-<pre><code class="lang-XML">&lt;Image src=&quot;res://logo&quot; stretch=&quot;none&quot; horizontalAlignment=&quot;center&quot; /&gt;
-</code></pre>
-<div class="exercise-end"></div>
-
-<p>The <code>res://</code> syntax tells NativeScript to use a platform-specific resource, in this case an image. Platform-specific resources go in your app&#39;s <code>app/App_Resources</code> folder. If you look there you&#39;ll find a few different image files, several of which are named <code>logo.png</code>.</p>
-<p>Although more complex than putting an image directly in the <code>app</code> folder, using platform-specific images gives you more control over image display on different device dimensions. For example iOS lets you provide three different image files for devices with different pixel densities. As such you&#39;ll find logos named <code>logo.png</code>, <code>logo@2x.png</code>, and <code>logo@3x.png</code> in your <code>App_Resources/iOS</code> folder. For Android you&#39;ll find similar image files in <code>App_Resources/Android/drawable-hdpi</code> (for &quot;high&quot; dpi, or high dots-per-inch), <code>App_Resources/Android/drawable-mdpi</code> (for medium-dpi), and <code>App_Resources/Android/drawable-ldpi</code> (for low-dpi).</p>
-<p>Once these files are in place the NativeScript framework knows how to pick the correct file; all you have to do is reference the image using <code>res://</code> and its base file name—i.e. <code>res://logo</code>. Here&#39;s what your login screen should look like on iOS and Android:</p>
-<p><img src="{{site.baseurl}}/img/cli-getting-started/chapter2/ios/4.png" alt="login 4">
-<img src="{{site.baseurl}}/img/cli-getting-started/chapter2/android/4.png" alt="login 4"></p>
-<p>At this point your UI looks good, but the app still doesn&#39;t actually do anything. Let&#39;s look at how you can use JavaScript to add some functionality.</p>
 
 			</div>
 		</div>

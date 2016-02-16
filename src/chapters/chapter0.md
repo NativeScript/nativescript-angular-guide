@@ -6,7 +6,9 @@ NativeScript’s first-class Angular support extends the Angular 2 runtime, maki
 
 Let’s look at how it all works by building an app.
 
-> **WARNING**: Although NativeScript itself is a production-ready framework that drives many apps in the app stores today, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on https://github.com/NativeScript/nativescript-angular.
+> **WARNING**: Although NativeScript itself is a production-ready framework that drives many apps in the app stores today, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on https://github.com/NativeScript/nativescript-angular. If you’re looking for a guide on using the production-ready flavor of NativeScript head to the [official Getting Started Guide](http://docs.nativescript.org/start/getting-started).
+
+> **WARNING #2 🚧**: This guide is being actively written. If you choose to go through this today you’ll certainly find grammatical errors and steps that just don’t work. If you find an error in the guide please report the problem at <https://github.com/tjvantoll/nativescript-angular-guide>. Pull requests are also welcome 😀
 
 ### What you're building
 

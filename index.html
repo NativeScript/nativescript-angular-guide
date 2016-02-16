@@ -17,7 +17,7 @@
 	<div id="header">
 		<a href="#" class="menu header-btn" id="toggle-toc"></a>
 		<h1>Building Apps with NativeScript and Angular 2</h1>
-		<a href="https://github.com/tjvantoll/quick-start-template" class="github header-btn"></a>
+		<a href="https://github.com/tjvantoll/nativescript-angular-guide" class="github header-btn"></a>
 	</div>
 
 	<div id="content-container">
@@ -32,7 +32,8 @@
 <p>NativeScript’s first-class Angular support extends the Angular 2 runtime, making it possible for you to build <em>native</em> iOS and Android applications using the same framework—and in some cases the same code—that you use to build Angular 2 web apps.</p>
 <p>Let’s look at how it all works by building an app.</p>
 <blockquote>
-<p><strong>WARNING</strong>: Although NativeScript itself is a production-ready framework that drives many apps in the app stores today, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>.</p>
+<p><strong>WARNING</strong>: Although NativeScript itself is a production-ready framework that drives many apps in the app stores today, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>. If you’re looking for a guide on using the production-ready flavor of NativeScript head to the <a href="http://docs.nativescript.org/start/getting-started">official Getting Started Guide</a>.</p>
+<p><strong>WARNING #2 🚧</strong>: This guide is being actively written. If you choose to go through this today you’ll certainly find grammatical errors and steps that just don’t work. If you find an error in the guide please report the problem at <a href="https://github.com/tjvantoll/nativescript-angular-guide">https://github.com/tjvantoll/nativescript-angular-guide</a>. Pull requests are also welcome 😀</p>
 </blockquote>
 <h3 id="what-you-re-building">What you&#39;re building</h3>
 <p>This guide will walk you through building <a href="https://github.com/NativeScript/sample-Groceries">Groceries</a>, a groceries management app that does the following things:</p>
@@ -63,12 +64,121 @@
 			</div>
 			<hr>
 			<div class="chapter">
-				<h2 id="another-chapter">Another chapter</h2>
-<p>Donec nisi magna, vehicula et purus eget, blandit suscipit tellus. Quisque lobortis augue at fringilla ullamcorper. Integer mattis diam eget augue suscipit, a malesuada mauris bibendum. Phasellus venenatis elit in semper hendrerit. Nunc tincidunt lectus in mauris facilisis, et laoreet metus aliquet. Mauris at hendrerit turpis, at semper mi. Suspendisse vel arcu nulla. Nullam scelerisque consequat molestie. Curabitur sit amet porta odio. Morbi lacinia vel tortor eu fringilla.</p>
-<h3 id="another-section">Another section</h3>
-<p>Mauris tempor facilisis accumsan. Mauris vitae iaculis risus. Mauris volutpat suscipit neque non bibendum. Phasellus non fringilla enim. Aliquam tempor quam vel ligula porta convallis. In blandit dictum tempus. Nunc at pulvinar justo. Aliquam eu mi eros. Nunc sit amet tellus non lorem malesuada tempus. Vestibulum nunc magna, varius ut aliquam non, fermentum sodales metus. Aliquam sit amet pulvinar lacus. Sed fringilla placerat tempor. Pellentesque id elementum nibh. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec laoreet, ex eget vulputate tincidunt, enim nisi ullamcorper urna, at scelerisque tellus mi sit amet nisi. Duis ac risus ac odio efficitur dignissim vitae dapibus purus.</p>
-<h3 id="yet-another-section">Yet another section</h3>
-<p>Cras massa nulla, feugiat eu pretium in, tempor nec nulla. Nullam vel lobortis felis. Cras varius iaculis ornare. Ut at nisl sit amet leo pulvinar iaculis non ut purus. Morbi luctus magna sed condimentum cursus. Ut accumsan enim ligula, vitae dapibus odio blandit quis. Sed auctor ex non scelerisque vulputate. Nunc feugiat lobortis nisl consequat consectetur. Vivamus consequat sem id consectetur varius. Nam nec erat id est interdum venenatis eu eu felis. Suspendisse potenti. Donec non sapien in est maximus cursus eget eget nunc. Maecenas congue sapien ut tempor facilisis.</p>
+				<h2 id="getting-up-and-running">Getting up and running</h2>
+<p>In this chapter you&#39;re going to start with the basics, including installing the NativeScript CLI, starting a new project, and getting your first app up and running.</p>
+<h3 id="install-nativescript-and-configure-your-environment">Install NativeScript and configure your environment</h3>
+<p>The NativeScript CLI has a few system requirements you must have in place before building NativeScript apps. As a first step, start by going through the instructions for your operating system:</p>
+<ul>
+<li><a href="http://docs.nativescript.org/start/ns-setup-win">Windows</a></li>
+<li><a href="http://docs.nativescript.org/start/ns-setup-os-x">OS X</a></li>
+<li><a href="http://docs.nativescript.org/start/ns-setup-linux">Linux</a></li>
+</ul>
+<blockquote>
+<p><strong>TIP</strong>: If you&#39;re a bit overwhelmed by these requirements, or if you&#39;re looking for a way to build iOS apps on Windows, you might be interested in <a href="http://www.telerik.com/platform">using NativeScript in the Telerik Platform</a>. The Telerik Platform provides tooling for NativeScript apps, including the ability to perform iOS and Android builds in the cloud, which removes the need to complete these system requirements.</p>
+</blockquote>
+<p>After completing the setup you should have two commands available from your terminal: <code>tns</code>—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and <code>nativescript</code>. The two commands are equivalent, so we&#39;ll stick with the shorter <code>tns</code>.</p>
+<p>You can verify the installation was successful by running <code>tns</code> in your terminal. You should see something like this:</p>
+<pre><code>$ tns
+# NativeScript
+┌─────────┬─────────────────────────────────────────────────────────────────────┐
+│ Usage   │ Synopsis                                                            │
+│ General │ $ tns &lt;Command&gt; [Command Parameters] [--command &lt;Options&gt;]          │
+│ Alias   │ $ nativescript &lt;Command&gt; [Command Parameters] [--command &lt;Options&gt;] │
+└─────────┴─────────────────────────────────────────────────────────────────────┘
+</code></pre><h3 id="start-your-app">Start your app</h3>
+<p>With the NativeScript CLI installed, it&#39;s time to start building your app. Normally, you would <a href="https://github.com/NativeScript/NativeScript-cli#create-project">use the <code>tns create</code> command to create an empty NativeScript application</a>. For this guide however, we&#39;ve scaffolded out a boilerplate project to act as a starting point for <a href="https://github.com/NativeScript/sample-Groceries">Groceries</a>.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Get the Groceries starting point
+</h4>
+
+<p>Navigate to a folder where you want to keep your app code:</p>
+<div class="no-copy-button"></div>
+
+<pre><code>cd the-folder-you-want-groceries-to-be-in
+</code></pre><p>Next, assuming you have <a href="http://www.git-scm.com/">git installed</a>, clone the Groceries repo from GitHub:</p>
+<pre><code>git clone https://github.com/NativeScript/sample-Groceries.git
+</code></pre><p>After that, change to the newly cloned repo&#39;s folder:</p>
+<pre><code>cd sample-Groceries
+</code></pre><p>Finally, switch to the “angular-start” branch for this guide&#39;s starting point:</p>
+<pre><code>git checkout angular-start
+</code></pre><blockquote>
+<p><strong>TIP:</strong> The “angular-end” branch has the final state of this guide&#39;s tutorial. Feel free to <a href="https://github.com/NativeScript/sample-Groceries/tree/angular-end">refer to the branch on GitHub</a> if you get stuck.</p>
+</blockquote>
+<div class="exercise-end"></div>
+
+<h3 id="add-target-development-platforms">Add target development platforms</h3>
+<p>Your app is now set up, but before you run it, you need to initialize a platform-specific native project for each platform you intend to target.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add the iOS and Android platforms
+</h4>
+
+<p>If you&#39;re on a Mac, start by adding the iOS platform:</p>
+<pre><code>tns platform add ios
+</code></pre><p>Next, add the Android platform with the same <code>platform add</code> command:</p>
+<pre><code>tns platform add android
+</code></pre><div class="exercise-end"></div>
+
+<blockquote>
+<p><strong>IMPORTANT:</strong> You can add platforms only for SDKs that you already have installed on your development machine. If you get errors running <code>tns platform add</code>, refer back to the section on <a href="#install-nativescript-and-configure-your-environment">setting up your development environment</a>.</p>
+</blockquote>
+<p>The <code>platform add</code> command adds a folder called <code>platforms</code> to your project, and copies all of the required native SDKs into this folder. When you build the application, the NativeScript CLI will copy your application code into the <code>platforms</code> folder so that a native binary can be created.</p>
+<h3 id="running-your-app">Running your app</h3>
+<p>With the platform initialization complete, you can run your app in an emulator or on devices.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Run your app
+</h4>
+
+<p>If you&#39;re on a Mac, start by running the app in an iOS simulator with the following command:</p>
+<pre><code>tns run ios --emulator
+</code></pre><p>If all went well, you should see something like this:</p>
+<p><img src="/images/chapter1/ios/1.png" alt="iOS login"></p>
+<p>Next, run your app on an Android emulator with the following command:</p>
+<pre><code>tns run android --emulator
+</code></pre><blockquote>
+<p><strong>WARNING</strong>:</p>
+<ul>
+<li>You must have at least one Android AVD (Android Virtual Device) configured for this command to work. If you get an error, try <a href="http://developer.telerik.com/featured/using-android-emulator-hybrid-mobile-apps-telerik-appbuilder/#managing-avds">setting up an AVD</a> and then run the command again.</li>
+<li>If you&#39;re using <a href="https://www.genymotion.com">Genymotion</a>, launch your Genymotion virtual device, and then run <code>tns run android</code>.</li>
+</ul>
+</blockquote>
+<p>If all went well, you should see your app running in an Android emulator:</p>
+<p><img src="/images/chapter1/android/1.png" alt="Android login"></p>
+<div class="exercise-end"></div>
+
+<p>Here are a few other tips for running NativeScript apps.</p>
+<blockquote>
+<p><strong>TIP</strong>:</p>
+<ul>
+<li>To run on a USB-connected Android or iOS device, use the same <code>run</code> command without the <code>--emulator</code> flag—i.e. <code>tns run android</code> and <code>tns run ios</code>.</li>
+<li>The <code>tns device</code> command lists all USB-connected iOS devices, USB-connected Android devices, and Genymotion virtual devices that <code>tns run</code> can deploy to. Note that <code>tns device</code> does not list iOS simulators.</li>
+</ul>
+</blockquote>
+<h3 id="development-workflow">Development workflow</h3>
+<p>At this point, you have the NativeScript CLI downloaded and installed, as well as the iOS and Android dependencies that you need to run your app. Now you need a good workflow that lets you make changes and see results fast. For that we’ll use the <code>tns livesync</code> command.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Your first NativeScript change
+</h4>
+
+<p>If your previous <code>tns run ios</code> or <code>tns run android</code> task is still running, type <code>Ctrl+C</code> in your terminal to kill it.</p>
+<p>If you’re on a Mac, start an iOS livesync watcher by executing the following command:</p>
+<pre><code>tns livesync ios --emulator --watch
+</code></pre><p>If you have an Android emulator running, start an Android livesync watcher by executing the following command:</p>
+<pre><code>tns livesync android --watch
+</code></pre><p>The <code>tns livesync</code> command updates your app running on an emulator or device by actually transferring the updated source code. By adding the <code>--watch</code> flag, the <code>livesync</code> command additionally watches the files in your NativeScript project. Whenever one of those files changes, the command detects the update, and patches your app on the fly with the updated code.</p>
+<p>To see this in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;Label text=&quot;hello world&quot; /&gt;</code> to <code>&lt;Label text=&quot;hello NativeScript&quot; /&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
+<div class="exercise-end"></div> 
+
+<p>In addition to updating your NativeScript app on the fly, the livesync command also shows the output of <code>console.log()</code> statements as your app executes, as well as stack traces when things go wrong. So if your app crashes at any time during this guide, look to the terminal for a detailed report of the problem.</p>
+<p>The iOS and Android logs can be a bit noisy, so you might have to scroll up a bit to find the actual problem. For example if I try to call <code>foo.bar()</code> when <code>foo</code> does not exist, here&#39;s the information I get on iOS:</p>
+<pre><code>/app/path/to/file.js:14:8: JS ERROR ReferenceError: Can&#39;t find variable: foo
+1   0xe3dc0 NativeScript::FFICallback&lt;NativeScript::ObjCMethodCallback&gt;::ffiClosureCallback(ffi_cif*, void*, void**, void*)
+</code></pre><p>And here&#39;s the same information in the Android logs:</p>
+<pre><code>E/TNS.Native( 2063): ReferenceError: foo is not defined
+E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app/./views/login/login.js, line: 13, column: 4
+</code></pre><blockquote>
+<p><strong>TIP</strong>: When you&#39;re trying to debug a problem, try adding <code>console.log()</code> statements in your JavaScript code—exactly as you would in a browser-based application.</p>
+</blockquote>
+<p>Now that you&#39;ve created an app, configured your environment, and set up your app to run on iOS and Android, you&#39;re ready to start digging into the files that make up a NativeScript app.</p>
 
 			</div>
 		</div>

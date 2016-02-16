@@ -1,6 +1,6 @@
 @import "fonts";
 @import "normalize";
-@import "mono-blue";
+@import "prism";
 
 $border-color: #EDEDED;
 $nativescript_color: #5854F8;
@@ -47,12 +47,6 @@ a:hover {
 	padding: 0.5em;
 	color: #333;
 	background: #f8f8f8;
-}
-code {
-	border:solid 1px #CCC;
-	background: #f8f8f8;
-	padding: 0.25em;
-	color: #333;
 }
 strong{
 	font-size:1.2em;
@@ -241,39 +235,43 @@ body.no-toc #book {
 	}
 }
 
+/* Style the code exercise boxes */
 .exercise {
 	border: 1px solid #ccc;
 	border-radius: 0.3em;
-	p, pre { margin-left: 1em; margin-right: 1em; }
-	h4 {
-		margin-top: 0;
-		padding: 1em;
-		border-bottom: 1px solid #eee;
-		b {
-			font-family: $bold-font;
-		}
-	}
+	margin-bottom: 1em;
+}
+.exercise p, .exercise pre {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+.exercise h4 {
+	margin-top: 0;
+	padding: 0.8em;
+	border-bottom: 1px solid #eee;
+	font-size: 1.1em;
 }
 
-pre {
-	position: relative;
-	overflow: visible;
-}
+/* Style the copy buttons */
 .copy-button {
 	position: absolute;
-	top: -1.5em;
-	right: 0;
 	height: 1.5em;
+	top: -1.5em;
+	top: calc(-1.5em - 1px);
+	right: -1px;
 	padding: 0 0.5em;
 	background: white;
-	border: solid #CCC;
+	border: 2px solid #dfdfdf;
 	border-width: 1px 1px 0 1px;
-	font-size: 0.9em;
-	&:active, &:focus {
-		background: $nativescript_color;
-		color: white;
-		outline: 0;
-	}
+}
+.copy-button:active, .copy-button:focus {
+	background: #5854F8;
+	outline: 0;
+	color: white;
+}
+
+code[class*="language-"] {
+	font-size: 1em;
 }
 
 @media (max-width: 700px) {

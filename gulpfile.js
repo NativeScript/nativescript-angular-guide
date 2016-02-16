@@ -47,7 +47,7 @@ gulp.task( "scripts", function() {
 	return gulp.src([
 			"src/scripts/fastclick.js",
 			"src/scripts/jquery.js",
-			"src/scripts/highlight.pack.js",
+			"src/scripts/prism.js",
 			"src/scripts/app.js"
 		])
 		.pipe( concat( "built.js" ) )

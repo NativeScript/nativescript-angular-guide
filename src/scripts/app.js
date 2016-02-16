@@ -33,14 +33,6 @@
 		});
 	});
 
-	// Build the exercise sections
-	$(".exercise-start").each(function() {
-		var exerciseDiv = $("<div class='exercise'></div>");
-		$(this).before(exerciseDiv);
-		$(this).nextUntil(".exercise-end").addBack().appendTo(exerciseDiv);
-	});
-	$(".exercise-end").remove();
-
 	$("#toggle-toc").on("click", function() {
 		$("body").toggleClass("no-toc");
 		return false;
@@ -51,13 +43,48 @@
 		}
 	});
 
-	hljs.initHighlightingOnLoad();
+	var codeSampleMapper = {
+		"c#": "clike",
+		"appbuilder" : "javascript",
+		"javascript" : "javascript",
+		"typescript" : "javascript",
+		"c++" : "clike",
+		"c" : "clike",
+		"css" : "css",
+		"objective-c" : "clike",
+		"java" : "clike",
+		"xml" : "markup"
+	}
 
-	// This is horrible, but detecting clipboard support without UA sniffing is
-	// basically impossible at the moment. We can (hopefully) whitelist Firefox
-	// after the upcoming Firefox 41 release.
-	// https://gist.github.com/jonrohan/81085b119d16cdd7868a
-	if (navigator.userAgent.match(/Chrome/)) {
+	// Enable Prism support by mapping the lang attributes to the language-* attribute Prim expects
+	$("pre").each(function(index){
+		var lang = $(this).find("code").attr("class");
+		if (lang) {
+			lang = lang.replace("lang-", "").toLowerCase();
+		}
+		var langExtension = codeSampleMapper[lang];
+		$(this)
+			.removeAttr("class")
+			.addClass("language-" + langExtension)
+			.find("code")
+			.removeAttr("class")
+			.addClass("language-" + langExtension);
+	});
+	Prism.highlightAll();
+
+	// Build the exercise sections
+	$(".exercise-start").each(function() {
+		var exerciseDiv = $("<div class='exercise'></div>");
+		$(this).before(exerciseDiv);
+		$(this).nextUntil(".exercise-end").addBack().appendTo(exerciseDiv);
+	});
+	$(".exercise-end").remove();
+
+	// Detecting clipboard support without UA sniffing is basically impossible
+	// at the moment. See https://gist.github.com/jonrohan/81085b119d16cdd7868a.
+	// Edge, Chrome, and Firefox support the API but Safari does not.
+	// (Edge hits this if test because it has “Chrome” in its user agent string).
+	if (navigator.userAgent.match(/(Chrome|Firefox)/)) {
 		// Add copy buttons to all pre tags in exercises
 		$(".exercise pre").each(function() {
 			// Pre tags in exercises can remove the code button by including a div
@@ -68,6 +95,8 @@
 			$(this).prepend("<button class='copy-button' title='Copy to clipboard'>Copy</button>");
 		});
 	}
+
+	// Add copy-to-clipboard behavior to the copy buttons.
 	// See https://developers.google.com/web/updates/2015/04/cut-and-copy-commands?hl=en
 	$(".copy-button").on("click", function() {
 		window.getSelection().removeAllRanges();

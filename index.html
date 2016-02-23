@@ -28,11 +28,11 @@
 		<div id="book">
 			<div class="chapter">
 				<h2 id="building-apps-with-nativescript-and-angular-2">Building Apps with NativeScript and Angular 2</h2>
-<p><img src="images/banner.png" class="banner-image"></p>
-<p>NativeScript’s first-class Angular support extends the Angular 2 runtime, making it possible for you to build <em>native</em> iOS and Android applications using the same framework—and in some cases the same code—that you use to build Angular 2 web apps.</p>
-<p>Let’s look at how it all works by building an app.</p>
+<p><img src="images/banner.png" class="banner-image" alt="NativeScript and Angular 2 logos"></p>
+<p><a href="https://www.nativescript.org/">NativeScript</a> is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no <a href="http://developer.telerik.com/featured/what-is-a-webview/">WebViews</a>—resulting in native-like performance and UX. NativeScript was created and is supported by <a href="http://www.telerik.com/">Telerik</a>.</p>
+<p>Angular JS is one of the most popular open source JavaScript frameworks for application development. The latest version of Angular, <a href="https://angular.io/">Angular 2</a>, makes it possible to use Angular outside of a web browser. NativeScript extends the Angular 2 runtime, making it possible for you to build native iOS and Android applications using the same framework—and in some cases the same code—that you use to build Angular 2 web apps. Let’s look at how it all works by building an app.</p>
 <blockquote>
-<p><strong>WARNING</strong>: Although NativeScript itself is a production-ready framework that drives many apps in the app stores today, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>. If you’re looking for a guide on using the production-ready flavor of NativeScript head to the <a href="http://docs.nativescript.org/start/getting-started">official Getting Started Guide</a>.</p>
+<p><strong>WARNING #1</strong>: Although NativeScript itself is a production-ready framework that drives <a href="https://www.nativescript.org/showcases">many apps in the app stores today</a>, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>. If you’re looking for a guide on using the production-ready flavor of NativeScript head to the <a href="http://docs.nativescript.org/start/getting-started">official Getting Started Guide</a>.</p>
 <p><strong>WARNING #2 🚧</strong>: This guide is being actively written. If you choose to go through this today you’ll certainly find grammatical errors and steps that just don’t work. If you find an error in the guide please report the problem at <a href="https://github.com/tjvantoll/nativescript-angular-guide">https://github.com/tjvantoll/nativescript-angular-guide</a>. Pull requests are also welcome 😀</p>
 </blockquote>
 <h3 id="what-you-re-building">What you&#39;re building</h3>
@@ -164,8 +164,11 @@
 <pre><code>tns livesync ios --emulator --watch
 </code></pre><p>If you have an Android emulator running, start an Android livesync watcher by executing the following command:</p>
 <pre><code>tns livesync android --watch
-</code></pre><p>The <code>tns livesync</code> command updates your app running on an emulator or device by actually transferring the updated source code. By adding the <code>--watch</code> flag, the <code>livesync</code> command additionally watches the files in your NativeScript project. Whenever one of those files changes, the command detects the update, and patches your app on the fly with the updated code.</p>
-<p>To see this in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;Label text=&quot;hello world&quot; /&gt;</code> to <code>&lt;Label text=&quot;hello NativeScript&quot; /&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
+</code></pre><p>The <code>tns livesync</code> command updates your app by transferring the updated source code to the device or simulator. By adding the <code>--watch</code> flag, the <code>livesync</code> command additionally watches the files in your NativeScript project. Whenever one of those files changes, the command detects the update, and patches your app with the updated code.</p>
+<blockquote>
+<p><strong>TIP</strong>: You can learn about how this is possible by reading more about <a href="http://developer.telerik.com/featured/nativescript-works/">how NativeScript works</a>.</p>
+</blockquote>
+<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;Label text=&quot;hello world&quot; /&gt;</code> to <code>&lt;Label text=&quot;hello NativeScript&quot; /&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
 <div class="exercise-end"></div> 
 
 <p>In addition to updating your NativeScript app on the fly, the livesync command also shows the output of <code>console.log()</code> statements as your app executes, as well as stack traces when things go wrong. So if your app crashes at any time during this guide, look to the terminal for a detailed report of the problem.</p>
@@ -177,6 +180,7 @@
 E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app/./views/login/login.js, line: 13, column: 4
 </code></pre><blockquote>
 <p><strong>TIP</strong>: When you&#39;re trying to debug a problem, try adding <code>console.log()</code> statements in your JavaScript code—exactly as you would in a browser-based application.</p>
+<p><strong>WARNING</strong>: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (<code>Info.plist</code>, <code>AndroidManifest.xml</code>, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use <code>Ctrl+C</code> to stop livesync, and rerun the application using the <code>tns run ios</code> and <code>tns run android</code> commands. Not to worry though, when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.</p>
 </blockquote>
 <p>Now that you&#39;ve created an app, configured your environment, and set up your app to run on iOS and Android, you&#39;re ready to start digging into the files that make up a NativeScript app.</p>
 

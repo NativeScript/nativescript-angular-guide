@@ -21,15 +21,15 @@ This guide will walk you through building [Groceries](https://github.com/NativeS
 
 If you follow along to the end, here's what the finished app will look like on iOS:
 
-![login](/images/chapter0/ios/1.png)
-![register](/images/chapter0/ios/2.png)
-![list](/images/chapter0/ios/3.png)
+![login](images/chapter0/ios/1.png)
+![register](images/chapter0/ios/2.png)
+![list](images/chapter0/ios/3.png)
 
 And here's what the app will look like on Android:
 
-![](/images/chapter0/android/1.png)
-![](/images/chapter0/android/2.png)
-![](/images/chapter0/android/3.png)
+![](images/chapter0/android/1.png)
+![](images/chapter0/android/2.png)
+![](images/chapter0/android/3.png)
 
 ### Prerequisites
 

@@ -111,8 +111,57 @@ First, you again use TypeScript’s `import` command to bring in externally defi
 
 Notice the interesting way that the `Component` class is used—with the syntax `@Component`. This is a [TypeScript decorator](https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md), which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty `AppComponent` class. Specifically, the `@Component` decorator’s `template` property tells NativeScript how to render this component on the screen. In fact, the `<label text="hello NativeScript"></label>` syntax is why you saw “hello NativeScript” when you ran this app earlier.
 
-However, this syntax may look a bit odd if you come from a web development background. On the web, the `<label>` HTML element doesn’t have a `text` attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI components work.
+However, this syntax may look a bit odd if you come from a web development background. On the web, the `<label>` HTML element doesn’t have a `text` attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI elements work.
 
-### Adding UI components
+### Adding UI elements
 
+The primary difference between building an Angular 2 app for the web and an Angular 2 app with NativeScript is in the UI elements that you use. NativeScript apps do not use a browser and do not have a DOM; therefore, elements like `<div>` and `<span>` simply do not work.
 
+No worries though, as NativeScript provides an [extensive suite of UI elements](http://docs.nativescript.org/ui/ui-views), each of which are implemented with native iOS and Android controls. For instance, the [`<label>` control](http://docs.nativescript.org/ui/ui-views#label) our previous example used is actually rendered as a [`UILabel`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/) on iOS and an [`android.widget.TextView`](http://developer.android.com/reference/android/widget/TextView.html) on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type `<label>` and let NativeScript handle the rendering details.
+
+Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current `<label>` with something that resembles your typical login screen in a mobile app.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add UI elements to <code>app.component.ts</code>
+</h4>
+
+Open `app/app.component.ts` and replace the existing `@Component` with the following code:
+
+``` JavaScript
+@Component({
+  // TODO: Is this necessary?
+  // selector: "my-app",
+  template: `
+    <text-field hint="Email Address" keyboardType="email"
+      autocorrect="false" autocapitalizationType="none"></text-field>
+    <text-field hint="Password" secure="true"></text-field>
+
+    <button text="Sign in"></button>
+    <button text="Sign up for Groceries"></button>
+  `
+})
+```
+
+<div class="exercise-end"></div>
+
+> **NOTE**: Notice the back-tick character (\`) used with the `template` property. This character is used to define an [ES2015 template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), which TypeScript supports, and which allows you to write multi-line strings without using messy string concatenation.
+
+This code adds two new NativeScript UI elements: a [text field](http://docs.nativescript.org/ApiReference/ui/text-field/how-to.html) and a [button](http://docs.nativescript.org/ApiReference/ui/button/how-to.html). Much like HTML elements, NativeScript UI elements provide attributes to let you configure their behavior and appearance. The code you just added uses the following attributes:
+
+- `<text-field>`
+    - `hint`: Shows placeholder text that tells the user what to type.
+    - `keyboardType`: The type of keyboard to present to the user for input. `keyboardType="email"` shows a keyboard optimized for entering email addresses. NativeScript currently supports [five types of keyboards](http://docs.nativescript.org/ui/keyboard.html) for text fields.
+    - `autocorrect`: A boolean attribute that determines whether the mobile operating system should autocorrect user input. In the case of email address text fields, the autocorrect behavior is undesirable.
+    - `autocapitalizationType`: Determines how the operating system should autocapitalize user input. `autocapitalizationType="none"` turns autocapitalization off altogether. NativeScript supports [four autocapitalization types]({{site.baseurl}}/ApiReference/ui/enums/AutocapitalizationType/README.html) on text fields.
+    - `secure`: A boolean attribute that determines whether the TextField's text should be masked, which is commonly done on password fields.
+- `<button>`
+    - `text`: Controls the text displayed within the button.
+
+After you [run your app](#development-workflow) you may expect to see a polished login screen, but instead you will see a single `<Button>` component on the screen:
+
+![login 1](images/chapter2/ios/1.png)
+![login 1](images/chapter2/android/1.png)
+
+The reason for this is you you need to tell NativeScript how to layout your page’s UI elements. Let's look at how to use NativeScript layouts to arrange these components on the screen.
+
+> **TIP**: The NativeScript docs include a [full list of the UI components and attributes]({{site.baseurl}}/ui-with-xml) with which you can build your apps. You can even [build your own, custom UI components]({{site.baseurl}}/ui-with-xml#custom-components).

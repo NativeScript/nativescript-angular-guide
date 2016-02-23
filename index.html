@@ -58,7 +58,7 @@
 <li><strong>CSS</strong>: You should know how to write simple CSS selectors, and know how to apply CSS rules as name/value pairs.</li>
 <li><strong>The terminal</strong>: You should know how to open a terminal or command-line prompt on your development machine, how to change directories, and how to execute commands.</li>
 </ul>
-<p>This guide will <em>not</em>, however, assume you have any knowledge of Angular 2. When background Angular 2 expertise will help you understand a concept, this guide will link you to the appropriate places in the <a href="https://angular.io/docs/ts/latest/">angular.io</a> documentation.</p>
+<p>This guide will <em>not</em>, however, assume you have any knowledge of Angular 2 or TypeScript. When background Angular 2 or TypeScript expertise will help you understand a concept, this guide will link you to the appropriate places in the <a href="https://angular.io/docs/ts/latest/">Angular</a> or <a href="http://www.typescriptlang.org/Handbook">TypeScript</a> documentation.</p>
 <p>With that out of the way, let’s get started!</p>
 
 			</div>
@@ -168,7 +168,7 @@
 <blockquote>
 <p><strong>TIP</strong>: You can learn about how this is possible by reading more about <a href="http://developer.telerik.com/featured/nativescript-works/">how NativeScript works</a>.</p>
 </blockquote>
-<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;Label text=&quot;hello world&quot; /&gt;</code> to <code>&lt;Label text=&quot;hello NativeScript&quot; /&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
+<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;label text=&#39;hello world&#39;&gt;&lt;/label&gt;</code> to <code>&lt;label text=&#39;hello NativeScript&#39;&gt;&lt;/label&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
 <div class="exercise-end"></div> 
 
 <p>In addition to updating your NativeScript app on the fly, the livesync command also shows the output of <code>console.log()</code> statements as your app executes, as well as stack traces when things go wrong. So if your app crashes at any time during this guide, look to the terminal for a detailed report of the problem.</p>
@@ -200,19 +200,21 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
     │   ├── nativescript-angular
     │   ├── tns-core-modules
     │   └── ...
+    ├── platforms
+    │   ├── android
+    │   └── ios
     ├── package.json
-    └── platforms
-        ├── android
-        └── ios
+    └── tsconfig.json
 </code></pre><p>Here&#39;s what these various files and folders do:</p>
 <ul>
 <li><strong>app</strong>: This folder contains all the development resources you need to build your app. You&#39;ll be spending most of your time editing the files in here.</li>
 <li><strong>node_modules</strong>: This folder contains your app&#39;s npm module dependencies, including Angular 2, TypeScript, and the other modules NativeScript needs to build your app.</li>
-<li><strong>node_modules/angular2</strong>: This folder contains the Angular 2 source code. NativeScript does not alter the core Angular 2 source code in any way.</li>
-<li><strong>node_modules/nativescript-angular</strong>: This folder contains the module that builds on top of Angular 2 to integrate NativeScript-specific functionality. The source code for this module lives at <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>.</li>
-<li><strong>node_modules/tns-core-modules</strong>: This folder contains your app&#39;s NativeScript modules, which are a series of NativeScript-provided JavaScript modules you&#39;ll use to build your app. Each module contains the platform-specific code needed to implement some feature—the camera, http calls, the file system, and so forth—exposed through a platform-agnostic API (e.g. <code>camera.takePicture()</code>). We&#39;ll look at some examples momentarily. The source code for these modules lives at <a href="https://github.com/NativeScript/nativescript">https://github.com/NativeScript/nativescript</a>.</li>
-<li><strong>package.json</strong>: This file contains your app&#39;s configuration details, such as your app id, the version of NativeScript you&#39;re using, and also which npm modules your app uses. We&#39;ll take a closer look at how to use this file when we talk about using npm modules in <a href="#plugins-and-npm-modules">chapter 5</a>.</li>
+<li><strong>node_modules/angular2</strong>: This folder contains the Angular 2 source code. NativeScript does not alter the core Angular 2 source code in any way, instead, NativeScript builds on top of Angular 2 with the nativescript-angular npm module.</li>
+<li><strong>node_modules/nativescript-angular</strong>: This folder contains the module that integrates NativeScript-specific functionality into Angular 2. The source code for this module lives at <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>.</li>
+<li><strong>node_modules/tns-core-modules</strong>: This folder contains your app&#39;s NativeScript modules, which are a series of NativeScript-provided JavaScript modules you&#39;ll use to build your app. Each module contains the platform-specific code needed to implement some feature—the camera, http calls, the file system, and so forth—exposed through a platform-agnostic API (e.g. <code>camera.takePicture()</code>). We&#39;ll look at some examples in <a href="#chapter4">chapter 4</a>. The source code for these modules lives at <a href="https://github.com/NativeScript/nativescript">https://github.com/NativeScript/nativescript</a>.</li>
 <li><strong>platforms</strong>: This folder contains the platform-specific code NativeScript needs to build native iOS and Android apps. For example in the <code>android</code> folder you&#39;ll find things like your project&#39;s <code>AndroidManifest.xml</code> and .apk executable files. Similarly, the <code>ios</code> folder contains the Groceries&#39; Xcode project and .ipa executables. Note, users on Windows machines will not have an <code>ios</code> folder.</li>
+<li><strong>package.json</strong>: This file contains your app&#39;s configuration details, such as your app id, the version of NativeScript you&#39;re using, and also which npm modules your app uses. We&#39;ll take a closer look at how to use this file when we talk about using npm modules in <a href="#plugins-and-npm-modules">chapter 5</a>.</li>
+<li><strong>tsconfig.json</strong>: This file contains your app’s TypeScript configuration. Unless you have existing TypeScript expertise, you’ll probably want to leave this file alone for now. If you do have existing experience you may want to tweak these values to suit your personal preferences, however, note that the <code>&quot;experimentalDecorators&quot;</code> and <code>&quot;emitDecoratorMetadata&quot;</code> flags are essential to making NativeScript and Angular 2 work, so don’t remove those. You can refer to the official TypeScript wiki for <a href="https://github.com/Microsoft/TypeScript/wiki/tsconfig.json">detailed documentation on what you can do in a <code>tsconfig.json</code> file</a>.</li>
 </ul>
 <p>The NativeScript CLI manages the <code>platforms</code> folder for you as you develop and run your app; therefore, it&#39;s a best practice to treat the <code>platforms</code> folder as generated code. The Groceries app includes the <code>platforms</code> folder in its <a href="https://github.com/NativeScript/sample-Groceries/blob/master/.gitignore"><code>.gitignore</code></a> to exclude its files from source control.</p>
 <p>Next, let&#39;s dig into the <code>app</code> folder, as that&#39;s where you&#39;ll be spending the majority of your time.</p>
@@ -223,9 +225,8 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
     │   │   ├── Android
     │   │   └── iOS
     │   ├── pages
-    │   │   └── login
-    │   │       ├── login.js
-    │   │       └── login.xml
+    │   │   ├── login.component.ts
+    │   │   └── ...
     │   ├── shared
     │   │   └── ...
     │   ├── app.css
@@ -236,21 +237,46 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
 </code></pre><p>Here&#39;s what these various files and folders do:</p>
 <ul>
 <li><strong>App_Resources</strong>: This folder contains platform-specific resources such as icons, splash screens, and configuration files. The NativeScript CLI takes care of injecting these resources into the appropriate places in the <code>platforms</code> folder when you execute <code>tns run</code>.</li>
-<li><strong>shared</strong>: This folder, specific to the Groceries app, contains any files you need to share across views in your app. In the Groceries app, you&#39;ll find a few view model objects and a <code>config.js</code> file used to share configuration variables like API keys.</li>
-<li><strong>views</strong>: This folder contains the code to build your app&#39;s views, each of which will have a subfolder in <code>views</code>. Each view is made up of an XML file, a JavaScript file, and an optional CSS file. The groceries app contains three folders for its three views.</li>
+<li><strong>pages</strong>: This folder, specific to the Groceries app, contains the code to build your app&#39;s pages. Each page is made up of a TypeScript file and an optional HTML file. The Groceries app starts with three TypeScript files for its three pages—a login page, a registration page, and a list page. In a more complex app you may wish to create a more detailed folder structure within <code>pages</code>, but for now, keeping all pages in the root simplifies our demo.</li>
+<li><strong>shared</strong>: This folder, also specific to the Groceries app, contains any files you need to share across pages in your app. In the Groceries app, you&#39;ll find a few service classes for talking to backend services, a few model objects, and a <code>config.ts</code> file used to share configuration variables like API keys.</li>
 <li><strong>app.css</strong>: This file contains global styles for your app. We&#39;ll dig into app styling in <a href="#css">section 2.3</a>.</li>
-<li><strong>app.js</strong>: This file sets up your application&#39;s starting module and initializes the app.</li>
+<li><strong>app.component.ts</strong>: This primary Angular component that drives your application. Eventually this file will handle routing and application-wide configuration, however for now the file has a simple hello world example that we’ll look at momentarily.</li>
+<li><strong>main.ts</strong>: The starting point of Angular 2 applications—web and native.</li>
 </ul>
-<p>Let&#39;s start with <code>app/app.js</code>, as it&#39;s the starting point for NativeScript apps. Your <code>app.js</code> contains the three lines below: </p>
-<pre><code class="lang-JavaScript">var applicationModule = require(&quot;application&quot;);
-applicationModule.mainModule = &quot;views/login/login&quot;;
-applicationModule.start();
+<p>To get a sense of a NativeScript app actually starts up, let’s dig in to the first few files.</p>
+<h3 id="starting-up">Starting up</h3>
+<p>The first few files you run in a NativeScript app look almost identical to <a href="https://angular.io/docs/ts/latest/quickstart.html">the first few files you run in an Angular 2 web app</a>. Let’s start with <code>main.ts</code> as that’s the first file executed. Open your <code>app.main.ts</code> file; you should see the code below:</p>
+<pre><code class="lang-JavaScript">import {nativeScriptBootstrap} from &quot;nativescript-angular/application&quot;;
+import {AppComponent} from &quot;./app.component&quot;;
+
+nativeScriptBootstrap(AppComponent);
 </code></pre>
-<p>Here, you&#39;re requiring, or importing, the <a href="{{site.baseurl}}/ApiReference/application/HOW-TO">NativeScript application module</a>. Then, you set its <code>mainModule</code>, or the starting screen of your app to be the login screen, which lives in your app&#39;s <code>views/login</code> folder.</p>
+<p>Here you’re using the TypeScript <code>import</code> command to bring in a function—<code>nativescriptBootstrap()</code>—and a <a href="http://www.typescriptlang.org/Handbook#classes">TypeScript class</a>—<code>AppComponent</code>—each of which are defined in separate files. The <code>nativescriptBootstrap()</code> function comes from the “nativescript-angular” npm module, which you may recall contains the code needed to integrate NativeScript and Angular 2. Whereas <a href="https://angular.io/docs/ts/latest/api/platform/browser/bootstrap-function.html">Angular 2’s own <code>bootstrap()</code> function</a> starts an Angular 2 browser app, NativeScript’s bootstrap function starts an Angular 2 native app.</p>
 <blockquote>
-<p><strong>TIP</strong>: JavaScript modules in NativeScript follow the <a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS specification</a>. This means you can use the <a href="http://wiki.commonjs.org/wiki/Modules/1.1#Module_Context"><code>require()</code> method</a> to import modules, as is done above, as well as use the <code>export</code> keyword to expose a module&#39;s properties and methods, which we&#39;ll look at later in this chapter. These are the same constructs Node.js uses for JavaScript modules, so if you know how to use Node.js modules, you already know how to use NativeScript modules.</p>
+<p><strong>TIP</strong>: If you’re curious about what <code>nativescriptBootstrap()</code> function actually has to do to startup native iOS and Android apps, remember that all this code is open source for you to explore at any time. The <code>nativescriptBootstrap()</code> function specifically is defined in an <a href="https://github.com/NativeScript/nativescript-angular/blob/master/src/nativescript-angular/application.ts"><code>application.ts</code> file</a> in the <a href="https://github.com/NativeScript/nativescript-angular">NativeScript/nativescript-angular repository</a> on GitHub.</p>
 </blockquote>
-<p>Now that your app is ready for development, let&#39;s add some UI components to make your login screen show more than some basic text.</p>
+<p>The bootstrap function, regardless of whether it’s for the web or for native apps, needs to know which Angular component to start the application with. In this case, you’re passing to control to a <code>AppComponent</code> component defined in <code>app.component.ts</code>.</p>
+<blockquote>
+<p><strong>TIP</strong>: In NativeScript we follow Angular 2’s own convention of naming component files with a <code>.component.ts</code> suffix.</p>
+</blockquote>
+<p>Next, open your app’s <code>app/app.component.ts</code> file; you should see the code below:</p>
+<pre><code class="lang-JavaScript">// TODO: I can’t explain why this is necessary until I know why this is necessary
+// import &quot;reflect-metadata&quot;;
+import {Component} from &quot;angular2/core&quot;;
+
+@Component({
+  // TODO: Can I just remove this to simplify the explanation below? Is it really “my” app if I cloned the app from GitHub? WHAT DOES IT ALL MEAN?
+  // selector: &quot;my-app&quot;,
+
+  template: &quot;&lt;label text=&#39;hello NativeScript&#39;&gt;&lt;/label&gt;&quot;
+})
+export class AppComponent {}
+</code></pre>
+<p>This file contains an Angular 2 component, which is the primary building block you’ll use to build your NativeScript applications. Let’s break down what’s going on in this file.</p>
+<p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
+<p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;label text=&quot;hello NativeScript&quot;&gt;&lt;/label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
+<p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI components work.</p>
+<h3 id="adding-ui-components">Adding UI components</h3>
 
 			</div>
 		</div>

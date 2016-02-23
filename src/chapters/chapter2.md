@@ -165,3 +165,7 @@ After you [run your app](#development-workflow) you may expect to see a polished
 The reason for this is you you need to tell NativeScript how to layout your page’s UI elements. Let's look at how to use NativeScript layouts to arrange these components on the screen.
 
 > **TIP**: The NativeScript docs include a [full list of the UI components and attributes]({{site.baseurl}}/ui-with-xml) with which you can build your apps. You can even [build your own, custom UI components]({{site.baseurl}}/ui-with-xml#custom-components).
+
+### Layouts
+
+Layouts!

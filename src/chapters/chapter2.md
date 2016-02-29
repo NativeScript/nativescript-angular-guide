@@ -92,26 +92,26 @@ The bootstrap function, regardless of whether it’s for the web or for native a
 Next, open your app’s `app/app.component.ts` file; you should see the code below:
 
 ``` JavaScript
-// TODO: I can’t explain why this is necessary until I know why this is necessary
+// TODO: Figure out if this is still necessary. If so, explain why.
 // import "reflect-metadata";
 import {Component} from "angular2/core";
 
 @Component({
-  // TODO: Can I just remove this to simplify the explanation below? Is it really “my” app if I cloned the app from GitHub? WHAT DOES IT ALL MEAN?
-  // selector: "my-app",
-
+  selector: "my-app",
   template: "<label text='hello NativeScript'></label>"
 })
 export class AppComponent {}
 ```
 
-This file contains an Angular 2 component, which is the primary building block you’ll use to build your NativeScript applications. Let’s break down what’s going on in this file.
+This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.
 
 First, you again use TypeScript’s `import` command to bring in externally defined functionality—in this case, the `Component` class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.
 
 Notice the interesting way that the `Component` class is used—with the syntax `@Component`. This is a [TypeScript decorator](https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md), which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty `AppComponent` class. Specifically, the `@Component` decorator’s `template` property tells NativeScript how to render this component on the screen. In fact, the `<label text="hello NativeScript"></label>` syntax is why you saw “hello NativeScript” when you ran this app earlier.
 
 However, this syntax may look a bit odd if you come from a web development background. On the web, the `<label>` HTML element doesn’t have a `text` attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI elements work.
+
+> **NOTE**: Curious about the `@Component` decorator’s `selector` property? The property defines how a component can be used within another component’s template. For instance a component that defines its `selector` with `selector: "foo-bar"` can be used by another component as `template: "<foo-bar></foo-bar>"`. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the `selector` property is currently irrelevant. We’ll use the `selector` property later in this guide though.
 
 ### Adding UI elements
 
@@ -129,8 +129,7 @@ Open `app/app.component.ts` and replace the existing `@Component` with the follo
 
 ``` JavaScript
 @Component({
-  // TODO: Is this necessary?
-  // selector: "my-app",
+  selector: "my-app",
   template: `
     <text-field hint="Email Address" keyboardType="email"
       autocorrect="false" autocapitalizationType="none"></text-field>
@@ -152,20 +151,73 @@ This code adds two new NativeScript UI elements: a [text field](http://docs.nati
     - `hint`: Shows placeholder text that tells the user what to type.
     - `keyboardType`: The type of keyboard to present to the user for input. `keyboardType="email"` shows a keyboard optimized for entering email addresses. NativeScript currently supports [five types of keyboards](http://docs.nativescript.org/ui/keyboard.html) for text fields.
     - `autocorrect`: A boolean attribute that determines whether the mobile operating system should autocorrect user input. In the case of email address text fields, the autocorrect behavior is undesirable.
-    - `autocapitalizationType`: Determines how the operating system should autocapitalize user input. `autocapitalizationType="none"` turns autocapitalization off altogether. NativeScript supports [four autocapitalization types]({{site.baseurl}}/ApiReference/ui/enums/AutocapitalizationType/README.html) on text fields.
+    - `autocapitalizationType`: Determines how the operating system should autocapitalize user input. `autocapitalizationType="none"` turns autocapitalization off altogether. NativeScript supports [four autocapitalization types](http://docs.nativescript.org/ApiReference/ui/enums/AutocapitalizationType/README.html) on text fields.
     - `secure`: A boolean attribute that determines whether the TextField's text should be masked, which is commonly done on password fields.
 - `<button>`
     - `text`: Controls the text displayed within the button.
 
-After you [run your app](#development-workflow) you may expect to see a polished login screen, but instead you will see a single `<Button>` component on the screen:
+After your app updates with this change, you may expect to see a polished login screen, but instead you will see a single `<button>` element on the screen:
 
 ![login 1](images/chapter2/ios/1.png)
 ![login 1](images/chapter2/android/1.png)
 
-The reason for this is you you need to tell NativeScript how to layout your page’s UI elements. Let's look at how to use NativeScript layouts to arrange these components on the screen.
+In NativeScript whenever you use more than one UI element, you need to tell NativeScript how to arrange those elements on the screen. Since you’re not doing that currently, NativeScript is incorrectly assuming you want the last element—the `<button>`—to take up the whole screen. To arrange these elements, let’s move onto the NativeScript feature for aligning elements on the screen: NativeScript layouts.
 
-> **TIP**: The NativeScript docs include a [full list of the UI components and attributes]({{site.baseurl}}/ui-with-xml) with which you can build your apps. You can even [build your own, custom UI components]({{site.baseurl}}/ui-with-xml#custom-components).
+> **TIP**: The NativeScript docs include a [full list of the UI components and attributes](http://docs.nativescript.org/ui-with-xml) with which you can build your apps. You can even [build your own, custom UI components](http://docs.nativescript.org/ui-with-xml#custom-components).
 
 ### Layouts
 
-Layouts!
+NativeScript provides several different layout containers that allow you to place UI elements precisely where you want them to appear. 
+
+- The [Absolute Layout](http://docs.nativescript.org/ApiReference/ui/layouts/absolute-layout/HOW-TO.html) lets you position elements using explicit x and y coordinates. This is useful when you need to place elements in exact locations, for example showing an activity indicator widget in the top-left corner of your app.
+- The [Dock Layout](http://docs.nativescript.org/ApiReference/ui/layouts/dock-layout/HOW-TO.html) is useful for placing UI elements at the outer edges of your app. For example, a container docked at the bottom of the screen would be a good location for an ad.
+- The [Grid Layout](http://docs.nativescript.org/ApiReference/ui/layouts/grid-layout/HOW-TO.html) lets you divide your interface into a series of rows and columns, much like a `<table>` in HTML markup.
+- The [Stack Layout](http://docs.nativescript.org/ApiReference/ui/layouts/stack-layout/HOW-TO.html) lets you stack child UI elements either vertically or horizontally.
+- The [Wrap Layout](http://docs.nativescript.org/ApiReference/ui/layouts/wrap-layout/HOW-TO.html) lets child UI elements flow from one row or column to the next when space is filled.
+
+For your login screen, all you need is a simple `<stack-layout>` to stack the UI elements on top of each other. In later sections, you'll use some of the more advanced layouts.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add a stack layout to the login screen
+</h4>
+
+In `app.component.ts`, add a `<stack-layout>` element within your component’s `template` property. The full component should now look like this:
+
+``` JavaScript
+@Component({
+  selector: "my-app",
+  template: `
+    <stack-layout>
+      <text-field hint="Email Address" keyboardType="email"
+        autocorrect="false" autocapitalizationType="none"></text-field>
+      <text-field hint="Password" secure="true"></text-field>
+
+      <button text="Sign in"></button>
+      <button text="Sign up for Groceries"></button>
+    </stack-layout>
+  `
+})
+```
+
+<div class="exercise-end"></div>
+
+The stack layout is a UI element, and as such, it has attributes just like the `<text-field>` and `<button>` elements you used in the previous section. Here, the `orientation="vertical"` attribute tells the stack layout to arrange its child elements vertically.
+
+After your app updates with this change, you'll see that your login page’s UI elements stack up:
+
+![login 2](http://docs.nativescript.org/img/cli-getting-started/chapter2/ios/2.png)
+![login 2](http://docs.nativescript.org/img/cli-getting-started/chapter2/android/2.png)
+
+Although the UI elements are in the correct order, they could use some spacing and color to make the app look a bit nicer. To do that let's look at another NativeScript feature: CSS.
+
+> **TIP**:
+> * Refer to the NativeScript docs for a [more detailed look at how NativeScript layouts work](http://docs.nativescript.org/layouts) and the various things you can do to configure them.
+> * Check out Jen Looper's article on [demystifying NativeScript layouts](https://www.nativescript.org/blog/demystifying-nativescript-layouts) for a more thorough look at NativeScript layouts in action.
+
+### CSS
+
+TODO: Write this!
+
+### Images
+
+TODO: Write this!

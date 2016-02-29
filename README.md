@@ -2,7 +2,7 @@
 
 This repo contains a guide for getting started building apps with [NativeScript](https://www.nativescript.org/) and [Angular 2](https://angular.io/). You can view the guide live at <https://tjvantoll.github.io/nativescript-angular-guide/>.
 
-If you’re interested in making changes to the guide, the chapters themselves are stored in this repo’s [src directory](https://github.com/tjvantoll/nativescript-angular-guide/tree/gh-pages/src/chapters). If you want to learn how to run the full guide on your local machine, check out the instructions below.
+If you’re interested in making changes to the guide, the chapters themselves are stored in this repo’s [src folder](https://github.com/tjvantoll/nativescript-angular-guide/tree/gh-pages/src/chapters). If you want to learn how to run the full guide on your local machine, check out the instructions below.
 
 ## Running locally
 

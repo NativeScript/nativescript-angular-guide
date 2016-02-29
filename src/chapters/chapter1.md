@@ -30,6 +30,9 @@ $ tns
 
 With the NativeScript CLI installed, it's time to start building your app. Normally, you would [use the `tns create` command to create an empty NativeScript application](https://github.com/NativeScript/NativeScript-cli#create-project). For this guide however, we've scaffolded out a boilerplate project to act as a starting point for [Groceries](https://github.com/NativeScript/sample-Groceries).
 
+> **NOTE**: After completing this guide, if you’d like to start a new NativeScript and Angular 2 app—one that doesn’t clone Groceries—you can use the NativeScript CLI’s `tns create` command as such:
+> `tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng`
+
 <h4 class="exercise-start">
     <b>Exercise</b>: Get the Groceries starting point
 </h4>

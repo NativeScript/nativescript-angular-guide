@@ -92,8 +92,6 @@ The bootstrap function, regardless of whether it’s for the web or for native a
 Next, open your app’s `app/app.component.ts` file; you should see the code below:
 
 ``` JavaScript
-// TODO: Figure out if this is still necessary. If so, explain why.
-// import "reflect-metadata";
 import {Component} from "angular2/core";
 
 @Component({

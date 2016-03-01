@@ -173,7 +173,7 @@
 <blockquote>
 <p><strong>TIP</strong>: You can learn about how this is possible by reading more about <a href="http://developer.telerik.com/featured/nativescript-works/">how NativeScript works</a>.</p>
 </blockquote>
-<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;label text=&#39;hello world&#39;&gt;&lt;/label&gt;</code> to <code>&lt;label text=&#39;hello NativeScript&#39;&gt;&lt;/label&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
+<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;Label text=&#39;hello world&#39;&gt;&lt;/Label&gt;</code> to <code>&lt;Label text=&#39;hello NativeScript&#39;&gt;&lt;/Label&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
 <div class="exercise-end"></div> 
 
 <p>In addition to updating your NativeScript app on the fly, the livesync command also shows the output of <code>console.log()</code> statements as your app executes, as well as stack traces when things go wrong. So if your app crashes at any time during this guide, look to the terminal for a detailed report of the problem.</p>
@@ -265,19 +265,17 @@ nativeScriptBootstrap(AppComponent);
 <p><strong>TIP</strong>: In NativeScript we follow Angular 2’s own convention of naming component files with a <code>.component.ts</code> suffix.</p>
 </blockquote>
 <p>Next, open your app’s <code>app/app.component.ts</code> file; you should see the code below:</p>
-<pre><code class="lang-JavaScript">// TODO: Figure out if this is still necessary. If so, explain why.
-// import &quot;reflect-metadata&quot;;
-import {Component} from &quot;angular2/core&quot;;
+<pre><code class="lang-JavaScript">import {Component} from &quot;angular2/core&quot;;
 
 @Component({
   selector: &quot;my-app&quot;,
-  template: &quot;&lt;label text=&#39;hello NativeScript&#39;&gt;&lt;/label&gt;&quot;
+  template: &quot;&lt;Label text=&#39;hello NativeScript&#39;&gt;&lt;/Label&gt;&quot;
 })
 export class AppComponent {}
 </code></pre>
 <p>This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.</p>
 <p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
-<p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;label text=&quot;hello NativeScript&quot;&gt;&lt;/label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
+<p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;Label text=&quot;hello NativeScript&quot;&gt;&lt;/Label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
 <p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI elements work.</p>
 <blockquote>
 <p><strong>NOTE</strong>: Curious about the <code>@Component</code> decorator’s <code>selector</code> property? The property defines how a component can be used within another component’s template. For instance a component that defines its <code>selector</code> with <code>selector: &quot;foo-bar&quot;</code> can be used by another component as <code>template: &quot;&lt;foo-bar&gt;&lt;/foo-bar&gt;&quot;</code>. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the <code>selector</code> property is currently irrelevant. We’ll use the <code>selector</code> property later in this guide though.</p>
@@ -285,7 +283,7 @@ export class AppComponent {}
 <h3 id="adding-ui-elements">Adding UI elements</h3>
 <p>The primary difference between building an Angular 2 app for the web and an Angular 2 app with NativeScript is in the UI elements that you use. NativeScript apps do not use a browser and do not have a DOM; therefore, elements like <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> simply do not work.</p>
 <p>No worries though, as NativeScript provides an <a href="http://docs.nativescript.org/ui/ui-views">extensive suite of UI elements</a>, each of which are implemented with native iOS and Android controls. For instance, the <a href="http://docs.nativescript.org/ui/ui-views#label"><code>&lt;label&gt;</code> control</a> our previous example used is actually rendered as a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/"><code>UILabel</code></a> on iOS and an <a href="http://developer.android.com/reference/android/widget/TextView.html"><code>android.widget.TextView</code></a> on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type <code>&lt;label&gt;</code> and let NativeScript handle the rendering details.</p>
-<p>Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current <code>&lt;label&gt;</code> with something that resembles your typical login screen in a mobile app.</p>
+<p>Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current <code>&lt;Label&gt;</code> with something that resembles your typical login screen in a mobile app.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add UI elements to <code>app.component.ts</code>
 </h4>
@@ -294,12 +292,12 @@ export class AppComponent {}
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
-    &lt;text-field hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
-      autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/text-field&gt;
-    &lt;text-field hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/text-field&gt;
+    &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
+      autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
+    &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
-    &lt;button text=&quot;Sign in&quot;&gt;&lt;/button&gt;
-    &lt;button text=&quot;Sign up for Groceries&quot;&gt;&lt;/button&gt;
+    &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
+    &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
   `
 })
 </code></pre>
@@ -310,7 +308,7 @@ export class AppComponent {}
 </blockquote>
 <p>This code adds two new NativeScript UI elements: a <a href="http://docs.nativescript.org/ApiReference/ui/text-field/how-to.html">text field</a> and a <a href="http://docs.nativescript.org/ApiReference/ui/button/how-to.html">button</a>. Much like HTML elements, NativeScript UI elements provide attributes to let you configure their behavior and appearance. The code you just added uses the following attributes:</p>
 <ul>
-<li><code>&lt;text-field&gt;</code><ul>
+<li><code>&lt;TextField&gt;</code><ul>
 <li><code>hint</code>: Shows placeholder text that tells the user what to type.</li>
 <li><code>keyboardType</code>: The type of keyboard to present to the user for input. <code>keyboardType=&quot;email&quot;</code> shows a keyboard optimized for entering email addresses. NativeScript currently supports <a href="http://docs.nativescript.org/ui/keyboard.html">five types of keyboards</a> for text fields.</li>
 <li><code>autocorrect</code>: A boolean attribute that determines whether the mobile operating system should autocorrect user input. In the case of email address text fields, the autocorrect behavior is undesirable.</li>
@@ -318,15 +316,15 @@ export class AppComponent {}
 <li><code>secure</code>: A boolean attribute that determines whether the TextField&#39;s text should be masked, which is commonly done on password fields.</li>
 </ul>
 </li>
-<li><code>&lt;button&gt;</code><ul>
+<li><code>&lt;Button&gt;</code><ul>
 <li><code>text</code>: Controls the text displayed within the button.</li>
 </ul>
 </li>
 </ul>
-<p>After your app updates with this change, you may expect to see a polished login screen, but instead you will see a single <code>&lt;button&gt;</code> element on the screen:</p>
+<p>After your app updates with this change, you may expect to see a polished login screen, but instead you will see a single <code>&lt;Button&gt;</code> element on the screen:</p>
 <p><img src="images/chapter2/ios/1.png" alt="login 1">
 <img src="images/chapter2/android/1.png" alt="login 1"></p>
-<p>In NativeScript whenever you use more than one UI element, you need to tell NativeScript how to arrange those elements on the screen. Since you’re not doing that currently, NativeScript is incorrectly assuming you want the last element—the <code>&lt;button&gt;</code>—to take up the whole screen. To arrange these elements, let’s move onto the NativeScript feature for aligning elements on the screen: NativeScript layouts.</p>
+<p>In NativeScript whenever you use more than one UI element, you need to tell NativeScript how to arrange those elements on the screen. Since you’re not doing that currently, NativeScript is incorrectly assuming you want the last element—the <code>&lt;Button&gt;</code>—to take up the whole screen. To arrange these elements, let’s move onto the NativeScript feature for aligning elements on the screen: NativeScript layouts.</p>
 <blockquote>
 <p><strong>TIP</strong>: The NativeScript docs include a <a href="http://docs.nativescript.org/ui-with-xml">full list of the UI components and attributes</a> with which you can build your apps. You can even <a href="http://docs.nativescript.org/ui-with-xml#custom-components">build your own, custom UI components</a>.</p>
 </blockquote>
@@ -344,24 +342,24 @@ export class AppComponent {}
     <b>Exercise</b>: Add a stack layout to the login screen
 </h4>
 
-<p>In <code>app.component.ts</code>, add a <code>&lt;stack-layout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
+<p>In <code>app.component.ts</code>, add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
-    &lt;stack-layout&gt;
-      &lt;text-field hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
-        autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/text-field&gt;
-      &lt;text-field hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/text-field&gt;
+    &lt;StackLayout&gt;
+      &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
+        autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
+      &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
-      &lt;button text=&quot;Sign in&quot;&gt;&lt;/button&gt;
-      &lt;button text=&quot;Sign up for Groceries&quot;&gt;&lt;/button&gt;
-    &lt;/stack-layout&gt;
+      &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
+      &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
+    &lt;/StackLayout&gt;
   `
 })
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;text-field&gt;</code> and <code>&lt;button&gt;</code> elements you used in the previous section. Here, the <code>orientation=&quot;vertical&quot;</code> attribute tells the stack layout to arrange its child elements vertically.</p>
+<p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> elements you used in the previous section. Here, the <code>orientation=&quot;vertical&quot;</code> attribute tells the stack layout to arrange its child elements vertically.</p>
 <p>After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
 <p><img src="http://docs.nativescript.org/img/cli-getting-started/chapter2/ios/2.png" alt="login 2">
 <img src="http://docs.nativescript.org/img/cli-getting-started/chapter2/android/2.png" alt="login 2"></p>
@@ -374,7 +372,77 @@ export class AppComponent {}
 </ul>
 </blockquote>
 <h3 id="css">CSS</h3>
-<p>TODO: Write this!</p>
+<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a> (<code>app.css</code>), component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>.</p>
+<blockquote>
+<p><strong>TIP</strong>: Although inline styles are great for quick testing—e.g. <code>&lt;StackLayout style=&quot;background-color: green;&quot;&gt;</code> you should avoid them in general because the <code>style</code> attributes tend to clutter up your templates, especially if you need to apply multiple rules.</p>
+</blockquote>
+<p>Let&#39;s start by adding a few application-wide CSS rules.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Create global styles
+</h4>
+
+<p>Open your app’s <code>app/app.css</code> file and paste in the following code:</p>
+<pre><code class="lang-CSS">Page {
+  background-color: white;
+  font-size: 17;
+}
+TextField {
+  margin: 10;
+  padding: 10;
+}
+Image {
+  margin-top: 20;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 80;
+}
+Button {
+  margin: 10;
+  padding: 10;
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select four UI components (Page, TextField, Image, and Button) by their tag name, and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="http://docs.nativescript.org/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
+<p>Let&#39;s make one more change. Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add platform-specific CSS
+</h4>
+
+<p>Add the following as the first line of your app&#39;s <code>app.css</code> file:</p>
+<pre><code class="lang-CSS">@import { url(&#39;~/platform.css&#39;) };
+</code></pre>
+<blockquote>
+<p><strong>WARNING</strong>: NativeScript is consistent with browser implementations, in that <code>@import</code> statements must precede all other CSS rules in a file.</p>
+</blockquote>
+<p>Next, add a <code>class=&quot;link&quot;</code> attribute to the sign up button in <code>login.xml</code>. The button&#39;s markup should look like this:</p>
+<pre><code class="lang-XML">&lt;Button text=&quot;Sign up for Groceries&quot; class=&quot;link&quot; /&gt;
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Let&#39;s break down what just happened. First, NativeScript supports CSS&#39;s <code>@import</code> statement for importing one CSS file into another. So this new line of code imports the CSS rules from <code>platform.css</code> into <code>app.css</code>. But, you might have noticed that Groceries does not have a file named <code>platform.css</code>—only <code>app/platform.android.css</code> and <code>app/platform.ios.css</code> exist. What&#39;s going on here?</p>
+<p><a id="platform-specific-files"></a>When you execute <code>tns run</code>, or <code>tns livesync</code>, the NativeScript CLI takes your code from the <code>app</code> folder and places it in the native projects located in the <code>platforms/ios</code> and <code>platforms/android</code> folders. Here the naming convention comes in: while moving files, the CLI intelligently selects <code>.android.*</code> and <code>.ios.*</code> files. To give a specific example, the CLI moves <code>platform.ios.css</code> into <code>platforms/ios</code> and renames it to <code>platform.css</code>; similarly, the CLI moves <code>platform.android.css</code> into <code>platforms/android</code>, and again renames it to <code>platform.css</code>. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it&#39;s supported for any type of file in NativeScript—not just CSS files. You&#39;ll see a few more examples of this convention later in this guide.</p>
+<p>There&#39;s one other change here we need to discuss, and that&#39;s the <code>class</code> attribute you added to this button:</p>
+<pre><code class="lang-XML">&lt;Button text=&quot;Sign up for Groceries&quot; class=&quot;link&quot; /&gt;
+</code></pre>
+<p>NativeScript uses the <code>class</code> attribute for adding CSS class names to UI components. The class name is used to give the sign up button a slightly different look than the sign in button. You can find the CSS rules associated with this class name in <code>platform.ios.css</code> and <code>platform.android.css</code>:</p>
+<pre><code class="lang-CSS">/* From platform.android.css */
+.link {
+  background-color: transparent;
+}
+
+/* From platform.ios.css */
+.link {
+  border-width: 0;
+}
+</code></pre>
+<blockquote>
+<p><strong>TIP</strong>: NativeScript also supports selecting elements by the <code>id</code> attribute. Refer to the docs for <a href="/styling#supported-selectors">a full list of the supported selectors</a>.</p>
+</blockquote>
+<p>With these changes in place, you&#39;ll notice that the app looks halfway decent now, and also has a distinctly different look on iOS and Android:</p>
+<p><img src="http://docs.nativescript.org/img/cli-getting-started/chapter2/ios/3.png" alt="login 1">
+<img src="http://docs.nativescript.org/img/cli-getting-started/chapter2/android/3.png" alt="login 1"></p>
+<p>Feel free to take some time to play with the look of this app before moving on. When you&#39;re ready, let&#39;s move on and add an image to this login screen.</p>
 <h3 id="images">Images</h3>
 <p>TODO: Write this!</p>
 

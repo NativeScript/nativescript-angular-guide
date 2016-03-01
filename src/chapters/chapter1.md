@@ -159,7 +159,7 @@ The `tns livesync` command updates your app by transferring the updated source c
 
 > **TIP**: You can learn about how this is possible by reading more about [how NativeScript works](http://developer.telerik.com/featured/nativescript-works/).
 
-To see livesync in action let’s make a small update to your app. Open your project’s `app/app.component.ts` file in your text editor of choice and change `<label text='hello world'></label>` to `<label text='hello NativeScript'></label>`. Save the file and you should see the app relaunch and the updated text displayed.
+To see livesync in action let’s make a small update to your app. Open your project’s `app/app.component.ts` file in your text editor of choice and change `<Label text='hello world'></Label>` to `<Label text='hello NativeScript'></Label>`. Save the file and you should see the app relaunch and the updated text displayed.
 
 <div class="exercise-end"></div> 
 

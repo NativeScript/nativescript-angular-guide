@@ -474,7 +474,29 @@ Button {
 			</div>
 			<div class="chapter">
 				<h2 id="application-logic">Application Logic</h2>
-<h3 id="events-and-data-binding">Events and data binding</h3>
+<p>In this chapter you’ll learn how to add JavaScript logic to your app, how to create services that talk to backend endpoints, and how to architect an app that uses multiple pages. There’s a lot to cover, so let’s start by discussing how to handle events and data binding.</p>
+<h3 id="events">Events</h3>
+<p>Most user interfaces are driven by events. In NativeScript apps, those events are usually some user action, such as tapping, swiping, or rotating—and NativeScript abstracts the iOS- and Android-specific code for handling such events into a handful of easy-to-use APIs. Let’s start with the most common event you’ll use in a NativeScript app—<code>tap</code>.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add a <code>tap</code> event handler
+</h4>
+
+<p>Open <code>app/app.component.ts</code>, find the existing sign in button within your component’s <code>template</code> (<code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code>), and replace it with the following code:</p>
+<pre><code class="lang-JavaScript">&lt;Button text=&quot;Sign in&quot; (tap)=&quot;signIn()&quot;&gt;&lt;/Button&gt;
+</code></pre>
+<p>Next, in the same file, replace the current <code>AppComponent</code> definition with the one shown below:</p>
+<pre><code class="lang-JavaScript">export class AppComponent {
+  signIn() {
+    console.log(&quot;hello&quot;);
+  }
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>The <code>(eventName)=&quot;functionName()&quot;</code> syntax is part of <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding">Angular 2’s event binding system</a>, which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the <code>(tap)=&quot;signIn()&quot;</code> syntax you just used tells Angular to run the <code>AppComponent</code> class’s <code>signIn()</code> function whenever the user taps the sign in button.</p>
+<p>To verify this binding works you can try tapping the sign in button now; you should see “hello” logged in your terminal or command prompt as is shown below:</p>
+<p><img src="images/chapter3/terminal-1.png" alt="Terminal showing the word hello logged"></p>
+<h3 id="data-binding">Data Binding</h3>
 <h3 id="services">Services</h3>
 <h3 id="routing">Routing</h3>
 

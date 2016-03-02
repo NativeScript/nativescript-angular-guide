@@ -300,11 +300,46 @@ NativeScript uses the `class` attribute for adding CSS class names to UI compone
 
 With these changes in place, you'll notice that the app looks halfway decent now, and also has a distinctly different look on iOS and Android:
 
-![login 1](http://docs.nativescript.org/img/cli-getting-started/chapter2/ios/3.png)
-![login 1](http://docs.nativescript.org/img/cli-getting-started/chapter2/android/3.png)
+![login 1](images/chapter2/ios/3.png)
+![login 1](images/chapter2/android/3.png)
 
 Feel free to take some time to play with the look of this app before moving on. When you're ready, let's move on and add an image to this login screen.
 
 ### Images
 
-TODO: Write this!
+In NativeScript you use the `<Image>` UI element and its `src` attribute to add images to your pages. The `src` attribute lets you specify your image in three ways. The first (and simplest) way is to point at the URL of an image:
+
+``` XML
+<Image src="https://www.nativescript.org/images/default-source/landingpages/logo.png"></Image>
+```
+
+The second way is to point at an image that lives within your app's `app` folder. For example if you have an image at `app/images/logo.png`, you can use it with:
+
+``` XML
+<Image src="~/images/logo.png"></Image>
+```
+
+The third way, and the one Groceries uses, is to use platform-specific image resources. Let's add an image to the login screen and then discuss exactly what's happening.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add a logo
+</h4>
+
+In `login.xml`, add the `<Image>` below as the first child of the existing `<StackLayout>` tag:
+
+``` XML
+<Image src="res://logo" stretch="none" horizontalAlignment="center"></Image>
+```
+
+<div class="exercise-end"></div>
+
+The `res://` syntax tells NativeScript to use a platform-specific resource, in this case an image. Platform-specific resources go in your app's `app/App_Resources` folder. If you look there you'll find a few different image files, several of which are named `logo.png`.
+
+Although more complex than putting an image directly in the `app` folder, using platform-specific images gives you more control over image display on different device dimensions. For example iOS lets you provide three different image files for devices with different pixel densities. As such you'll find logos named `logo.png`, `logo@2x.png`, and `logo@3x.png` in your `App_Resources/iOS` folder. For Android you'll find similar image files in `App_Resources/Android/drawable-hdpi` (for "high" dpi, or high dots-per-inch), `App_Resources/Android/drawable-mdpi` (for medium-dpi), and `App_Resources/Android/drawable-ldpi` (for low-dpi).
+
+Once these files are in place the NativeScript framework knows how to pick the correct file; all you have to do is reference the image using `res://` and its base file name—i.e. `res://logo`. Here's what your login screen should look like on iOS and Android:
+
+![login 4](images/chapter2/ios/4.png)
+![login 4](images/chapter2/android/4.png)
+
+At this point your UI looks good, but the app still doesn't actually do anything. Let's look at how you can use JavaScript to add some functionality.

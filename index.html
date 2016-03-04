@@ -93,9 +93,9 @@
 </code></pre><h3 id="start-your-app">Start your app</h3>
 <p>With the NativeScript CLI installed, it&#39;s time to start building your app. Normally, you would <a href="https://github.com/NativeScript/NativeScript-cli#create-project">use the <code>tns create</code> command to create an empty NativeScript application</a>. For this guide however, we&#39;ve scaffolded out a boilerplate project to act as a starting point for <a href="https://github.com/NativeScript/sample-Groceries">Groceries</a>.</p>
 <blockquote>
-<p><strong>NOTE</strong>: After completing this guide, if you’d like to start a new NativeScript and Angular 2 app—one that doesn’t clone Groceries—you can use the NativeScript CLI’s <code>tns create</code> command as such:
-<code>tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng</code></p>
-</blockquote>
+<p><strong>NOTE</strong>: After completing this guide, if you’d like to start a new NativeScript and Angular 2 app—one that doesn’t clone Groceries—you can use the NativeScript CLI’s <code>tns create</code> command as such:</p>
+<pre><code>tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng
+</code></pre></blockquote>
 <h4 class="exercise-start">
     <b>Exercise</b>: Get the Groceries starting point
 </h4>
@@ -484,7 +484,7 @@ Button {
 <p>Open <code>app/app.component.ts</code>, find the existing sign in button within your component’s <code>template</code> (<code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code>), and replace it with the following code:</p>
 <pre><code class="lang-JavaScript">&lt;Button text=&quot;Sign in&quot; (tap)=&quot;signIn()&quot;&gt;&lt;/Button&gt;
 </code></pre>
-<p>Next, in the same file, replace the current <code>AppComponent</code> definition with the one shown below:</p>
+<p>Next, in the same file, replace the current <code>AppComponent</code> declaration with the one shown below:</p>
 <pre><code class="lang-JavaScript">export class AppComponent {
   signIn() {
     console.log(&quot;hello&quot;);
@@ -493,10 +493,47 @@ Button {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The <code>(eventName)=&quot;functionName()&quot;</code> syntax is part of <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding">Angular 2’s event binding system</a>, which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the <code>(tap)=&quot;signIn()&quot;</code> syntax you just used tells Angular to run the <code>AppComponent</code> class’s <code>signIn()</code> function whenever the user taps the sign in button.</p>
-<p>To verify this binding works you can try tapping the sign in button now; you should see “hello” logged in your terminal or command prompt as is shown below:</p>
+<p>The <code>(eventName)=&quot;functionName()&quot;</code> syntax is part of <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding">Angular 2’s event binding system</a>, which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the <code>(tap)=&quot;signIn()&quot;</code> syntax tells Angular to run the <code>AppComponent</code> class’s <code>signIn()</code> function whenever the user taps the sign in button.</p>
+<p>To verify this binding works try tapping the sign in button in your app; you should see “hello” logged in your terminal or command prompt as such:</p>
 <p><img src="images/chapter3/terminal-1.png" alt="Terminal showing the word hello logged"></p>
+<blockquote>
+<p><strong>TIP</strong>:</p>
+<ul>
+<li>In NativeScript you can find a list of events available in the appropriate UI element’s API documentation. For instance, the <a href="http://docs.nativescript.org/ApiReference/ui/button/Button">button element’s API documentation</a> lists its <code>tap</code> event.</li>
+<li>The Angular 2 docs have a helpful <a href="https://angular.io/docs/ts/latest/guide/cheatsheet.html">cheat sheet</a> that includes the various syntaxes available when building templates. Don’t worry too much about knowing how all these work at the moment; we’ll progressively introduce the most common syntaxes in this guide.</li>
+</ul>
+</blockquote>
+<p>With the <code>tap</code> event in place, we now have a way of tying our UI elements in our template to TypeScript code. To make a login page actually work though, we need to introduce one other way of connecting a template to code: data binding.</p>
 <h3 id="data-binding">Data Binding</h3>
+<p>Angular 2 provides several ways to bind data in your TypeScript code to UI controls, and through the magic of NativeScript those same methods are available in your iOS and Android apps.</p>
+<p>The first of these is a way to bind UI attributes to properties defined in your TypeScript class. Let’s look at how it works.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Using Angular 2 attribute binding
+</h4>
+
+<p>In <code>app/app.component.ts</code> replace the current <code>AppComponent</code> declaration with the one shown below, which adds a new <code>email</code> property, and changes the <code>signIn()</code> method to display its value:</p>
+<pre><code class="lang-JavaScript">export class AppComponent {
+  email = &quot;nativescriptrocks@telerik.com&quot;;
+  signIn() {
+    alert(&quot;You’re using: &quot; + this.email);
+  }
+}
+</code></pre>
+<p>Next, find the first <code>&lt;TextField&gt;</code> in your component’s <code>template</code> and replace it with the code below, which adds a new <code>text</code> attribute:</p>
+<pre><code class="lang-JavaScript">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [text]=&quot;email&quot;
+  autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>The key thing to note here is the <code>[text]=&quot;email&quot;</code> attribute on the <code>&lt;TextField&gt;</code>. This is Angular 2’s syntax for attribute binding, and it allows you to bind the value of an attribute to a property in your TypeScript class. In this case, the <code>text</code> attribute of the <code>&lt;TextField&gt;</code>—which is roughly equivalent to a DOM <code>&lt;input&gt;</code>’s <code>value</code> attribute—is bound to the <code>AppComponent</code>’s <code>email</code> attribute. Therefore the app now has an email address prefilled when it loads:</p>
+<p><img src="images/chapter3/android/1.png" alt="Android with prefilled email">
+<img src="images/chapter3/ios/1.png" alt="iOS with prefilled email"></p>
+<blockquote>
+<p><strong>NOTE</strong>: It’s very easy to confuse Angular 2’s event binding syntax <code>(eventName)=&quot;functionName()&quot;</code> with its attribute binding syntax <code>[attributeName]=&quot;propertyName&quot;</code> 🤔. Don’t worry though; if you get them backwards, the problem is really easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.</p>
+</blockquote>
+<p>This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—and actually, it’s far easier to show this limitation in the current code.</p>
+<p>Head back to your app, change the text field value (type a few extra letters or something like that), and then tap the Sign In button. Because your <code>signIn()</code> function alerts the current value of your component’s <code>email</code> property—<code>alert(&quot;You’re using: &quot; + this.email)</code>—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.</p>
+<p><img src="images/chapter3/ios/2.png" alt="iOS with email address that doesn’t match"></p>
 <h3 id="services">Services</h3>
 <h3 id="routing">Routing</h3>
 

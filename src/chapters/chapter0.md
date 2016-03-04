@@ -2,7 +2,7 @@
 
 <img src="images/banner.png" class="banner-image" alt="NativeScript and Angular 2 logos">
 
-Welcome to the NativeScript & Angular 2 getting started guide. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.
+Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.
 
 > **WARNING 🚧**: This guide is being actively written and is not complete. If you find an error in the guide please report the problem at <https://github.com/tjvantoll/nativescript-angular-guide>. Pull requests are also welcome 😀
 

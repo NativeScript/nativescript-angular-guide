@@ -100,6 +100,24 @@ In `app/app.component.ts`, find the find the first `<TextField>`, and replace it
 
 At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. And that’s because the syntax actually is a shorthand for both an attribute binding and an event binding, or in code—`[text]="email" (emailChange)="email=$event"`, which binds a text field’s `text` attribute property to an `email` property, as well as adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
 
+And, if you again modify your app’s email address and click the Sign In button, you’ll see the updated value in the alert as expected:
+
+![iOS with email address that does match](images/chapter3/ios/3.png)
+
+At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
+
+Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
+
+### Structuring your app
+
+There are many reasons to segment your application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.
+
+Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.
+
+To see how this works in action let’s create a few files.
+
+
+
 ### Services
 
 ### Routing

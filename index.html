@@ -31,7 +31,7 @@
 <p><img src="images/banner.png" class="banner-image" alt="NativeScript and Angular 2 logos"></p>
 <p>Welcome to the NativeScript &amp; Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.</p>
 <blockquote>
-<p><strong>WARNING 🚧</strong>: This guide is being actively written and is not complete. If you find an error in the guide please report the problem at <a href="https://github.com/tjvantoll/nativescript-angular-guide">https://github.com/tjvantoll/nativescript-angular-guide</a>. Pull requests are also welcome 😀</p>
+<p><strong>WARNING 🚧</strong>: This guide is being actively written and is not complete. If you find an error in the guide please report the problem at <a href="https://github.com/tjvantoll/nativescript-angular-guide">https://github.com/tjvantoll/nativescript-angular-guide</a>. Pull requests are also welcome 😀.</p>
 </blockquote>
 <h3 id="what-is-nativescript-what-is-angular-2-">What is NativeScript? What is Angular 2?</h3>
 <p><a href="https://www.nativescript.org/">NativeScript</a>  is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no <a href="http://developer.telerik.com/featured/what-is-a-webview/">WebViews</a>—resulting in native-like performance and UX. Angular JS is one of the most popular open source JavaScript frameworks for application development.</p>
@@ -251,8 +251,8 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
 </code></pre><p>Here&#39;s what these various files and folders do:</p>
 <ul>
 <li><strong>App_Resources</strong>: This folder contains platform-specific resources such as icons, splash screens, and configuration files. The NativeScript CLI takes care of injecting these resources into the appropriate places in the <code>platforms</code> folder when you execute <code>tns run</code>.</li>
-<li><strong>pages</strong>: This folder, specific to the Groceries app, contains the code to build your app&#39;s pages. Each page is made up of a TypeScript file and an optional HTML file. The Groceries app starts with three TypeScript files for its three pages—a login page, a registration page, and a list page. In a more complex app you may wish to create a more detailed folder structure within <code>pages</code>, but for now, keeping all pages in the root simplifies our demo.</li>
-<li><strong>shared</strong>: This folder, also specific to the Groceries app, contains any files you need to share across pages in your app. In the Groceries app, you&#39;ll find a few service classes for talking to backend services, a few model objects, and a <code>config.ts</code> file used to share configuration variables like API keys.</li>
+<li><strong>pages</strong>: This folder, specific to the Groceries app, contains the code to build your app&#39;s pages. Each page is made up of a TypeScript file and an optional HTML file. The Groceries app starts with three TypeScript files for its three pages—a login page, a registration page, and a list page. In a more complex app you may wish to create a more detailed folder structure within <code>pages</code>, but for now, keeping all pages in the root keeps our demo simple.</li>
+<li><strong>shared</strong>: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes a few classes for talking to backend services, a few model objects, and a <code>config.ts</code> file used to share configuration variables like API keys. We’ll discuss the <code>shared</code> folder, as well as code sharing between native apps and web apps, in detail in section 3.2.</li>
 <li><strong>app.css</strong>: This file contains global styles for your app. We&#39;ll dig into app styling in <a href="#css">section 2.3</a>.</li>
 <li><strong>app.component.ts</strong>: This primary Angular component that drives your application. Eventually this file will handle routing and application-wide configuration, however for now the file has a simple hello world example that we’ll look at momentarily.</li>
 <li><strong>main.ts</strong>: The starting point of Angular 2 applications—web and native.</li>
@@ -551,6 +551,14 @@ Button {
 <div class="exercise-end"></div>
 
 <p>At first glance the <code>[(ngModel)]</code> syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. And that’s because the syntax actually is a shorthand for both an attribute binding and an event binding, or in code—<code>[text]=&quot;email&quot; (emailChange)=&quot;email=$event&quot;</code>, which binds a text field’s <code>text</code> attribute property to an <code>email</code> property, as well as adds a <code>change</code> event handler that updates the <code>email</code> property’s value whenever the user makes a change.</p>
+<p>And, if you again modify your app’s email address and click the Sign In button, you’ll see the updated value in the alert as expected:</p>
+<p><img src="images/chapter3/ios/3.png" alt="iOS with email address that does match"></p>
+<p>At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
+<p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
+<h3 id="structuring-your-app">Structuring your app</h3>
+<p>There are many reasons to segment your application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.</p>
+<p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.</p>
+<p>To see how this works in action let’s create a few files.</p>
 <h3 id="services">Services</h3>
 <h3 id="routing">Routing</h3>
 

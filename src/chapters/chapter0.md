@@ -44,7 +44,8 @@ This guide assumes that you have some basic knowledge of JavaScript, CSS, and yo
 * **JavaScript**: You should know basic JavaScript concepts, such as how functions, if statements, and loops work.
 * **CSS**: You should know how to write simple CSS selectors, and know how to apply CSS rules as name/value pairs.
 * **The terminal**: You should know how to open a terminal or command-line prompt on your development machine, how to change directories, and how to execute commands.
+* **A text editor or IDE**: You should know the basics of your text editor or IDE of choice. You can use any text editor to build NativeScript apps, however, for the best possible experience you may want to choose an editor with built-in TypeScript support such as [Visual Studio Code](https://code.visualstudio.com/).
 
-This guide will _not_, however, assume you have any knowledge of Angular 2 or TypeScript. When background Angular 2 or TypeScript expertise will help you understand a concept, this guide will link you to the appropriate places in the [Angular](https://angular.io/docs/ts/latest/) or [TypeScript](http://www.typescriptlang.org/Handbook) documentation.
+This guide will _not_ assume you have any knowledge of Angular 2 or TypeScript. When background Angular 2 or TypeScript expertise will help you understand a concept, this guide will link you to the appropriate places in the [Angular](https://angular.io/docs/ts/latest/) or [TypeScript](http://www.typescriptlang.org/Handbook) documentation.
 
 With that out of the way, let’s get started!

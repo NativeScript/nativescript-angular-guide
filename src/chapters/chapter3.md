@@ -63,7 +63,7 @@ export class AppComponent {
 
 Next, find the first `<TextField>` in your component’s `template` and replace it with the code below, which adds a new `text` attribute:
 
-``` JavaScript
+``` XML
 <TextField hint="Email Address" keyboardType="email" [text]="email"
   autocorrect="false" autocapitalizationType="none"></TextField>
 ```
@@ -83,7 +83,22 @@ Head back to your app, change the text field value (type a few extra letters or 
 
 ![iOS with email address that doesn’t match](images/chapter3/ios/2.png)
 
+To fix this, you need to switch to Angular 2’s two-way data binding syntax.
 
+<h4 class="exercise-start">
+    <b>Exercise</b>: Two-way data binding with Angular 2
+</h4>
+
+In `app/app.component.ts`, find the find the first `<TextField>`, and replace it with the `<TextField>` below, which introduces a new `[(ngModel)]` attribute:
+
+``` XML
+<TextField hint="Email Address" keyboardType="email" [(ngModel)]="email"
+  autocorrect="false" autocapitalizationType="none"></TextField>
+```
+
+<div class="exercise-end"></div>
+
+At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. And that’s because the syntax actually is a shorthand for both an attribute binding and an event binding, or in code—`[text]="email" (emailChange)="email=$event"`, which binds a text field’s `text` attribute property to an `email` property, as well as adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
 
 ### Services
 

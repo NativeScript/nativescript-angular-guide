@@ -116,7 +116,86 @@ Even if you have no plans to create an Angular 2 web app, separating out your co
 
 To see how this works in action let’s create a few files.
 
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add a model object
+</h4>
 
+The first thing we’ll do is add a model object to store user data. Open `app/user/user.service.ts` and paste in the following code:
+
+``` JavaScript
+export class User {
+  email: string;
+  password: string;
+}
+```
+
+This code defines a simple [TypeScript class](http://www.typescriptlang.org/Handbook#classes) that does nothing more than define two properties—`email` and `password`. Note the use of [TypeScript’s `export` keyword](http://www.typescriptlang.org/Handbook#modules-going-external), as we’ll see why that’s important momentarily.
+
+Next, open `app/app.component.ts`, and first add the following `import` to the top of the file:
+
+``` JavaScript
+import {User} from "./shared/user/user";
+```
+
+Here you import the `User` class that you just defined. Note the parallel between the `export` command used in the previous example and the `import` command used in the previous example. The reason the `User` class is available to import is because it was explicitly exported. You’ll see other examples of `import` and `export` as you go through this guide.
+
+Next, replace the existing `AppComponent` definition with the one below, which uses the `User` class you just imported.
+
+``` JavaScript
+export class AppComponent {
+  user: User;
+  constructor() {
+    this.user = new User();
+  }
+  signIn() {
+    alert("You’re using: " + this.user.email);
+  }
+}
+```
+
+Instead of storing data on the `AppComponent` directly, you’re now using the `User` model object, which is reusable outside of this page and even outside of this application. You also provide a TypeScript constructor, which is a function invoked when an instance of the `AppComponent` class is instantiated. In this app, Angular 2 instantiates an `AppComponent` for you with the call to `nativeScriptBootstrap(AppComponent)` done in `main.ts`. 
+
+Your final step is to use this new model object in your template. To do that, replace the existing two `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
+
+``` XML
+<TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
+  autocorrect="false" autocapitalizationType="none"></TextField>
+<TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
+```
+
+If you got lost during this section, here’s a copy-and-paste friendly version of the full `app.component.ts` you should have at this point:
+
+``` JavaScript
+import {Component} from "angular2/core";
+import {User} from "./shared/user/user";
+
+@Component({
+  selector: "my-app",
+  template: `
+    <StackLayout>
+      <Image src="res://logo" stretch="none" horizontalAlignment="center"></Image>
+
+      <TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
+        autocorrect="false" autocapitalizationType="none"></TextField>
+      <TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
+
+      <Button text="Sign in" (tap)="signIn()"></Button>
+      <Button text="Sign up for Groceries" class="link"></Button>
+    </StackLayout>
+  `
+})
+export class AppComponent {
+  user: User;
+  constructor() {
+    this.user = new User();
+  }
+  signIn() {
+    alert("You’re using: " + this.user.email);
+  }
+}
+```
+
+<div class="exercise-end"></div>
 
 ### Services
 

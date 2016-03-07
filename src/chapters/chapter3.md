@@ -120,7 +120,7 @@ To see how this works in action let’s create a few files.
     <b>Exercise</b>: Add a model object
 </h4>
 
-The first thing we’ll do is add a model object to store user data. Open `app/user/user.service.ts` and paste in the following code:
+The first thing we’ll do is add a model object to store user data. Open `app/user/user.ts` and paste in the following code:
 
 ``` JavaScript
 export class User {
@@ -197,6 +197,26 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
+With this setup you now have a `User` class that you can share across pages in your app and even across applications. But a model object that’s four simple lines of code isn’t all that exciting. Where this approach really pays off is when you’re able to share your business logic, and the code that hits your backend systems. In Angular 2 those classes are known as services. Let’s look at them next.
+
 ### Services
+
+A login screen isn’t all that useful if it doesn’t actually log users into anything. Therefore, our next task is to take the user’s email address and password, and send them to a backend endpoint to retrieve an authentication token we’ll use later in this guide. We’ll build this functionality as an Angular 2 service.
+
+For the purposes of this tutorial we prebuilt a handful of backend endpoints using [Telerik Backend Services](http://www.telerik.com/platform/backend-services), and we’ll be using those endpoints to make this app functional. Let’s see how they work.
+
+> **NOTE**: You don't have to use Telerik Backend Services to hit your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add an Angular 2 service
+</h4>
+
+Open `app/shared/user/user.service.ts` and paste in the following code:
+
+``` JavaScript
+
+```
+
+<div class="exercise-end"></div>
 
 ### Routing

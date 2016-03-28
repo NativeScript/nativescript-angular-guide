@@ -8,11 +8,11 @@ Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hand
 
 ### What is NativeScript? What is Angular 2?
 
-[NativeScript](https://www.nativescript.org/)  is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no [WebViews](http://developer.telerik.com/featured/what-is-a-webview/)—resulting in native-like performance and UX. Angular JS is one of the most popular open source JavaScript frameworks for application development.
+[NativeScript](https://www.nativescript.org/)  is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no [WebViews](http://developer.telerik.com/featured/what-is-a-webview/)—resulting in native-like performance and UX. [Angular JS](https://angularjs.org/) is one of the most popular open source JavaScript frameworks for application development.
 
 The latest version of Angular, [Angular 2](https://angular.io/), makes it possible to use Angular outside of a web browser, and developers at [Telerik](http://www.telerik.com/) (the company that created and maintains NativeScript) [have been working closely with developers at Google](https://docs.google.com/document/d/1J6fZcVbVa6uONVCJIox2A3Jn5TWgspLufmryfA1OXGk/edit#heading=h.trgonlvb0z3j) to make Angular 2 in NativeScript a reality.
 
-The result is a framework that allows you to build mobile apps using the same framework—and in some cases the same code—that you use to build Angular 2 web apps, with the performance you’d expect from native code. Let’s look at how it all works by building an app.
+The result is a software architecture that allows you to build mobile apps using the same framework—and in some cases the same code—that you use to build Angular 2 web apps, with the performance you’d expect from native code. Let’s look at how it all works by building an app.
 
 > **WARNING**: Although NativeScript itself is a production-ready framework that drives [many apps in the app stores today](https://www.nativescript.org/showcases), NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on https://github.com/NativeScript/nativescript-angular. If you’re looking for a guide on using the production-ready flavor of NativeScript, head to the [official Getting Started Guide](http://docs.nativescript.org/start/getting-started).
 

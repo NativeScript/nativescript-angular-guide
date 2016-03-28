@@ -13,6 +13,8 @@ To keep things simple, let's start by looking at the outer structure of the Groc
 └── sample-Groceries
     ├── app
     │   └── ...
+    ├── hooks
+    ├── lib
     ├── node_modules
     │   ├── angular2
     │   ├── nativescript-angular
@@ -22,6 +24,7 @@ To keep things simple, let's start by looking at the outer structure of the Groc
     │   ├── android
     │   └── ios
     ├── package.json
+    ├── references.d.ts
     └── tsconfig.json
 
 ```
@@ -29,12 +32,15 @@ To keep things simple, let's start by looking at the outer structure of the Groc
 Here's what these various files and folders do:
 
 - **app**: This folder contains all the development resources you need to build your app. You'll be spending most of your time editing the files in here.
+- **hooks**: This folder contains a series of files that manage the lifecycles of Angular components.
+- **lib**: This folder contains libraries offering third-party functionality; in this case, the TelerikUI.framework required at the end of this tutorial.
 - **node_modules**: This folder contains your app's npm module dependencies, including Angular 2, TypeScript, and the other modules NativeScript needs to build your app.
 - **node_modules/angular2**: This folder contains the Angular 2 source code. NativeScript does not alter the core Angular 2 source code in any way, instead, NativeScript builds on top of Angular 2 with the nativescript-angular npm module.
 - **node_modules/nativescript-angular**: This folder contains the module that integrates NativeScript-specific functionality into Angular 2. The source code for this module lives at <https://github.com/NativeScript/nativescript-angular>.
 - **node_modules/tns-core-modules**: This folder contains your app's NativeScript modules, which are a series of NativeScript-provided JavaScript modules you'll use to build your app. Each module contains the platform-specific code needed to implement some feature—the camera, http calls, the file system, and so forth—exposed through a platform-agnostic API (e.g. `camera.takePicture()`). We'll look at some examples in [chapter 4](#chapter4). The source code for these modules lives at <https://github.com/NativeScript/nativescript>.
 - **platforms**: This folder contains the platform-specific code NativeScript needs to build native iOS and Android apps. For example in the `android` folder you'll find things like your project's `AndroidManifest.xml` and .apk executable files. Similarly, the `ios` folder contains the Groceries' Xcode project and .ipa executables. Note, users on Windows machines will not have an `ios` folder.
 - **package.json**: This file contains your app's configuration details, such as your app id, the version of NativeScript you're using, and also which npm modules your app uses. We'll take a closer look at how to use this file when we talk about using npm modules in [chapter 5](#plugins-and-npm-modules).
+- **references.d.ts**: This file is a helper utility for typescript to help with autocompletion and compilation.
 - **tsconfig.json**: This file contains your app’s TypeScript configuration. Unless you have existing TypeScript expertise, you’ll probably want to leave this file alone for now. If you do have existing experience you may want to tweak these values to suit your personal preferences, however, note that the `"experimentalDecorators"` and `"emitDecoratorMetadata"` flags are essential to making NativeScript and Angular 2 work, so don’t remove those. You can refer to the official TypeScript wiki for [detailed documentation on what you can do in a `tsconfig.json` file](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json).
 
 The NativeScript CLI manages the `platforms` folder for you as you develop and run your app; therefore, it's a best practice to treat the `platforms` folder as generated code. The Groceries app includes the `platforms` folder in its [`.gitignore`](https://github.com/NativeScript/sample-Groceries/blob/master/.gitignore) to exclude its files from source control.
@@ -49,9 +55,13 @@ Next, let's dig into the `app` folder, as that's where you'll be spending the ma
     │   │   ├── Android
     │   │   └── iOS
     │   ├── pages
-    │   │   ├── login.component.ts
+    │   │   ├── list
+    │   │   │ ├── list.html
+    │   │   │ └── ...
     │   │   └── ...
     │   ├── shared
+    │   │   └── ...
+    │   ├── utils
     │   │   └── ...
     │   ├── app.css
     │   ├── app.component.ts
@@ -62,13 +72,13 @@ Next, let's dig into the `app` folder, as that's where you'll be spending the ma
 Here's what these various files and folders do:
 
 - **App_Resources**: This folder contains platform-specific resources such as icons, splash screens, and configuration files. The NativeScript CLI takes care of injecting these resources into the appropriate places in the `platforms` folder when you execute `tns run`.
-- **pages**: This folder, specific to the Groceries app, contains the code to build your app's pages. Each page is made up of a TypeScript file and an optional HTML file. The Groceries app starts with three TypeScript files for its three pages—a login page, a registration page, and a list page. In a more complex app you may wish to create a more detailed folder structure within `pages`, but for now, keeping all pages in the root keeps our demo simple.
-- **shared**: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes a few classes for talking to backend services, a few model objects, and a `config.ts` file used to share configuration variables like API keys. We’ll discuss the `shared` folder, as well as code sharing between native apps and web apps, in detail in section 3.2.
+- **pages**: This folder, specific to the Groceries app, contains the code to build your app's pages. Each page is made up of a TypeScript file and an optional HTML file. The Groceries app starts with three TypeScript files for its three pages—a login page, a registration page, and a list page, kept in their respective folders.
+- **shared**: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes folders containing files with a few classes for talking to backend services, a few model objects, and a `config.ts` file used to share configuration variables like API keys. We’ll discuss the `shared` folder, as well as code sharing between native apps and web apps, in detail in section 3.2.
 - **app.css**: This file contains global styles for your app. We'll dig into app styling in [section 2.3](#css).
 - **app.component.ts**: This primary Angular component that drives your application. Eventually this file will handle routing and application-wide configuration, however for now the file has a simple hello world example that we’ll look at momentarily.
 - **main.ts**: The starting point of Angular 2 applications—web and native.
 
-To get a sense of a NativeScript app actually starts up, let’s dig in to the first few files.
+To get a sense of a NativeScript app actually starts up, let’s explore the first few files.
 
 ### Starting up
 
@@ -173,7 +183,7 @@ NativeScript provides several different layout containers that allow you to plac
 - The [Stack Layout](http://docs.nativescript.org/ApiReference/ui/layouts/stack-layout/HOW-TO.html) lets you stack child UI elements either vertically or horizontally.
 - The [Wrap Layout](http://docs.nativescript.org/ApiReference/ui/layouts/wrap-layout/HOW-TO.html) lets child UI elements flow from one row or column to the next when space is filled.
 
-For your login screen, all you need is a simple `<stack-layout>` to stack the UI elements on top of each other. In later sections, you'll use some of the more advanced layouts.
+For your login screen, all you need is a simple `<StackLayout>` to stack the UI elements on top of each other. In later sections, you'll use some of the more advanced layouts.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a stack layout to the login screen
@@ -262,9 +272,9 @@ Add the following as the first line of your app's `app.css` file:
 ``` CSS
 @import { url('~/platform.css') };
 ```
-> **WARNING**: NativeScript is consistent with browser implementations, in that `@import` statements must precede all other CSS rules in a file.
+> **WARNING**: NativeScript is consistent with browser implementations in that `@import` statements must precede all other CSS rules in a file.
 
-Next, add a `class="link"` attribute to the sign up button in `login.xml`. The button's markup should look like this:
+Next, add a `class="link"` attribute to the sign up button in `login/login.html`. The button's markup should look like this:
 
 ``` XML
 <Button text="Sign up for Groceries" class="link" />

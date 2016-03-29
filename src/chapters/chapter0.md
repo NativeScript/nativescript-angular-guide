@@ -1,6 +1,6 @@
 ## Building Apps with NativeScript and Angular 2
 
-<img src="images/banner.png" class="banner-image" alt="NativeScript and Angular 2 logos">
+<img src="images/banner.png" class="banner-image plain" alt="NativeScript and Angular 2 logos">
 
 Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.
 
@@ -27,9 +27,9 @@ This guide will walk you through building [Groceries](https://github.com/NativeS
 
 If you follow along to the end, here's what the finished app will look like on iOS:
 
-![login](images/chapter0/ios/1.png)
-![register](images/chapter0/ios/2.png)
-![list](images/chapter0/ios/3.png)
+![](images/chapter0/ios/1.png)
+![](images/chapter0/ios/2.png)
+![](images/chapter0/ios/3.png)
 
 And here's what the app will look like on Android:
 

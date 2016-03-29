@@ -28,7 +28,7 @@
 		<div id="book">
 			<div class="chapter">
 				<h2 id="building-apps-with-nativescript-and-angular-2">Building Apps with NativeScript and Angular 2</h2>
-<p><img src="images/banner.png" class="banner-image" alt="NativeScript and Angular 2 logos"></p>
+<p><img src="images/banner.png" class="banner-image plain" alt="NativeScript and Angular 2 logos"></p>
 <p>Welcome to the NativeScript &amp; Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.</p>
 <blockquote>
 <p><strong>WARNING 🚧</strong>: This guide is being actively written and is not complete. If you find an error in the guide please report the problem at <a href="https://github.com/tjvantoll/nativescript-angular-guide">https://github.com/tjvantoll/nativescript-angular-guide</a>. Pull requests are also welcome 😀.</p>
@@ -49,9 +49,9 @@
 <li>Runs cross-platform (iOS and Android).</li>
 </ul>
 <p>If you follow along to the end, here&#39;s what the finished app will look like on iOS:</p>
-<p><img src="images/chapter0/ios/1.png" alt="login">
-<img src="images/chapter0/ios/2.png" alt="register">
-<img src="images/chapter0/ios/3.png" alt="list"></p>
+<p><img src="images/chapter0/ios/1.png" alt="">
+<img src="images/chapter0/ios/2.png" alt="">
+<img src="images/chapter0/ios/3.png" alt=""></p>
 <p>And here&#39;s what the app will look like on Android:</p>
 <p><img src="images/chapter0/android/1.png" alt="">
 <img src="images/chapter0/android/2.png" alt="">
@@ -278,7 +278,7 @@ nativeScriptBootstrap(AppComponent);
 <blockquote>
 <p><strong>TIP</strong>: If you’re curious about what <code>nativescriptBootstrap()</code> function actually has to do to startup native iOS and Android apps, remember that all this code is open source for you to explore at any time. The <code>nativescriptBootstrap()</code> function specifically is defined in an <a href="https://github.com/NativeScript/nativescript-angular/blob/master/src/nativescript-angular/application.ts"><code>application.ts</code> file</a> in the <a href="https://github.com/NativeScript/nativescript-angular">NativeScript/nativescript-angular repository</a> on GitHub.</p>
 </blockquote>
-<p>The bootstrap function, regardless of whether it’s for the web or for native apps, needs to know which Angular component to start the application with. In this case, you’re passing to control to a <code>AppComponent</code> component defined in <code>app.component.ts</code>.</p>
+<p>The bootstrap function, regardless of whether it’s for the web or for native apps, needs to know which Angular component to start the application with. In this case, you’re passing control to a <code>AppComponent</code> component defined in <code>app.component.ts</code>.</p>
 <blockquote>
 <p><strong>TIP</strong>: In NativeScript we follow Angular 2’s own convention of naming component files with a <code>.component.ts</code> suffix.</p>
 </blockquote>
@@ -292,7 +292,7 @@ nativeScriptBootstrap(AppComponent);
 export class AppComponent {}
 </code></pre>
 <p>This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.</p>
-<p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
+<p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
 <p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;Label text=&quot;hello NativeScript&quot;&gt;&lt;/Label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
 <p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI elements work.</p>
 <blockquote>
@@ -301,7 +301,7 @@ export class AppComponent {}
 <h3 id="adding-ui-elements">Adding UI elements</h3>
 <p>The primary difference between building an Angular 2 app for the web and an Angular 2 app with NativeScript is in the UI elements that you use. NativeScript apps do not use a browser and do not have a DOM; therefore, elements like <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> simply do not work.</p>
 <p>No worries though, as NativeScript provides an <a href="http://docs.nativescript.org/ui/ui-views">extensive suite of UI elements</a>, each of which are implemented with native iOS and Android controls. For instance, the <a href="http://docs.nativescript.org/ui/ui-views#label"><code>&lt;label&gt;</code> control</a> our previous example used is actually rendered as a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/"><code>UILabel</code></a> on iOS and an <a href="http://developer.android.com/reference/android/widget/TextView.html"><code>android.widget.TextView</code></a> on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type <code>&lt;label&gt;</code> and let NativeScript handle the rendering details.</p>
-<p>Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current <code>&lt;Label&gt;</code> with something that resembles your typical login screen in a mobile app.</p>
+<p>Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current <code>&lt;Label&gt;</code> with something that resembles a typical login screen in a mobile app.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add UI elements to <code>app.component.ts</code>
 </h4>
@@ -342,7 +342,7 @@ export class AppComponent {}
 <p>After your app updates with this change, you may expect to see a polished login screen, but instead you will see a single <code>&lt;Button&gt;</code> element on the screen:</p>
 <p><img src="images/chapter2/ios/1.png" alt="login 1">
 <img src="images/chapter2/android/1.png" alt="login 1"></p>
-<p>In NativeScript whenever you use more than one UI element, you need to tell NativeScript how to arrange those elements on the screen. Since you’re not doing that currently, NativeScript is incorrectly assuming you want the last element—the <code>&lt;Button&gt;</code>—to take up the whole screen. To arrange these elements, let’s move onto the NativeScript feature for aligning elements on the screen: NativeScript layouts.</p>
+<p>What went wrong? In NativeScript whenever you use more than one UI element, you need to tell NativeScript how to arrange those elements on the screen. Since you’re not doing that currently, NativeScript is incorrectly assuming you want the last element—the <code>&lt;Button&gt;</code>—to take up the whole screen. To arrange these elements, let’s move onto the NativeScript feature for aligning elements on the screen: NativeScript layouts.</p>
 <blockquote>
 <p><strong>TIP</strong>: The NativeScript docs include a <a href="http://docs.nativescript.org/ui-with-xml">full list of the UI components and attributes</a> with which you can build your apps. You can even <a href="http://docs.nativescript.org/ui-with-xml#custom-components">build your own, custom UI components</a>.</p>
 </blockquote>
@@ -355,7 +355,7 @@ export class AppComponent {}
 <li>The <a href="http://docs.nativescript.org/ApiReference/ui/layouts/stack-layout/HOW-TO.html">Stack Layout</a> lets you stack child UI elements either vertically or horizontally.</li>
 <li>The <a href="http://docs.nativescript.org/ApiReference/ui/layouts/wrap-layout/HOW-TO.html">Wrap Layout</a> lets child UI elements flow from one row or column to the next when space is filled.</li>
 </ul>
-<p>For your login screen, all you need is a simple <code>&lt;StackLayout&gt;</code> to stack the UI elements on top of each other. In later sections, you&#39;ll use some of the more advanced layouts.</p>
+<p>For your login screen, all you need is a simple <code>&lt;StackLayout&gt;</code> for stacking the UI elements on top of each other. In later sections, you&#39;ll use some of the more advanced layouts.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a stack layout to the login screen
 </h4>
@@ -379,8 +379,8 @@ export class AppComponent {}
 
 <p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> elements you used in the previous section. Here, the <code>orientation=&quot;vertical&quot;</code> attribute tells the stack layout to arrange its child elements vertically.</p>
 <p>After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
-<p><img src="http://docs.nativescript.org/img/cli-getting-started/chapter2/ios/2.png" alt="login 2">
-<img src="http://docs.nativescript.org/img/cli-getting-started/chapter2/android/2.png" alt="login 2"></p>
+<p><img src="images/chapter2/ios/2.png" alt="login 2">
+<img src="images/chapter2/android/2.png" alt="login 2"></p>
 <p>Although the UI elements are in the correct order, they could use some spacing and color to make the app look a bit nicer. To do that let&#39;s look at another NativeScript feature: CSS.</p>
 <blockquote>
 <p><strong>TIP</strong>:</p>

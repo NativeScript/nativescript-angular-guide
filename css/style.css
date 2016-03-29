@@ -688,6 +688,7 @@ ol li, ul li {
 
 .chapter img:not(.plain) {
   border: 1px solid black;
+  height: 300px;
   margin-right: 0.2rem; }
 
 h5, h6 {

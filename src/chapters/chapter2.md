@@ -270,24 +270,74 @@ TextField {
 }
 ```
 
+> **NOTE**: We’ll leave the `platform.android.css` file empty as we have no Android-specific changes to make yet.
+
 <div class="exercise-end"></div>
 
 NativeScript supports CSS's `@import` statement for importing one CSS file into another. So this new line of code imports the CSS rules from `platform.css` into `app.css`. But, you might have noticed that Groceries does not have a file named `platform.css`—only `app/platform.android.css` and `app/platform.ios.css` exist. What's going on here?
 
 <a id="platform-specific-files"></a>When you execute `tns run`, or `tns livesync`, the NativeScript CLI takes your code from the `app` folder and places it in the native projects located in the `platforms/ios` and `platforms/android` folders. Here the naming convention comes in: while moving files, the CLI intelligently selects `.android.*` and `.ios.*` files. To give a specific example, the CLI moves `platform.ios.css` into `platforms/ios` and renames it to `platform.css`; similarly, the CLI moves `platform.android.css` into `platforms/android`, and again renames it to `platform.css`. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it's supported for any type of file in NativeScript—not just CSS files. You'll see a few more examples of this convention later in this guide.
 
-> **Note**: The `platform.android.css` file is currently empty as we have no Android-specific changes to make yet. We’ll make some Android-specific tweaks later in the guide.
-
-With these changes in place, you'll notice that the app has a bit more spacing, and also has a distinctly different look on iOS and Android:
+With these changes in place, you'll notice that the app has a bit more spacing, and also that the text fields have borders on iOS but that Android:
 
 ![login 3](images/chapter2/ios/3.png)
 ![login 3](images/chapter2/android/3.png)
 
-Despite our changes, the app still doesn’t look great, and that’s because we’re going to apply another batch of styles at the component level.
+Despite our changes the app still looks pretty ugly, and that’s because we’re going to apply another batch of styles at the component level. Let’s look at how that works.
 
 ### Component-specific CSS
 
-TODO: Write this!
+Much like on the web, sometimes in your NativeScript apps you want to write CSS rules that apply to your entire application, and sometimes you want to write CSS rules that apply to a specific portion of the interface. In the previous section you saw how to use NativeScript’s `app.css` file to write global rules, and in this section you’ll learn how to use a component’s `styleUrls` property to apply rules that are scoped to individual components.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add component-specific CSS
+</h4>
+
+Open your app’s `app/app.component.ts` file and add a `styleUrls` property such that that full `@Component` declaration now looks like this:
+
+``` JavaScript
+@Component({
+  selector: "my-app",
+  template: `
+    <StackLayout>
+      <TextField hint="Email Address" keyboardType="email"
+        autocorrect="false" autocapitalizationType="none"></TextField>
+      <TextField hint="Password" secure="true"></TextField>
+
+      <Button text="Sign in"></Button>
+      <Button text="Sign up for Groceries"></Button>
+    </StackLayout>
+  `,
+  styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
+})
+```
+
+<div class="exercise-end"></div>
+
+In Angular 2, the `stylesUrl` points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, `login-common.css`, and `login.css`.
+
+Why two files? Much like you divided your global files into `app.css`, `platform.ios.css`, and `platform.android.css`, this structure gives you a similar ability to separate common login styling in `login-common.css`, iOS-specific login styling `login.ios.css`, and Android-specific login styling in `login.android.css`. Before we see what your app looks like now, there’s one small change you need to make. If you open `app/pages/login/login-common.css` you’ll see the final selector used is `#submit-button`. Much like using CSS on the web, in NativeScript you can both `id` and `class` attributes to target specific user interface components.
+
+Let’s see how it works by adding an `id` to your app’s “Sign In” button.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add an `id` attribute
+</h4>
+
+Open your app’s `app/app.component.ts` file, find `<Button text="Sign in"></Button>` in your component’s `template`, and replace it with the code below:
+
+``` XML
+<Button text="Sign in" id="submit-button"></Button>
+```
+
+<div class="exercise-end"></div>
+
+As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply the rules globally for both platforms, for iOS specifically, or for Android specifically. And you can also apply rules at the component level. With this last `id` change in place your app is starting to look a little nicer:
+
+![login 4](images/chapter2/ios/4.png)
+![login 4](images/chapter2/android/4.png)
+
+To continue polishing the visuals of this login screen, let’s look at how we can add an image of this app’s logo.
 
 ### Images
 

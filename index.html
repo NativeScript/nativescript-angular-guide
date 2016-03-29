@@ -428,19 +428,57 @@ TextField {
   border-color: black;
 }
 </code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: We’ll leave the <code>platform.android.css</code> file empty as we have no Android-specific changes to make yet.</p>
+</blockquote>
 <div class="exercise-end"></div>
 
 <p>NativeScript supports CSS&#39;s <code>@import</code> statement for importing one CSS file into another. So this new line of code imports the CSS rules from <code>platform.css</code> into <code>app.css</code>. But, you might have noticed that Groceries does not have a file named <code>platform.css</code>—only <code>app/platform.android.css</code> and <code>app/platform.ios.css</code> exist. What&#39;s going on here?</p>
 <p><a id="platform-specific-files"></a>When you execute <code>tns run</code>, or <code>tns livesync</code>, the NativeScript CLI takes your code from the <code>app</code> folder and places it in the native projects located in the <code>platforms/ios</code> and <code>platforms/android</code> folders. Here the naming convention comes in: while moving files, the CLI intelligently selects <code>.android.*</code> and <code>.ios.*</code> files. To give a specific example, the CLI moves <code>platform.ios.css</code> into <code>platforms/ios</code> and renames it to <code>platform.css</code>; similarly, the CLI moves <code>platform.android.css</code> into <code>platforms/android</code>, and again renames it to <code>platform.css</code>. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it&#39;s supported for any type of file in NativeScript—not just CSS files. You&#39;ll see a few more examples of this convention later in this guide.</p>
-<blockquote>
-<p><strong>Note</strong>: The <code>platform.android.css</code> file is currently empty as we have no Android-specific changes to make yet. We’ll make some Android-specific tweaks later in the guide.</p>
-</blockquote>
-<p>With these changes in place, you&#39;ll notice that the app has a bit more spacing, and also has a distinctly different look on iOS and Android:</p>
+<p>With these changes in place, you&#39;ll notice that the app has a bit more spacing, and also that the text fields have borders on iOS but that Android:</p>
 <p><img src="images/chapter2/ios/3.png" alt="login 3">
 <img src="images/chapter2/android/3.png" alt="login 3"></p>
-<p>Despite our changes, the app still doesn’t look great, and that’s because we’re going to apply another batch of styles at the component level.</p>
+<p>Despite our changes the app still looks pretty ugly, and that’s because we’re going to apply another batch of styles at the component level. Let’s look at how that works.</p>
 <h3 id="component-specific-css">Component-specific CSS</h3>
-<p>TODO: Write this!</p>
+<p>Much like on the web, sometimes in your NativeScript apps you want to write CSS rules that apply to your entire application, and sometimes you want to write CSS rules that apply to a specific portion of the interface. In the previous section you saw how to use NativeScript’s <code>app.css</code> file to write global rules, and in this section you’ll learn how to use a component’s <code>styleUrls</code> property to apply rules that are scoped to individual components.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add component-specific CSS
+</h4>
+
+<p>Open your app’s <code>app/app.component.ts</code> file and add a <code>styleUrls</code> property such that that full <code>@Component</code> declaration now looks like this:</p>
+<pre><code class="lang-JavaScript">@Component({
+  selector: &quot;my-app&quot;,
+  template: `
+    &lt;StackLayout&gt;
+      &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
+        autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
+      &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+
+      &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
+      &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
+    &lt;/StackLayout&gt;
+  `,
+  styleUrls: [&quot;pages/login/login-common.css&quot;, &quot;pages/login/login.css&quot;]
+})
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>In Angular 2, the <code>stylesUrl</code> points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code>, and <code>login.css</code>.</p>
+<p>Why two files? Much like you divided your global files into <code>app.css</code>, <code>platform.ios.css</code>, and <code>platform.android.css</code>, this structure gives you a similar ability to separate common login styling in <code>login-common.css</code>, iOS-specific login styling <code>login.ios.css</code>, and Android-specific login styling in <code>login.android.css</code>. Before we see what your app looks like now, there’s one small change you need to make. If you open <code>app/pages/login/login-common.css</code> you’ll see the final selector used is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface components.</p>
+<p>Let’s see how it works by adding an <code>id</code> to your app’s “Sign In” button.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Add an <code>id</code> attribute
+</h4>
+
+<p>Open your app’s <code>app/app.component.ts</code> file, find <code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code> in your component’s <code>template</code>, and replace it with the code below:</p>
+<pre><code class="lang-XML">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot;&gt;&lt;/Button&gt;
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply the rules globally for both platforms, for iOS specifically, or for Android specifically. And you can also apply rules at the component level. With this last <code>id</code> change in place your app is starting to look a little nicer:</p>
+<p><img src="images/chapter2/ios/4.png" alt="login 4">
+<img src="images/chapter2/android/4.png" alt="login 4"></p>
+<p>To continue polishing the visuals of this login screen, let’s look at how we can add an image of this app’s logo.</p>
 <h3 id="images">Images</h3>
 <p>In NativeScript you use the <code>&lt;Image&gt;</code> UI element and its <code>src</code> attribute to add images to your pages. The <code>src</code> attribute lets you specify your image in three ways. The first (and simplest) way is to point at the URL of an image:</p>
 <pre><code class="lang-XML">&lt;Image src=&quot;https://www.nativescript.org/images/default-source/landingpages/logo.png&quot;&gt;&lt;/Image&gt;
@@ -547,7 +585,7 @@ TextField {
 <h3 id="structuring-your-app">Structuring your app</h3>
 <p>There are many reasons to segment your application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.</p>
 <p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.</p>
-<p>To see how this works in action let’s create a few files.</p>
+<p>To see how this works in action let’s edit some files in the <code>/shared</code> folder and set them up to be imported.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a model object
 </h4>

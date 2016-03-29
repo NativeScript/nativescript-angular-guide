@@ -114,7 +114,7 @@ There are many reasons to segment your application into modular units, and you c
 
 Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.
 
-To see how this works in action let’s create a few files.
+To see how this works in action let’s edit some files in the `/shared` folder and set them up to be imported.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a model object

@@ -389,12 +389,11 @@ export class AppComponent {}
 <li>Check out Jen Looper&#39;s article on <a href="https://www.nativescript.org/blog/demystifying-nativescript-layouts">demystifying NativeScript layouts</a> for a more thorough look at NativeScript layouts in action.</li>
 </ul>
 </blockquote>
-<h3 id="css">CSS</h3>
-<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a> (<code>app.css</code>), component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>.</p>
+<h3 id="global-css">Global CSS</h3>
+<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a> (<code>app.css</code>), component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
 <blockquote>
-<p><strong>TIP</strong>: Although inline styles are great for quick testing—e.g. <code>&lt;StackLayout style=&quot;background-color: green;&quot;&gt;</code> you should avoid them in general because the <code>style</code> attributes tend to clutter up your templates, especially if you need to apply multiple rules.</p>
+<p><strong>TIP</strong>: Although inline styles are great for quick testing—e.g. <code>&lt;StackLayout style=&quot;background-color: green;&quot;&gt;</code>—you should avoid them in general because the <code>style</code> attributes tend to clutter up your templates, especially if you need to apply multiple rules.</p>
 </blockquote>
-<p>Let&#39;s start by adding a few application-wide CSS rules.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Create global styles
 </h4>
@@ -402,65 +401,46 @@ export class AppComponent {}
 <p>Open your app’s <code>app/app.css</code> file and paste in the following code:</p>
 <pre><code class="lang-CSS">Page {
   background-color: white;
-  font-size: 17;
+  font-size: 15;
 }
 TextField {
-  margin: 10;
   padding: 10;
-}
-Image {
-  margin-top: 20;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 80;
-}
-Button {
-  margin: 10;
-  padding: 10;
+  font-size: 13;
 }
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select four UI components (Page, TextField, Image, and Button) by their tag name, and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="http://docs.nativescript.org/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
-<p>Let&#39;s make one more change. Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
+<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="http://docs.nativescript.org/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
+<p>Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add platform-specific CSS
 </h4>
 
-<p>Add the following as the first line of your app&#39;s <code>app.css</code> file:</p>
-<pre><code class="lang-CSS">@import { url(&#39;~/platform.css&#39;) };
+<p>Add the following as the first line of your app&#39;s <code>app/app.css</code> file:</p>
+<pre><code class="lang-CSS">@import url(&quot;~/platform.css&quot;);
 </code></pre>
 <blockquote>
 <p><strong>WARNING</strong>: NativeScript is consistent with browser implementations in that <code>@import</code> statements must precede all other CSS rules in a file.</p>
 </blockquote>
-<p>Next, add a <code>class=&quot;link&quot;</code> attribute to the sign up button in <code>login/login.html</code>. The button&#39;s markup should look like this:</p>
-<pre><code class="lang-XML">&lt;Button text=&quot;Sign up for Groceries&quot; class=&quot;link&quot; /&gt;
+<p>Next, open your app’s <code>app/platform.ios.css</code> file and paste in the following code:</p>
+<pre><code class="lang-CSS">TextField {
+  border-width: 1;
+  border-color: black;
+}
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Let&#39;s break down what just happened. First, NativeScript supports CSS&#39;s <code>@import</code> statement for importing one CSS file into another. So this new line of code imports the CSS rules from <code>platform.css</code> into <code>app.css</code>. But, you might have noticed that Groceries does not have a file named <code>platform.css</code>—only <code>app/platform.android.css</code> and <code>app/platform.ios.css</code> exist. What&#39;s going on here?</p>
+<p>NativeScript supports CSS&#39;s <code>@import</code> statement for importing one CSS file into another. So this new line of code imports the CSS rules from <code>platform.css</code> into <code>app.css</code>. But, you might have noticed that Groceries does not have a file named <code>platform.css</code>—only <code>app/platform.android.css</code> and <code>app/platform.ios.css</code> exist. What&#39;s going on here?</p>
 <p><a id="platform-specific-files"></a>When you execute <code>tns run</code>, or <code>tns livesync</code>, the NativeScript CLI takes your code from the <code>app</code> folder and places it in the native projects located in the <code>platforms/ios</code> and <code>platforms/android</code> folders. Here the naming convention comes in: while moving files, the CLI intelligently selects <code>.android.*</code> and <code>.ios.*</code> files. To give a specific example, the CLI moves <code>platform.ios.css</code> into <code>platforms/ios</code> and renames it to <code>platform.css</code>; similarly, the CLI moves <code>platform.android.css</code> into <code>platforms/android</code>, and again renames it to <code>platform.css</code>. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it&#39;s supported for any type of file in NativeScript—not just CSS files. You&#39;ll see a few more examples of this convention later in this guide.</p>
-<p>There&#39;s one other change here we need to discuss, and that&#39;s the <code>class</code> attribute you added to this button:</p>
-<pre><code class="lang-XML">&lt;Button text=&quot;Sign up for Groceries&quot; class=&quot;link&quot; /&gt;
-</code></pre>
-<p>NativeScript uses the <code>class</code> attribute for adding CSS class names to UI components. The class name is used to give the sign up button a slightly different look than the sign in button. You can find the CSS rules associated with this class name in <code>platform.ios.css</code> and <code>platform.android.css</code>:</p>
-<pre><code class="lang-CSS">/* From platform.android.css */
-.link {
-  background-color: transparent;
-}
-
-/* From platform.ios.css */
-.link {
-  border-width: 0;
-}
-</code></pre>
 <blockquote>
-<p><strong>TIP</strong>: NativeScript also supports selecting elements by the <code>id</code> attribute. Refer to the docs for <a href="/styling#supported-selectors">a full list of the supported selectors</a>.</p>
+<p><strong>Note</strong>: The <code>platform.android.css</code> file is currently empty as we have no Android-specific changes to make yet. We’ll make some Android-specific tweaks later in the guide.</p>
 </blockquote>
-<p>With these changes in place, you&#39;ll notice that the app looks halfway decent now, and also has a distinctly different look on iOS and Android:</p>
-<p><img src="images/chapter2/ios/3.png" alt="login 1">
-<img src="images/chapter2/android/3.png" alt="login 1"></p>
-<p>Feel free to take some time to play with the look of this app before moving on. When you&#39;re ready, let&#39;s move on and add an image to this login screen.</p>
+<p>With these changes in place, you&#39;ll notice that the app has a bit more spacing, and also has a distinctly different look on iOS and Android:</p>
+<p><img src="images/chapter2/ios/3.png" alt="login 3">
+<img src="images/chapter2/android/3.png" alt="login 3"></p>
+<p>Despite our changes, the app still doesn’t look great, and that’s because we’re going to apply another batch of styles at the component level.</p>
+<h3 id="component-specific-css">Component-specific CSS</h3>
+<p>TODO: Write this!</p>
 <h3 id="images">Images</h3>
 <p>In NativeScript you use the <code>&lt;Image&gt;</code> UI element and its <code>src</code> attribute to add images to your pages. The <code>src</code> attribute lets you specify your image in three ways. The first (and simplest) way is to point at the URL of an image:</p>
 <pre><code class="lang-XML">&lt;Image src=&quot;https://www.nativescript.org/images/default-source/landingpages/logo.png&quot;&gt;&lt;/Image&gt;

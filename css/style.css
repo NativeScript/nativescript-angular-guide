@@ -686,8 +686,9 @@ p, ol, ul {
 ol li, ul li {
   line-height: 2em; }
 
-img[src*=gif] {
-  border: 1px solid black; }
+.chapter img:not(.plain) {
+  border: 1px solid black;
+  margin-right: 0.2rem; }
 
 h5, h6 {
   letter-spacing: .01rem;

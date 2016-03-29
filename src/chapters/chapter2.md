@@ -14,7 +14,7 @@ To keep things simple, let's start by looking at the outer structure of the Groc
     ├── app
     │   └── ...
     ├── hooks
-    ├── lib
+    │   └── ...
     ├── node_modules
     │   ├── angular2
     │   ├── nativescript-angular
@@ -32,15 +32,14 @@ To keep things simple, let's start by looking at the outer structure of the Groc
 Here's what these various files and folders do:
 
 - **app**: This folder contains all the development resources you need to build your app. You'll be spending most of your time editing the files in here.
-- **hooks**: This folder contains a series of files that manage the lifecycles of Angular components.
-- **lib**: This folder contains libraries offering third-party functionality; in this case, the TelerikUI.framework required at the end of this tutorial.
+- **hooks**: This folder contains a series of files the NativeScript CLI uses to preprocess TypeScript code into JavaScript code. You can ignore this folder for now, but after you complete this tutorial you may want to experiment with other preprocessors that NativeScript provides out of the box, such as [Babel for JavaScript](http://docs.nativescript.org/core-concepts/transpilers#installing-babel) or [SASS for CSS](http://www.nativescriptsnacks.com/more/2016/03/14/less-sass.html).
 - **node_modules**: This folder contains your app's npm module dependencies, including Angular 2, TypeScript, and the other modules NativeScript needs to build your app.
 - **node_modules/angular2**: This folder contains the Angular 2 source code. NativeScript does not alter the core Angular 2 source code in any way, instead, NativeScript builds on top of Angular 2 with the nativescript-angular npm module.
 - **node_modules/nativescript-angular**: This folder contains the module that integrates NativeScript-specific functionality into Angular 2. The source code for this module lives at <https://github.com/NativeScript/nativescript-angular>.
 - **node_modules/tns-core-modules**: This folder contains your app's NativeScript modules, which are a series of NativeScript-provided JavaScript modules you'll use to build your app. Each module contains the platform-specific code needed to implement some feature—the camera, http calls, the file system, and so forth—exposed through a platform-agnostic API (e.g. `camera.takePicture()`). We'll look at some examples in [chapter 4](#chapter4). The source code for these modules lives at <https://github.com/NativeScript/nativescript>.
 - **platforms**: This folder contains the platform-specific code NativeScript needs to build native iOS and Android apps. For example in the `android` folder you'll find things like your project's `AndroidManifest.xml` and .apk executable files. Similarly, the `ios` folder contains the Groceries' Xcode project and .ipa executables. Note, users on Windows machines will not have an `ios` folder.
 - **package.json**: This file contains your app's configuration details, such as your app id, the version of NativeScript you're using, and also which npm modules your app uses. We'll take a closer look at how to use this file when we talk about using npm modules in [chapter 5](#plugins-and-npm-modules).
-- **references.d.ts**: This file is a helper utility for typescript to help with autocompletion and compilation.
+- **references.d.ts**: This file is a helper utility for TypeScript to help with autocompletion and compilation.
 - **tsconfig.json**: This file contains your app’s TypeScript configuration. Unless you have existing TypeScript expertise, you’ll probably want to leave this file alone for now. If you do have existing experience you may want to tweak these values to suit your personal preferences, however, note that the `"experimentalDecorators"` and `"emitDecoratorMetadata"` flags are essential to making NativeScript and Angular 2 work, so don’t remove those. You can refer to the official TypeScript wiki for [detailed documentation on what you can do in a `tsconfig.json` file](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json).
 
 The NativeScript CLI manages the `platforms` folder for you as you develop and run your app; therefore, it's a best practice to treat the `platforms` folder as generated code. The Groceries app includes the `platforms` folder in its [`.gitignore`](https://github.com/NativeScript/sample-Groceries/blob/master/.gitignore) to exclude its files from source control.
@@ -55,9 +54,9 @@ Next, let's dig into the `app` folder, as that's where you'll be spending the ma
     │   │   ├── Android
     │   │   └── iOS
     │   ├── pages
-    │   │   ├── list
-    │   │   │ ├── list.html
-    │   │   │ └── ...
+    │   │   ├── login
+    │   │   │   ├── login.html
+    │   │   │   └── ...
     │   │   └── ...
     │   ├── shared
     │   │   └── ...

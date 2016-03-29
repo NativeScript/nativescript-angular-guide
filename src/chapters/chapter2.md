@@ -312,13 +312,41 @@ Open your app’s `app/app.component.ts` file and add a `styleUrls` property suc
 })
 ```
 
+Next, open your app’s `app/pages/login/login.common.css` file and paste in the following code:
+
+``` CSS
+StackLayout {
+  margin-top: 130;
+  margin-left: 30;
+  margin-right: 30;
+  padding-bottom: 15;
+  background-color: white;
+}
+Image {
+  margin-top: 5;
+  margin-bottom: 20;
+}
+Button, TextField {
+  margin-left: 16;
+  margin-right: 16;
+  margin-bottom: 10;
+}
+#submit-button {
+  background-color: #CB1D00;
+  color: white;
+  margin-top: 20;
+}
+```
+
 <div class="exercise-end"></div>
 
-In Angular 2, the `stylesUrl` points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, `login-common.css`, and `login.css`.
+In Angular 2, the `stylesUrl` points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, `login-common.css`, and `login.css`, which is actually implemented as `login.ios.css` and `login.android.css` using the same naming convention we introduced in the previous section.
 
-Why two files? Much like you divided your global files into `app.css`, `platform.ios.css`, and `platform.android.css`, this structure gives you a similar ability to separate common login styling in `login-common.css`, iOS-specific login styling `login.ios.css`, and Android-specific login styling in `login.android.css`. Before we see what your app looks like now, there’s one small change you need to make. If you open `app/pages/login/login-common.css` you’ll see the final selector used is `#submit-button`. Much like using CSS on the web, in NativeScript you can both `id` and `class` attributes to target specific user interface components.
+Why three files? Much like you divided your global files into `app.css`, `platform.ios.css`, and `platform.android.css`, this structure gives you a similar ability to place common login styling in `login-common.css`, iOS-specific login styling `login.ios.css`, and Android-specific login styling in `login.android.css`.
 
-Let’s see how it works by adding an `id` to your app’s “Sign In” button.
+The great thing about placing CSS rules at the component level is you can use concise CSS selectors such as `Button` and `TextField`, and not worry about those rules applying to all buttons and text fields in your application, as Angular 2 ensures those rules remain scoped to your component.
+
+Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in `login-common.css` is `#submit-button`. Much like using CSS on the web, in NativeScript you can both `id` and `class` attributes to target specific user interface element, but at the moment there’s no UI element in your app with an `id` of `"submit-button"`. Let’s change that.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an `id` attribute
@@ -332,10 +360,12 @@ Open your app’s `app/app.component.ts` file, find `<Button text="Sign in"></Bu
 
 <div class="exercise-end"></div>
 
-As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply the rules globally for both platforms, for iOS specifically, or for Android specifically. And you can also apply rules at the component level. With this last `id` change in place your app is starting to look a little nicer:
+And with this last `id` change in place your app is starting to look a little nicer:
 
 ![login 4](images/chapter2/ios/4.png)
 ![login 4](images/chapter2/android/4.png)
+
+As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply rules globally—either for both platforms in `app.css`, for iOS in `platform.ios.css`, or for Android in `platform.android.css`. And you can also apply rules at the component level, while maintaining the same flexibility to target different platforms if required.
 
 To continue polishing the visuals of this login screen, let’s look at how we can add an image of this app’s logo.
 

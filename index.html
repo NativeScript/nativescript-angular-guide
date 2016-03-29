@@ -473,13 +473,13 @@ Button {
     <b>Exercise</b>: Add a logo
 </h4>
 
-<p>In <code>login.xml</code>, add the <code>&lt;Image&gt;</code> below as the first child of the existing <code>&lt;StackLayout&gt;</code> tag:</p>
-<pre><code class="lang-XML">&lt;Image src=&quot;res://logo&quot; stretch=&quot;none&quot; horizontalAlignment=&quot;center&quot;&gt;&lt;/Image&gt;
+<p>In <code>app.component.ts</code>, add the <code>&lt;Image&gt;</code> below as the first child of the existing <code>&lt;StackLayout&gt;</code> tag:</p>
+<pre><code class="lang-XML">&lt;Image src=&quot;res://logo_login&quot; stretch=&quot;none&quot; horizontalAlignment=&quot;center&quot;&gt;&lt;/Image&gt;
 </code></pre>
 <div class="exercise-end"></div>
 
 <p>The <code>res://</code> syntax tells NativeScript to use a platform-specific resource, in this case an image. Platform-specific resources go in your app&#39;s <code>app/App_Resources</code> folder. If you look there you&#39;ll find a few different image files, several of which are named <code>logo.png</code>.</p>
-<p>Although more complex than putting an image directly in the <code>app</code> folder, using platform-specific images gives you more control over image display on different device dimensions. For example iOS lets you provide three different image files for devices with different pixel densities. As such you&#39;ll find logos named <code>logo.png</code>, <code>logo@2x.png</code>, and <code>logo@3x.png</code> in your <code>App_Resources/iOS</code> folder. For Android you&#39;ll find similar image files in <code>App_Resources/Android/drawable-hdpi</code> (for &quot;high&quot; dpi, or high dots-per-inch), <code>App_Resources/Android/drawable-mdpi</code> (for medium-dpi), and <code>App_Resources/Android/drawable-ldpi</code> (for low-dpi).</p>
+<p>Although more complex than putting an image directly in the <code>app</code> folder, using platform-specific images gives you more control over image display on different device dimensions. For example iOS lets you provide three different image files for devices with different pixel densities. As such you&#39;ll find logos named <code>logo_login.png</code>, <code>logo_login@2x.png</code>, and <code>logo_login@3x.png</code> in your <code>App_Resources/iOS</code> folder. For Android you&#39;ll find similar image files in <code>App_Resources/Android/drawable-hdpi</code> (for &quot;high&quot; dpi, or high dots-per-inch), <code>App_Resources/Android/drawable-mdpi</code> (for medium-dpi), and <code>App_Resources/Android/drawable-ldpi</code> (for low-dpi).</p>
 <p>Once these files are in place the NativeScript framework knows how to pick the correct file; all you have to do is reference the image using <code>res://</code> and its base file name—i.e. <code>res://logo</code>. Here&#39;s what your login screen should look like on iOS and Android:</p>
 <p><img src="images/chapter2/ios/4.png" alt="login 4">
 <img src="images/chapter2/android/4.png" alt="login 4"></p>

@@ -153,9 +153,7 @@ export class AppComponent {
 }
 ```
 
-Instead of storing data on the `AppComponent` directly, you’re now using the `User` model object, which is reusable outside of this page and even outside of this application. You instantiate a new instance of the `User` class in a new `constructor` function, that Angular 2 will invoke when it bootstraps your application.
-
-> **NOTE**: Remember that in `main.ts` you’re calling `nativeScriptBootstrap(AppComponent)`. Under the hood, Angular 2 will instantiate an instance of `AppComponent` during the bootstrapping process, which will cause your `AppComponent` constructor function to run.
+Instead of storing data on the `AppComponent` directly, you’re now using the `User` model object, which is reusable outside of this page and even outside of this application. You instantiate an instance of the `User` class in a new `constructor` function, which Angular 2 invokes when it bootstraps your application.
 
 Your final step is to use this new model object in your template. To do that, replace the two existing `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
 

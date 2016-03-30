@@ -640,10 +640,7 @@ Button, TextField {
   }
 }
 </code></pre>
-<p>Instead of storing data on the <code>AppComponent</code> directly, you’re now using the <code>User</code> model object, which is reusable outside of this page and even outside of this application. You instantiate a new instance of the <code>User</code> class in a new <code>constructor</code> function, that Angular 2 will invoke when it bootstraps your application.</p>
-<blockquote>
-<p><strong>NOTE</strong>: Remember that in <code>main.ts</code> you’re calling <code>nativeScriptBootstrap(AppComponent)</code>. Under the hood, Angular 2 will instantiate an instance of <code>AppComponent</code> during the bootstrapping process, which will cause your <code>AppComponent</code> constructor function to run.</p>
-</blockquote>
+<p>Instead of storing data on the <code>AppComponent</code> directly, you’re now using the <code>User</code> model object, which is reusable outside of this page and even outside of this application. You instantiate an instance of the <code>User</code> class in a new <code>constructor</code> function, which Angular 2 invokes when it bootstraps your application.</p>
 <p>Your final step is to use this new model object in your template. To do that, replace the two existing <code>&lt;TextField&gt;</code>s with the code shown below, which updates the <code>[(ngModel)]</code> bindings to point at the new <code>User</code> object:</p>
 <pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;

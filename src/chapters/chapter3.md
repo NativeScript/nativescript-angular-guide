@@ -75,13 +75,13 @@ The key thing to note here is the `[text]="email"` attribute on the `<TextField>
 ![Android with prefilled email](images/chapter3/android/1.png)
 ![iOS with prefilled email](images/chapter3/ios/1.png)
 
-> **NOTE**: It’s very easy to confuse Angular 2’s event binding syntax `(eventName)="functionName()"` with its attribute binding syntax `[attributeName]="propertyName"` 🤔. Don’t worry though; if you get them backwards, the problem is really easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.
+> **NOTE**: It’s very easy to confuse Angular 2’s event binding syntax `(eventName)="functionName()"` with its attribute binding syntax `[attributeName]="propertyName"` 🤔. Don’t worry though; if you get them backwards, the problem is usually easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.
 
-This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—and actually, it’s far easier to show this limitation in the current code.
+This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—that is, you additionally need changes the user makes to be reflected in your TypeScript code.
 
-Head back to your app, change the text field value (type a few extra letters or something like that), and then tap the Sign In button. Because your `signIn()` function alerts the current value of your component’s `email` property—`alert("You’re using: " + this.email)`—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.
+To show that the current example’s data binding is only one way, head back to your app, change the email text field’s value (type a few extra letters or something like that), and then tap the “Sign In” button. Because your `signIn()` function alerts the current value of your component’s `email` property—`alert("You’re using: " + this.email)`—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.
 
-![iOS with email address that doesn’t match](images/chapter3/ios/2.png)
+![Android with email address that do not match](images/chapter3/android/2.png)
 
 To fix this, you need to switch to Angular 2’s two-way data binding syntax.
 
@@ -98,11 +98,11 @@ In `app/app.component.ts`, find the find the first `<TextField>`, and replace it
 
 <div class="exercise-end"></div>
 
-At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. And that’s because the syntax actually is a shorthand for both an attribute binding and an event binding, or in code—`[text]="email" (emailChange)="email=$event"`, which binds a text field’s `text` attribute property to an `email` property, as well as adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
+At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, `[(ngModel)]="email"` is shorthand for `[text]="email" (emailChange)="email=$event"`, which binds the email element’s `text` attribute to an `email` property, as well as adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
 
-And, if you again modify your app’s email address and click the Sign In button, you’ll see the updated value in the alert as expected:
+Don’t worry too much about the details here while we’re still getting started. In your head you can think of `[(ngModel)]` as the way to implement two-way data binding when you need it on form controls. And to show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:
 
-![iOS with email address that does match](images/chapter3/ios/3.png)
+![Android with email addresses that do match](images/chapter3/android/3.png)
 
 At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
 
@@ -110,7 +110,7 @@ Before we tie this app to a backend and make this login screen fully functional,
 
 ### Structuring your app
 
-There are many reasons to segment your application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.
+There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.
 
 Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.
 

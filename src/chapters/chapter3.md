@@ -13,14 +13,14 @@ Most user interfaces are driven by events. In NativeScript apps, those events ar
 Open `app/app.component.ts`, find the existing sign in button within your component’s `template` (`<Button text="Sign in"></Button>`), and replace it with the following code:
 
 ``` JavaScript
-<Button text="Sign in" id="submit-button" (tap)="signIn()"></Button>
+<Button text="Sign in" id="submit-button" (tap)="submit()"></Button>
 ```
 
 Next, in the same file, replace the current `AppComponent` declaration with the one shown below:
 
 ``` JavaScript
 export class AppComponent {
-  signIn() {
+  submit() {
     console.log("hello");
   }
 }
@@ -28,7 +28,7 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
-The `(eventName)="functionName()"` syntax is part of [Angular 2’s event binding system](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding), which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the `(tap)="signIn()"` syntax tells Angular to run the `AppComponent` class’s `signIn()` function whenever the user taps the sign in button.
+The `(eventName)="functionName()"` syntax is part of [Angular 2’s event binding system](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding), which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the `(tap)="submit()"` syntax tells Angular to run the `AppComponent` class’s `submit()` function whenever the user taps the sign in button.
 
 To verify this binding works tap the “Sign In” button in your app; you should see “hello” logged in your terminal or command prompt as such:
 
@@ -50,12 +50,12 @@ The first of these is a way to bind UI attributes to properties defined in your 
     <b>Exercise</b>: Using Angular 2 attribute binding
 </h4>
 
-In `app/app.component.ts` replace the current `AppComponent` declaration with the one shown below, which adds a new `email` property, and changes the `signIn()` method to display its value:
+In `app/app.component.ts` replace the current `AppComponent` declaration with the one shown below, which adds a new `email` property, and changes the `submit()` method to display its value:
 
 ``` TypeScript
 export class AppComponent {
   email = "nativescriptrocks@telerik.com";
-  signIn() {
+  submit() {
     alert("You’re using: " + this.email);
   }
 }
@@ -79,7 +79,7 @@ The key thing to note here is the `[text]="email"` attribute on the `<TextField>
 
 This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—that is, you additionally need changes the user makes to be reflected in your TypeScript code.
 
-To show that the current example’s data binding is only one way, head back to your app, change the email text field’s value (type a few extra letters or something like that), and then tap the “Sign In” button. Because your `signIn()` function alerts the current value of your component’s `email` property—`alert("You’re using: " + this.email)`—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.
+To show that the current example’s data binding is only one way, head back to your app, change the email text field’s value (type a few extra letters or something like that), and then tap the “Sign In” button. Because your `submit()` function alerts the current value of your component’s `email` property—`alert("You’re using: " + this.email)`—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.
 
 ![Android with email address that do not match](images/chapter3/android/2.png)
 
@@ -105,6 +105,41 @@ Don’t worry too much about the details here while we’re still getting starte
 ![Android with email addresses that do match](images/chapter3/android/3.png)
 
 At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
+
+TODO: Transition
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+app.component.ts — Replace the two buttons with this
+
+``` XML
+<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
+<Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
+```
+
+app.component.ts - Use this for the AppComponent class:
+
+``` TypeScript
+export class AppComponent {
+  email = "nativescriptrocks@telerik.com";
+  isLoggingIn = true;
+
+  submit() {
+    alert("You’re using: " + this.email);
+  }
+  toggleDisplay() {
+    this.isLoggingIn = !this.isLoggingIn;
+  }
+}
+```
+
+<div class="exercise-end"></div>
+
+TODO: Transition
+
+
 
 Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
 
@@ -144,11 +179,16 @@ Next, replace the existing `AppComponent` definition with the one below, which u
 ``` JavaScript
 export class AppComponent {
   user: User;
+  isLoggingIn = true;
+
   constructor() {
     this.user = new User();
   }
-  signIn() {
+  submit() {
     alert("You’re using: " + this.user.email);
+  }
+  toggleDisplay() {
+    this.isLoggingIn = !this.isLoggingIn;
   }
 }
 ```
@@ -163,6 +203,8 @@ Your final step is to use this new model object in your template. To do that, re
 <TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
 ```
 
+TODO: Better explanation. Move the full template into the login.html file and use `templateUrl`. 
+
 If you got lost during this section, here’s a copy-and-paste friendly version of the full `app.component.ts` you should have at this point:
 
 ``` JavaScript
@@ -171,28 +213,24 @@ import {User} from "./shared/user/user";
 
 @Component({
   selector: "my-app",
-  template: `
-    <StackLayout>
-      <Image src="res://logo" stretch="none" horizontalAlignment="center"></Image>
-
-      <TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
-        autocorrect="false" autocapitalizationType="none"></TextField>
-      <TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
-
-      <Button text="Sign in" (tap)="signIn()"></Button>
-      <Button text="Sign up for Groceries" class="link"></Button>
-    </StackLayout>
-  `
+  templateUrl: "pages/login/login.html",
+  styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
 })
 export class AppComponent {
   user: User;
+  isLoggingIn = true;
+
   constructor() {
     this.user = new User();
   }
-  signIn() {
+  submit() {
     alert("You’re using: " + this.user.email);
   }
+  toggleDisplay() {
+    this.isLoggingIn = !this.isLoggingIn;
+  }
 }
+
 ```
 
 <div class="exercise-end"></div>
@@ -213,10 +251,162 @@ For the purposes of this tutorial we prebuilt a handful of backend endpoints usi
 
 Open `app/shared/user/user.service.ts` and paste in the following code:
 
-``` JavaScript
+``` TypeScript
+import {Injectable} from "angular2/core";
+import {Http, Headers, Response} from "angular2/http";
+import {User} from "./user";
+import {Config} from "../config";
+import {Observable} from "rxjs/Rx";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
 
+@Injectable()
+export class UserService {
+  constructor(private _http: Http) {}
+
+  register(user: User) {
+    var headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    return this._http.post(
+      Config.apiUrl + "Users",
+      JSON.stringify({
+        Username: user.email,
+        Email: user.email,
+        Password: user.password
+      }),
+      { headers: headers }
+    )
+    .catch(this.handleErrors);
+  }
+
+  handleErrors(error: Response) {
+    console.log(JSON.stringify(error.json()));
+    return Observable.throw(error);
+  }
+}
+```
+
+TODO: Explain that mess above, and probably break it into a lot of steps.
+
+In app.component.ts. Add the line below to the top:
+
+``` TypeScript
+import {UserService} from "./shared/user/user.service";
+```
+
+Then change the constructor to this:
+
+``` TypeScript
+constructor(private _userService: UserService) {
+  this.user = new User();
+}
+```
+
+Add this line to the @Component:
+
+``` TypeScript
+providers: [UserService],
+```
+
+Then change the submit function to this:
+
+``` TypeScript
+submit() {
+  if (this.isLoggingIn) {
+    this.login();
+  } else {
+    this.signUp();
+  }
+}
+```
+
+Then add these two functions:
+
+``` TypeScript
+login() {
+  // TODO: Define
+}
+signUp() {
+  this._userService.register(this.user)
+    .subscribe(
+      () => {
+        alert("Your account was successfully created.")
+        this.toggleDisplay();
+      },
+      () => alert("Unfortunately we were unable to create your account.")
+    );
+}
+```
+
+Create an account, then hardcode those credentials in your constructor to make testing easier:
+
+``` TypeScript
+constructor(private _userService: UserService) {
+  this.user = new User();
+  this.user.email = "nativescriptrocks@telerik.com";
+  this.user.password = "password";
+}
+```
+
+Full app.component.ts:
+
+``` TypeScript
+import {Component} from "angular2/core";
+import {User} from "./shared/user/user";
+import {UserService} from "./shared/user/user.service";
+
+@Component({
+  selector: "my-app",
+  templateUrl: "pages/login/login.html",
+  styleUrls: ["pages/login/login-common.css", "pages/login/login.css"],
+  providers: [UserService]
+})
+export class AppComponent {
+  user: User;
+  isLoggingIn = true;
+
+  constructor(private _userService: UserService) {
+    this.user = new User();
+  }
+  submit() {
+    if (this.isLoggingIn) {
+      this.login();
+    } else {
+      this.signUp();
+    }
+  }
+  login() {
+    // TODO: Define
+  }
+  signUp() {
+    this._userService.register(this.user)
+      .subscribe(
+        () => {
+          alert("Your account was successfully created.")
+          this.toggleDisplay();
+        },
+        () => alert("Unfortunately we were unable to create your account.")
+      );
+  }
+  toggleDisplay() {
+    this.isLoggingIn = !this.isLoggingIn;
+  }
+}
+```
+
+Also change main.ts to use this:
+
+``` TypeScript
+import {HTTP_PROVIDERS} from "angular2/http";
+import {nativeScriptBootstrap} from "nativescript-angular/application";
+import {AppComponent} from "./app.component";
+
+nativeScriptBootstrap(AppComponent, [HTTP_PROVIDERS]);
 ```
 
 <div class="exercise-end"></div>
+
+
 
 ### Routing

@@ -110,17 +110,17 @@ Before we tie this app to a backend and make this login screen fully functional,
 
 ### Structuring your app
 
-There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.
+There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.
 
-Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.
+Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.
 
-To see how this works in action let’s edit some files in the `/shared` folder and set them up to be imported.
+To see how this works in action, let’s edit some files in the `/shared` folder and set them up to be imported.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a model object
 </h4>
 
-The first thing we’ll do is add a model object to store user data. Open `app/user/user.ts` and paste in the following code:
+Let’s start by creating a simple model object to store user data. Open `app/user/user.ts` and paste in the following code:
 
 ``` JavaScript
 export class User {
@@ -137,7 +137,7 @@ Next, open `app/app.component.ts`, and first add the following `import` to the t
 import {User} from "./shared/user/user";
 ```
 
-Here you import the `User` class that you just defined. Note the parallel between the `export` command used in the previous example and the `import` command used in the previous example. The reason the `User` class is available to import is because it was explicitly exported. You’ll see other examples of `import` and `export` as you go through this guide.
+Here you import the `User` class that you just defined. Note the parallel between the `export` command used in the previous example and the `import` command used here. The reason the `User` class is available to import is because it was explicitly exported. You’ll see other examples of `import` and `export` as you go through this guide.
 
 Next, replace the existing `AppComponent` definition with the one below, which uses the `User` class you just imported.
 
@@ -153,9 +153,11 @@ export class AppComponent {
 }
 ```
 
-Instead of storing data on the `AppComponent` directly, you’re now using the `User` model object, which is reusable outside of this page and even outside of this application. You also provide a TypeScript constructor, which is a function invoked when an instance of the `AppComponent` class is instantiated. In this app, Angular 2 instantiates an `AppComponent` for you with the call to `nativeScriptBootstrap(AppComponent)` done in `main.ts`. 
+Instead of storing data on the `AppComponent` directly, you’re now using the `User` model object, which is reusable outside of this page and even outside of this application. You instantiate a new instance of the `User` class in a new `constructor` function, that Angular 2 will invoke when it bootstraps your application.
 
-Your final step is to use this new model object in your template. To do that, replace the existing two `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
+> **NOTE**: Remember that in `main.ts` you’re calling `nativeScriptBootstrap(AppComponent)`. Under the hood, Angular 2 will instantiate an instance of `AppComponent` during the bootstrapping process, which will cause your `AppComponent` constructor function to run.
+
+Your final step is to use this new model object in your template. To do that, replace the two existing `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
 
 ``` XML
 <TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"

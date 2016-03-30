@@ -611,14 +611,14 @@ Button, TextField {
 <p>At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
 <p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
 <h3 id="structuring-your-app">Structuring your app</h3>
-<p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-build native apps.</p>
-<p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse for your native and web apps can be an invaluable time saver.</p>
-<p>To see how this works in action let’s edit some files in the <code>/shared</code> folder and set them up to be imported.</p>
+<p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
+<p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.</p>
+<p>To see how this works in action, let’s edit some files in the <code>/shared</code> folder and set them up to be imported.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a model object
 </h4>
 
-<p>The first thing we’ll do is add a model object to store user data. Open <code>app/user/user.ts</code> and paste in the following code:</p>
+<p>Let’s start by creating a simple model object to store user data. Open <code>app/user/user.ts</code> and paste in the following code:</p>
 <pre><code class="lang-JavaScript">export class User {
   email: string;
   password: string;
@@ -628,7 +628,7 @@ Button, TextField {
 <p>Next, open <code>app/app.component.ts</code>, and first add the following <code>import</code> to the top of the file:</p>
 <pre><code class="lang-JavaScript">import {User} from &quot;./shared/user/user&quot;;
 </code></pre>
-<p>Here you import the <code>User</code> class that you just defined. Note the parallel between the <code>export</code> command used in the previous example and the <code>import</code> command used in the previous example. The reason the <code>User</code> class is available to import is because it was explicitly exported. You’ll see other examples of <code>import</code> and <code>export</code> as you go through this guide.</p>
+<p>Here you import the <code>User</code> class that you just defined. Note the parallel between the <code>export</code> command used in the previous example and the <code>import</code> command used here. The reason the <code>User</code> class is available to import is because it was explicitly exported. You’ll see other examples of <code>import</code> and <code>export</code> as you go through this guide.</p>
 <p>Next, replace the existing <code>AppComponent</code> definition with the one below, which uses the <code>User</code> class you just imported.</p>
 <pre><code class="lang-JavaScript">export class AppComponent {
   user: User;
@@ -640,8 +640,11 @@ Button, TextField {
   }
 }
 </code></pre>
-<p>Instead of storing data on the <code>AppComponent</code> directly, you’re now using the <code>User</code> model object, which is reusable outside of this page and even outside of this application. You also provide a TypeScript constructor, which is a function invoked when an instance of the <code>AppComponent</code> class is instantiated. In this app, Angular 2 instantiates an <code>AppComponent</code> for you with the call to <code>nativeScriptBootstrap(AppComponent)</code> done in <code>main.ts</code>. </p>
-<p>Your final step is to use this new model object in your template. To do that, replace the existing two <code>&lt;TextField&gt;</code>s with the code shown below, which updates the <code>[(ngModel)]</code> bindings to point at the new <code>User</code> object:</p>
+<p>Instead of storing data on the <code>AppComponent</code> directly, you’re now using the <code>User</code> model object, which is reusable outside of this page and even outside of this application. You instantiate a new instance of the <code>User</code> class in a new <code>constructor</code> function, that Angular 2 will invoke when it bootstraps your application.</p>
+<blockquote>
+<p><strong>NOTE</strong>: Remember that in <code>main.ts</code> you’re calling <code>nativeScriptBootstrap(AppComponent)</code>. Under the hood, Angular 2 will instantiate an instance of <code>AppComponent</code> during the bootstrapping process, which will cause your <code>AppComponent</code> constructor function to run.</p>
+</blockquote>
+<p>Your final step is to use this new model object in your template. To do that, replace the two existing <code>&lt;TextField&gt;</code>s with the code shown below, which updates the <code>[(ngModel)]</code> bindings to point at the new <code>User</code> object:</p>
 <pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
 &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;

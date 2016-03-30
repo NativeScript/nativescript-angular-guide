@@ -536,13 +536,13 @@ Button, TextField {
 				<h2 id="application-logic">Application Logic</h2>
 <p>In this chapter you’ll learn how to add JavaScript logic to your app, how to create services that talk to backend endpoints, and how to architect an app that uses multiple pages. There’s a lot to cover, so let’s start by discussing how to handle events and data binding.</p>
 <h3 id="events">Events</h3>
-<p>Most user interfaces are driven by events. In NativeScript apps, those events are usually some user action, such as tapping, swiping, or rotating—and NativeScript abstracts the iOS- and Android-specific code for handling such events into a handful of easy-to-use APIs. Let’s start with the most common event you’ll use in a NativeScript app—<code>tap</code>.</p>
+<p>Most user interfaces are driven by events. In NativeScript apps, those events are usually some user action, such as tapping, swiping, or rotating—and NativeScript abstracts the iOS- and Android-specific code for handling such events into a handful of easy-to-use APIs. Let’s start with the most common event you’ll use in a NativeScript app: <code>tap</code>.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a <code>tap</code> event handler
 </h4>
 
 <p>Open <code>app/app.component.ts</code>, find the existing sign in button within your component’s <code>template</code> (<code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code>), and replace it with the following code:</p>
-<pre><code class="lang-JavaScript">&lt;Button text=&quot;Sign in&quot; (tap)=&quot;signIn()&quot;&gt;&lt;/Button&gt;
+<pre><code class="lang-JavaScript">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot; (tap)=&quot;signIn()&quot;&gt;&lt;/Button&gt;
 </code></pre>
 <p>Next, in the same file, replace the current <code>AppComponent</code> declaration with the one shown below:</p>
 <pre><code class="lang-JavaScript">export class AppComponent {
@@ -554,8 +554,8 @@ Button, TextField {
 <div class="exercise-end"></div>
 
 <p>The <code>(eventName)=&quot;functionName()&quot;</code> syntax is part of <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding">Angular 2’s event binding system</a>, which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the <code>(tap)=&quot;signIn()&quot;</code> syntax tells Angular to run the <code>AppComponent</code> class’s <code>signIn()</code> function whenever the user taps the sign in button.</p>
-<p>To verify this binding works try tapping the sign in button in your app; you should see “hello” logged in your terminal or command prompt as such:</p>
-<p><img src="images/chapter3/terminal-1.png" alt="Terminal showing the word hello logged"></p>
+<p>To verify this binding works tap the “Sign In” button in your app; you should see “hello” logged in your terminal or command prompt as such:</p>
+<p><img alt="Terminal showing the word hello logged" src="images/chapter3/terminal-1.png" class="plain"></p>
 <blockquote>
 <p><strong>TIP</strong>:</p>
 <ul>
@@ -563,7 +563,7 @@ Button, TextField {
 <li>The Angular 2 docs have a helpful <a href="https://angular.io/docs/ts/latest/guide/cheatsheet.html">cheat sheet</a> that includes the various syntaxes available when building templates. Don’t worry too much about knowing how all these work at the moment; we’ll progressively introduce the most common syntaxes in this guide.</li>
 </ul>
 </blockquote>
-<p>With the <code>tap</code> event in place, we now have a way of tying our UI elements in our template to TypeScript code. To make a login page actually work though, we need to introduce one other way of connecting a template to code: data binding.</p>
+<p>With the <code>tap</code> event in place, you now have a way of tying the UI elements in your template to your TypeScript code. To make a login page actually work though, we need to introduce one other way of connecting a template to code: data binding.</p>
 <h3 id="data-binding">Data Binding</h3>
 <p>Angular 2 provides several ways to bind data in your TypeScript code to UI controls, and through the magic of NativeScript those same methods are available in your iOS and Android apps.</p>
 <p>The first of these is a way to bind UI attributes to properties defined in your TypeScript class. Let’s look at how it works.</p>
@@ -572,7 +572,7 @@ Button, TextField {
 </h4>
 
 <p>In <code>app/app.component.ts</code> replace the current <code>AppComponent</code> declaration with the one shown below, which adds a new <code>email</code> property, and changes the <code>signIn()</code> method to display its value:</p>
-<pre><code class="lang-JavaScript">export class AppComponent {
+<pre><code class="lang-TypeScript">export class AppComponent {
   email = &quot;nativescriptrocks@telerik.com&quot;;
   signIn() {
     alert(&quot;You’re using: &quot; + this.email);

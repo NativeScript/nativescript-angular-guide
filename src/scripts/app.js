@@ -47,7 +47,7 @@
 		"c#": "clike",
 		"appbuilder" : "javascript",
 		"javascript" : "javascript",
-		"typescript" : "javascript",
+		"typescript" : "typescript",
 		"c++" : "clike",
 		"c" : "clike",
 		"css" : "css",

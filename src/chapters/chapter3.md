@@ -4,7 +4,7 @@ In this chapter you’ll learn how to add JavaScript logic to your app, how to c
 
 ### Events
 
-Most user interfaces are driven by events. In NativeScript apps, those events are usually some user action, such as tapping, swiping, or rotating—and NativeScript abstracts the iOS- and Android-specific code for handling such events into a handful of easy-to-use APIs. Let’s start with the most common event you’ll use in a NativeScript app—`tap`.
+Most user interfaces are driven by events. In NativeScript apps, those events are usually some user action, such as tapping, swiping, or rotating—and NativeScript abstracts the iOS- and Android-specific code for handling such events into a handful of easy-to-use APIs. Let’s start with the most common event you’ll use in a NativeScript app: `tap`.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a `tap` event handler
@@ -13,7 +13,7 @@ Most user interfaces are driven by events. In NativeScript apps, those events ar
 Open `app/app.component.ts`, find the existing sign in button within your component’s `template` (`<Button text="Sign in"></Button>`), and replace it with the following code:
 
 ``` JavaScript
-<Button text="Sign in" (tap)="signIn()"></Button>
+<Button text="Sign in" id="submit-button" (tap)="signIn()"></Button>
 ```
 
 Next, in the same file, replace the current `AppComponent` declaration with the one shown below:
@@ -30,15 +30,15 @@ export class AppComponent {
 
 The `(eventName)="functionName()"` syntax is part of [Angular 2’s event binding system](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#event-binding), which lets you bind an event that occurs on a UI element to a function in your component’s class. In this case, the `(tap)="signIn()"` syntax tells Angular to run the `AppComponent` class’s `signIn()` function whenever the user taps the sign in button.
 
-To verify this binding works try tapping the sign in button in your app; you should see “hello” logged in your terminal or command prompt as such:
+To verify this binding works tap the “Sign In” button in your app; you should see “hello” logged in your terminal or command prompt as such:
 
-![Terminal showing the word hello logged](images/chapter3/terminal-1.png)
+<img alt="Terminal showing the word hello logged" src="images/chapter3/terminal-1.png" class="plain">
 
 > **TIP**:
 > * In NativeScript you can find a list of events available in the appropriate UI element’s API documentation. For instance, the [button element’s API documentation](http://docs.nativescript.org/ApiReference/ui/button/Button) lists its `tap` event.
 > * The Angular 2 docs have a helpful [cheat sheet](https://angular.io/docs/ts/latest/guide/cheatsheet.html) that includes the various syntaxes available when building templates. Don’t worry too much about knowing how all these work at the moment; we’ll progressively introduce the most common syntaxes in this guide.
 
-With the `tap` event in place, we now have a way of tying our UI elements in our template to TypeScript code. To make a login page actually work though, we need to introduce one other way of connecting a template to code: data binding.
+With the `tap` event in place, you now have a way of tying the UI elements in your template to your TypeScript code. To make a login page actually work though, we need to introduce one other way of connecting a template to code: data binding.
 
 ### Data Binding
 
@@ -52,7 +52,7 @@ The first of these is a way to bind UI attributes to properties defined in your 
 
 In `app/app.component.ts` replace the current `AppComponent` declaration with the one shown below, which adds a new `email` property, and changes the `signIn()` method to display its value:
 
-``` JavaScript
+``` TypeScript
 export class AppComponent {
   email = "nativescriptrocks@telerik.com";
   signIn() {

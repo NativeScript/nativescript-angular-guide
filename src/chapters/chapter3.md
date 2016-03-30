@@ -289,9 +289,10 @@ export class UserService {
 
 TODO: Explain that mess above, and probably break it into a lot of steps.
 
-In app.component.ts. Add the line below to the top:
+In app.component.ts. Add the lines below to the top:
 
 ``` TypeScript
+import {HTTP_PROVIDERS} from "angular2/http";
 import {UserService} from "./shared/user/user.service";
 ```
 
@@ -306,7 +307,7 @@ constructor(private _userService: UserService) {
 Add this line to the @Component:
 
 ``` TypeScript
-providers: [UserService],
+providers: [UserService, HTTP_PROVIDERS]
 ```
 
 Then change the submit function to this:
@@ -353,6 +354,7 @@ Full app.component.ts:
 
 ``` TypeScript
 import {Component} from "angular2/core";
+import {HTTP_PROVIDERS} from "angular2/http";
 import {User} from "./shared/user/user";
 import {UserService} from "./shared/user/user.service";
 
@@ -360,7 +362,7 @@ import {UserService} from "./shared/user/user.service";
   selector: "my-app",
   templateUrl: "pages/login/login.html",
   styleUrls: ["pages/login/login-common.css", "pages/login/login.css"],
-  providers: [UserService]
+  providers: [UserService, HTTP_PROVIDERS]
 })
 export class AppComponent {
   user: User;
@@ -368,6 +370,8 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {
     this.user = new User();
+    this.user.email = "nativescriptrocks@telerik.com";
+    this.user.password = "password";
   }
   submit() {
     if (this.isLoggingIn) {
@@ -395,18 +399,8 @@ export class AppComponent {
 }
 ```
 
-Also change main.ts to use this:
-
-``` TypeScript
-import {HTTP_PROVIDERS} from "angular2/http";
-import {nativeScriptBootstrap} from "nativescript-angular/application";
-import {AppComponent} from "./app.component";
-
-nativeScriptBootstrap(AppComponent, [HTTP_PROVIDERS]);
-```
-
 <div class="exercise-end"></div>
 
-
+Show that user account creation now works and transition to routing.
 
 ### Routing

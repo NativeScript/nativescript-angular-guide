@@ -750,8 +750,9 @@ export class UserService {
 }
 </code></pre>
 <p>TODO: Explain that mess above, and probably break it into a lot of steps.</p>
-<p>In app.component.ts. Add the line below to the top:</p>
-<pre><code class="lang-TypeScript">import {UserService} from &quot;./shared/user/user.service&quot;;
+<p>In app.component.ts. Add the lines below to the top:</p>
+<pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
+import {UserService} from &quot;./shared/user/user.service&quot;;
 </code></pre>
 <p>Then change the constructor to this:</p>
 <pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
@@ -759,7 +760,7 @@ export class UserService {
 }
 </code></pre>
 <p>Add this line to the @Component:</p>
-<pre><code class="lang-TypeScript">providers: [UserService],
+<pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS]
 </code></pre>
 <p>Then change the submit function to this:</p>
 <pre><code class="lang-TypeScript">submit() {
@@ -794,6 +795,7 @@ signUp() {
 </code></pre>
 <p>Full app.component.ts:</p>
 <pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
+import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
 import {User} from &quot;./shared/user/user&quot;;
 import {UserService} from &quot;./shared/user/user.service&quot;;
 
@@ -801,7 +803,7 @@ import {UserService} from &quot;./shared/user/user.service&quot;;
   selector: &quot;my-app&quot;,
   templateUrl: &quot;pages/login/login.html&quot;,
   styleUrls: [&quot;pages/login/login-common.css&quot;, &quot;pages/login/login.css&quot;],
-  providers: [UserService]
+  providers: [UserService, HTTP_PROVIDERS]
 })
 export class AppComponent {
   user: User;
@@ -809,6 +811,8 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {
     this.user = new User();
+    this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
+    this.user.password = &quot;password&quot;;
   }
   submit() {
     if (this.isLoggingIn) {
@@ -835,17 +839,9 @@ export class AppComponent {
   }
 }
 </code></pre>
-<p>Also change main.ts to use this:</p>
-<pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
-import {nativeScriptBootstrap} from &quot;nativescript-angular/application&quot;;
-import {AppComponent} from &quot;./app.component&quot;;
-
-nativeScriptBootstrap(AppComponent, [HTTP_PROVIDERS]);
-</code></pre>
 <div class="exercise-end"></div>
 
-
-
+<p>Show that user account creation now works and transition to routing.</p>
 <h3 id="routing">Routing</h3>
 
 			</div>

@@ -332,7 +332,7 @@ signUp() {
   this._userService.register(this.user)
     .subscribe(
       () => {
-        alert("Your account was successfully created.")
+        alert("Your account was successfully created.");
         this.toggleDisplay();
       },
       () => alert("Unfortunately we were unable to create your account.")
@@ -387,7 +387,7 @@ export class AppComponent {
     this._userService.register(this.user)
       .subscribe(
         () => {
-          alert("Your account was successfully created.")
+          alert("Your account was successfully created.");
           this.toggleDisplay();
         },
         () => alert("Unfortunately we were unable to create your account.")
@@ -401,6 +401,133 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
-Show that user account creation now works and transition to routing.
+TODO: Show that user account creation now works and transition to routing.
 
 ### Routing
+
+TODO: Intro
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Copy app/app.component.ts into app/pages/login/login.component.ts, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:
+
+``` TypeScript
+import {User} from "../../shared/user/user";
+import {UserService} from "../../shared/user/user.service";
+```
+
+Open app/app.component.ts back up and paste in the following code:
+
+``` TypeScript
+import {Component} from "angular2/core";
+import {HTTP_PROVIDERS} from "angular2/http";
+import {RouteConfig} from "angular2/router";
+import {NS_ROUTER_DIRECTIVES, NS_ROUTER_PROVIDERS} from "nativescript-angular/router";
+import {LoginPage} from "./pages/login/login.component";
+
+@Component({
+  selector: "main",
+  directives: [NS_ROUTER_DIRECTIVES],
+  providers: [NS_ROUTER_PROVIDERS],
+  template: "<page-router-outlet></page-router-outlet>"
+})
+@RouteConfig([
+  { path: "/Login", component: LoginPage, as: "Login", useAsDefault: true },
+])
+export class AppComponent {}
+```
+
+Explain what’s going on here.
+
+<div class="exercise-end"></div>
+
+Let’s actually log the user in then, shall we?
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Open pages/list/list.component.ts and paste in this:
+
+``` TypeScript
+import {Component} from "angular2/core";
+
+@Component({
+  selector: "list",
+  templateUrl: "pages/list/list.html",
+  styleUrls: ["pages/list/list-common.css", "pages/list/list.css"]
+})
+export class ListPage {}
+```
+
+Next, open pages/list/list.html and paste in this:
+
+``` XML
+<Label text="Hello world"></Label>
+```
+
+Now, go back to app/app.component.ts and paste in this at the top of the file:
+
+``` TypeScript
+import {ListPage} from "./pages/list/list.component";
+```
+
+And this in the `@RouteConfig`:
+
+``` TypeScript
+{ path: "/List", component: ListPage, as: "List" }
+```
+
+Now go to app/shared/user/user.service.ts and add this function:
+
+``` TypeScript
+login(user: User) {
+  var headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  return this._http.post(
+    Config.apiUrl + "oauth/token",
+    JSON.stringify({
+      username: user.email,
+      password: user.password,
+      grant_type: "password"
+    }),
+    { headers: headers }
+  )
+  .map(response => response.json())
+  .do(data => {
+    Config.token = data.Result.access_token;
+  })
+  .catch(this.handleErrors);
+}
+```
+
+Finally, go to `app/login/login.component.ts` and change the login function to do this:
+
+``` TypeScript
+this._userService.login(this.user)
+  .subscribe(
+    () => this._router.navigate(["List"]),
+    (error) => alert("Unfortunately we could not find your account.")
+  );
+```
+
+To make this work, in the same file, add this to the top:
+
+``` TypeScript
+import {Router} from "angular2/router";
+```
+
+And this to the constructor:
+
+``` TypeScript
+constructor(private _router: Router, private _userService: UserService) {
+```
+
+<div class="exercise-end"></div>
+
+You can login now! And navigate! Show a gif of the navigation. Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.
+
+Then transition to modules.

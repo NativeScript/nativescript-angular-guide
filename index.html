@@ -779,7 +779,7 @@ signUp() {
   this._userService.register(this.user)
     .subscribe(
       () =&gt; {
-        alert(&quot;Your account was successfully created.&quot;)
+        alert(&quot;Your account was successfully created.&quot;);
         this.toggleDisplay();
       },
       () =&gt; alert(&quot;Unfortunately we were unable to create your account.&quot;)
@@ -828,7 +828,7 @@ export class AppComponent {
     this._userService.register(this.user)
       .subscribe(
         () =&gt; {
-          alert(&quot;Your account was successfully created.&quot;)
+          alert(&quot;Your account was successfully created.&quot;);
           this.toggleDisplay();
         },
         () =&gt; alert(&quot;Unfortunately we were unable to create your account.&quot;)
@@ -841,8 +841,100 @@ export class AppComponent {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Show that user account creation now works and transition to routing.</p>
+<p>TODO: Show that user account creation now works and transition to routing.</p>
 <h3 id="routing">Routing</h3>
+<p>TODO: Intro</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Copy app/app.component.ts into app/pages/login/login.component.ts, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:</p>
+<pre><code class="lang-TypeScript">import {User} from &quot;../../shared/user/user&quot;;
+import {UserService} from &quot;../../shared/user/user.service&quot;;
+</code></pre>
+<p>Open app/app.component.ts back up and paste in the following code:</p>
+<pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
+import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
+import {RouteConfig} from &quot;angular2/router&quot;;
+import {NS_ROUTER_DIRECTIVES, NS_ROUTER_PROVIDERS} from &quot;nativescript-angular/router&quot;;
+import {LoginPage} from &quot;./pages/login/login.component&quot;;
+
+@Component({
+  selector: &quot;main&quot;,
+  directives: [NS_ROUTER_DIRECTIVES],
+  providers: [NS_ROUTER_PROVIDERS],
+  template: &quot;&lt;page-router-outlet&gt;&lt;/page-router-outlet&gt;&quot;
+})
+@RouteConfig([
+  { path: &quot;/Login&quot;, component: LoginPage, as: &quot;Login&quot;, useAsDefault: true },
+])
+export class AppComponent {}
+</code></pre>
+<p>Explain what’s going on here.</p>
+<div class="exercise-end"></div>
+
+<p>Let’s actually log the user in then, shall we?</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open pages/list/list.component.ts and paste in this:</p>
+<pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
+
+@Component({
+  selector: &quot;list&quot;,
+  templateUrl: &quot;pages/list/list.html&quot;,
+  styleUrls: [&quot;pages/list/list-common.css&quot;, &quot;pages/list/list.css&quot;]
+})
+export class ListPage {}
+</code></pre>
+<p>Next, open pages/list/list.html and paste in this:</p>
+<pre><code class="lang-XML">&lt;Label text=&quot;Hello world&quot;&gt;&lt;/Label&gt;
+</code></pre>
+<p>Now, go back to app/app.component.ts and paste in this at the top of the file:</p>
+<pre><code class="lang-TypeScript">import {ListPage} from &quot;./pages/list/list.component&quot;;
+</code></pre>
+<p>And this in the <code>@RouteConfig</code>:</p>
+<pre><code class="lang-TypeScript">{ path: &quot;/List&quot;, component: ListPage, as: &quot;List&quot; }
+</code></pre>
+<p>Now go to app/shared/user/user.service.ts and add this function:</p>
+<pre><code class="lang-TypeScript">login(user: User) {
+  var headers = new Headers();
+  headers.append(&quot;Content-Type&quot;, &quot;application/json&quot;);
+
+  return this._http.post(
+    Config.apiUrl + &quot;oauth/token&quot;,
+    JSON.stringify({
+      username: user.email,
+      password: user.password,
+      grant_type: &quot;password&quot;
+    }),
+    { headers: headers }
+  )
+  .map(response =&gt; response.json())
+  .do(data =&gt; {
+    Config.token = data.Result.access_token;
+  })
+  .catch(this.handleErrors);
+}
+</code></pre>
+<p>Finally, go to <code>app/login/login.component.ts</code> and change the login function to do this:</p>
+<pre><code class="lang-TypeScript">this._userService.login(this.user)
+  .subscribe(
+    () =&gt; this._router.navigate([&quot;List&quot;]),
+    (error) =&gt; alert(&quot;Unfortunately we could not find your account.&quot;)
+  );
+</code></pre>
+<p>To make this work, in the same file, add this to the top:</p>
+<pre><code class="lang-TypeScript">import {Router} from &quot;angular2/router&quot;;
+</code></pre>
+<p>And this to the constructor:</p>
+<pre><code class="lang-TypeScript">constructor(private _router: Router, private _userService: UserService) {
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>You can login now! And navigate! Show a gif of the navigation. Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.</p>
+<p>Then transition to modules.</p>
 
 			</div>
 			<div class="chapter">

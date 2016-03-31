@@ -939,7 +939,36 @@ export class ListPage {}
 			</div>
 			<div class="chapter">
 				<h2 id="nativescript-modules">NativeScript modules</h2>
-<h3 id="dialog">Dialog</h3>
+<p>Explain what modules are. Should be able to copy content almost verbatim from the current guide.</p>
+<h3 id="ui-elements">UI elements</h3>
+<p>Explain that UI elements are actually NativeScript modules.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>In app/pages/login/login.component.ts, first add these imports:</p>
+<pre><code class="lang-TypeScript">import {topmost} from &quot;ui/frame&quot;;
+import {Page} from &quot;ui/page&quot;;
+</code></pre>
+<p>Then include <code>OnInit</code> in the existing <code>&quot;angular2/core&quot;</code> import:</p>
+<pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
+</code></pre>
+<p>Add the following as a new property in the <code>LoginPage</code> class:</p>
+<pre><code class="lang-TypeScript">page: Page;
+</code></pre>
+<p>Then add the following function to the <code>LoginPage</code> class:</p>
+<pre><code class="lang-TypeScript">ngOnInit() {
+  this.page = &lt;Page&gt;topmost().currentPage;
+  this.page.actionBarHidden = true;
+  this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &quot;res://bg_login&quot;;
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: The <code>this.page.ios</code> check can go away in 2.0. It’s there because of <a href="https://github.com/NativeScript/NativeScript/issues/1788">this bug</a>.</p>
+</blockquote>
+<div class="exercise-end"></div>
+
+<p>Explain what <code>OnInit</code> is. Explain how to look up {N} modules on the docs. Show images of what the app looks like now. Transition to talking about the list page.</p>
 <h3 id="listview">ListView</h3>
 <h3 id="gridlayout">GridLayout</h3>
 <h3 id="activityindicator">ActivityIndicator</h3>

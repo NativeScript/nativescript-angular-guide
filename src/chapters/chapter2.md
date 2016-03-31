@@ -316,7 +316,6 @@ Next, open your app’s `app/pages/login/login.common.css` file and paste in the
 
 ``` CSS
 StackLayout {
-  margin-top: 130;
   margin-left: 30;
   margin-right: 30;
   padding-bottom: 15;

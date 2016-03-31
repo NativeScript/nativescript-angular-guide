@@ -940,7 +940,7 @@ export class ListPage {}
 				<h2 id="nativescript-modules">NativeScript modules</h2>
 <p>Explain what modules are. Should be able to copy content almost verbatim from the current guide.</p>
 <h3 id="ui-elements">UI elements</h3>
-<p>Explain that UI elements are actually NativeScript modules.</p>
+<p>Explain that UI elements are actually NativeScript modules. Say that we’re going to make this app look nice—it’s a native app after all.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: ???
 </h4>
@@ -967,11 +967,35 @@ import {Page} from &quot;ui/page&quot;;
 </blockquote>
 <div class="exercise-end"></div>
 
-<p>Explain what <code>OnInit</code> is. Explain how to look up {N} modules on the docs. Show images of what the app looks like now. Transition to talking about the list page.</p>
+<p>Explain what <code>OnInit</code> is. Explain how to look up {N} modules on the docs. Show images of what the app looks like now.</p>
+<p>Transition to animations</p>
+<h3 id="animations">Animations</h3>
+<p>Talk about animations and the animation module.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/pages/login/login.html</code> and add an <code>id</code> to the <code>&lt;StackLayout&gt;</code>:</p>
+<pre><code class="lang-XML">&lt;StackLayout id=&quot;container&quot;&gt;
+</code></pre>
+<p>Open <code>app/pages/login/login.component.ts</code> and add the following line at the top:</p>
+<pre><code class="lang-TypeScript">import {Color} from &quot;color&quot;;
+</code></pre>
+<p>Change the <code>toggleDisplay()</code> function in the same file to look like this:</p>
+<pre><code class="lang-TypeScript">toggleDisplay() {
+  this.isLoggingIn = !this.isLoggingIn;
+  this.page.getViewById(&quot;container&quot;).animate({
+    backgroundColor: this.isLoggingIn ? new Color(&quot;white&quot;) : new Color(&quot;#301217&quot;),
+    duration: 200
+  });
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Talk about the color module and animation module. Have gifs. Mention that the hint color looks bad, but that we’ll address that later. Transition to talking about the list page.</p>
 <h3 id="listview">ListView</h3>
 <h3 id="gridlayout">GridLayout</h3>
 <h3 id="activityindicator">ActivityIndicator</h3>
-<h3 id="animations">Animations</h3>
 
 			</div>
 			<div class="chapter">

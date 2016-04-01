@@ -8,12 +8,12 @@ Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hand
 
 <div class="intro-box">
   <img src="images/NativeScript_logo.png" class="plain" alt="NativeScript logo">
-  <p>[NativeScript](https://www.nativescript.org/)  is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no [WebViews](http://developer.telerik.com/featured/what-is-a-webview/)—resulting in native-like performance and UX. [Angular JS](https://angularjs.org/) is one of the most popular open source JavaScript frameworks for application development.</p>
+  <p>[NativeScript](https://www.nativescript.org/)  is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no [WebViews](http://developer.telerik.com/featured/what-is-a-webview/)—resulting in native-like performance and UX.</p>
 </div>
 
 <div class="intro-box">
   <img src="images/Angular_logo.png" class="plain" alt="Angular logo">
-  <p>The latest version of Angular, [Angular 2](https://angular.io/), makes it possible to use Angular outside of a web browser, and developers at [Telerik](http://www.telerik.com/) (the company that created and maintains NativeScript) [have been working closely with developers at Google](https://docs.google.com/document/d/1J6fZcVbVa6uONVCJIox2A3Jn5TWgspLufmryfA1OXGk/edit#heading=h.trgonlvb0z3j) to make Angular 2 in NativeScript a reality.</p>
+  <p>[Angular JS](https://angularjs.org/) is one of the most popular open source JavaScript frameworks for application development. The latest version of Angular, [Angular 2](https://angular.io/), makes it possible to use Angular outside of a web browser, and developers at [Telerik](http://www.telerik.com/) (the company that created and maintains NativeScript) [have been working closely with developers at Google](https://docs.google.com/document/d/1J6fZcVbVa6uONVCJIox2A3Jn5TWgspLufmryfA1OXGk/edit#heading=h.trgonlvb0z3j) to make Angular 2 in NativeScript a reality.</p>
 </div>
 
 <div class="intro-box">

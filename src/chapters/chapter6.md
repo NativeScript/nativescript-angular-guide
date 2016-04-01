@@ -78,4 +78,83 @@ Transition to Android API discussion.
 
 ### Accessing Android APIs
 
+Talk about Googling the same sort of thing for Android APIs (setting the hint color).
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Open `app/utils/hint-util.ts` and replace the existing contents of the file with the following code:
+
+``` TypeScript
+import {Color} from "color";
+import {TextField} from "ui/text-field";
+
+declare var android: any;
+declare var NSAttributedString: any;
+declare var NSDictionary: any;
+declare var NSForegroundColorAttributeName: any;
+
+export function setHintColor(args: { view: TextField, color: Color }) {
+  if (args.view.android) {
+    args.view.android.setHintTextColor(args.color.android);
+  }
+  if (args.view.ios) {
+    var dictionary = new NSDictionary(
+      [args.color.ios],
+      [NSForegroundColorAttributeName]
+    );
+    args.view.ios.attributedPlaceholder = NSAttributedString.alloc().initWithStringAttributes(
+      args.view.hint, dictionary);
+  }
+}
+```
+
+<div class="exercise-end"></div>
+
+Talk about what just happened.
+
+TODO: Insert gifs
+
+Transition to status bar discussion
+
 ### Customizing the status bar
+
+Talk about status bars.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Open `app.main.ts` and replace the contents of the file with the following code:
+
+``` TypeScript
+import {nativeScriptBootstrap} from "nativescript-angular/application";
+import {AppComponent} from "./app.component";
+import {setStatusBarColors} from "./utils/status-bar-util";
+
+setStatusBarColors();
+nativeScriptBootstrap(AppComponent);
+```
+
+Next, open `app/platform.ios.css` and paste in the following code:
+
+``` CSS
+Page {
+  margin-top: -20;
+}
+```
+
+<div class="exercise-end"></div>
+
+Talk about what just happened.
+
+TODO: Insert images
+
+And... that's it! You've created a functional, cross-platform, backend-driven app to manage your grocery list. In the process you've created a unique UI for Android and iOS, leveraged NativeScript plugins and npm modules, learned how to log in and register, managed backend services, created a list with add and delete functionality, and more. 
+
+Congratulations! Feel free to [share your accomplishment on Twitter](https://twitter.com/intent/tweet?text=I%20just%20built%20an%20iOS%20and%20Android%20app%20using%20@NativeScript%20%F0%9F%8E%89.%20You%20can%20too!%20http://docs.nativescript.org/start/getting-started%20%23opensource) or [Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdocs.nativescript.org%2Fstart%2Fgetting-started&p%5B) to impress your friends 😀.
+
+> **TIP**:
+> * If you're curious about how NativeScript makes it possible to directly invoke iOS and Android APIs, you can read about [“How NativeScript Works”](http://developer.telerik.com/featured/nativescript-works/) on our blog.
+> * Remember that the [Groceries app's “angular-end” branch](https://github.com/NativeScript/sample-Groceries/tree/angular-end) has the final state of this tutorial. Feel free to refer back to it at any time.

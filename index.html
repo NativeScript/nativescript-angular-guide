@@ -1159,6 +1159,98 @@ export class ListPage implements OnInit {
 
 <p>Show an image of the list with backend-driven data. Talk about how the next step is letting users add to the list.</p>
 <h3 id="gridlayout">GridLayout</h3>
+<p>Introduce what a grid layout actually is. Should be able to copy from the existing guide liberally.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/pages/list/list.html</code> and paste in the following code:</p>
+<pre><code class="lang-XML">&lt;GridLayout rows=&quot;auto, *&quot;&gt;
+
+  &lt;GridLayout row=&quot;0&quot; columns=&quot;*, auto&quot; class=&quot;add-bar&quot;&gt;
+    &lt;TextField id=&quot;grocery&quot; hint=&quot;Enter a grocery item&quot; col=&quot;0&quot;&gt;&lt;/TextField&gt;
+    &lt;Image src=&quot;res://add&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
+  &lt;/GridLayout&gt;
+
+  &lt;ListView [items]=&quot;groceryList&quot; row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
+    &lt;template #item=&quot;item&quot;&gt;
+      &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
+    &lt;/template&gt;
+  &lt;/ListView&gt;
+
+&lt;/GridLayout&gt;
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Show an image of what this looks like first and then break down the syntax in detail.</p>
+<p>Now let’s make the add button actually work.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/pages/list/list.html</code> and give the existing <code>&lt;TextField&gt;</code> a new <code>[(ngModel)]</code> attribute so that it looks like this:</p>
+<pre><code class="lang-XML">&lt;TextField id=&quot;grocery&quot; [(ngModel)]=&quot;grocery&quot; hint=&quot;Enter a grocery item&quot; col=&quot;0&quot;&gt;&lt;/TextField&gt;
+</code></pre>
+<p>Next, give image a new tap attribute binding, so that the full <code>&lt;Image&gt;</code> looks like this:</p>
+<pre><code class="lang-XML">&lt;Image src=&quot;res://add&quot; id=&quot;add-image&quot; (tap)=&quot;add()&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
+</code></pre>
+<p>Next, open <code>app/pages/list/list.component.ts</code> and add the following property to the <code>ListPage</code> class (right below <code>groceryList</code>):</p>
+<pre><code class="lang-TypeScript">grocery: string;
+</code></pre>
+<p>Next, add the following two inputs to the top of the <code>list.component.ts</code> file:</p>
+<pre><code class="lang-TypeScript">import {TextField} from &quot;ui/text-field&quot;;
+import {topmost} from &quot;ui/frame&quot;;
+</code></pre>
+<p>Then, add the following <code>add()</code> function to the existing <code>ListPage</code> class:</p>
+<pre><code class="lang-TypeScript">add() {
+  if (this.grocery.trim() === &quot;&quot;) {
+    alert(&quot;Enter a grocery item&quot;);
+    return;
+  }
+
+  // Dismiss the keyboard
+  var groceryTextField = &lt;TextField&gt;topmost().currentPage.getViewById(&quot;grocery&quot;);
+  groceryTextField.dismissSoftInput();
+
+  this._groceryListService.add(this.grocery)
+    .subscribe(
+      groceryObject =&gt; {
+        this.groceryList.unshift(groceryObject);
+        this.grocery = &quot;&quot;;
+      },
+      () =&gt; {
+        alert({
+          message: &quot;An error occurred while adding an item to your list.&quot;,
+          okButtonText: &quot;OK&quot;
+        });
+        this.grocery = &quot;&quot;;
+      }
+    )
+}
+</code></pre>
+<p>Finally, open <code>app/shared/grocery/grocery-list.service.ts</code> and paste the following function into the <code>GroceryService</code> class:</p>
+<pre><code class="lang-TypeScript">add(name: string) {
+  var headers = new Headers();
+  headers.append(&quot;Authorization&quot;, &quot;Bearer &quot; + Config.token);
+  headers.append(&quot;Content-Type&quot;, &quot;application/json&quot;);
+
+  return this._http.post(
+    Config.apiUrl + &quot;Groceries&quot;,
+    JSON.stringify({ Name: name }),
+    { headers: headers }
+  )
+  .map(res =&gt; res.json())
+  .map(data =&gt; {
+    return new Grocery(data.Result.Id, name);
+  })
+  .catch(this.handleErrors);
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Remind people that the final code for the tutorial is up on GitHub.</p>
+<p>Talk about the code you just wrote.</p>
+<p>Show a gif of the page in action.</p>
 <h3 id="activityindicator">ActivityIndicator</h3>
 
 			</div>

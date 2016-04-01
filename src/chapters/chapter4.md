@@ -301,6 +301,125 @@ Show an image of the list with backend-driven data. Talk about how the next step
 
 ### GridLayout
 
+Introduce what a grid layout actually is. Should be able to copy from the existing guide liberally.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Open `app/pages/list/list.html` and paste in the following code:
+
+``` XML
+<GridLayout rows="auto, *">
+
+  <GridLayout row="0" columns="*, auto" class="add-bar">
+    <TextField id="grocery" hint="Enter a grocery item" col="0"></TextField>
+    <Image src="res://add" col="1"></Image>
+  </GridLayout>
+
+  <ListView [items]="groceryList" row="1" class="small-spacing">
+    <template #item="item">
+      <Label [text]="item.name" class="medium-spacing"></Label>
+    </template>
+  </ListView>
+
+</GridLayout>
+```
+
+<div class="exercise-end"></div>
+
+Show an image of what this looks like first and then break down the syntax in detail.
+
+Now let’s make the add button actually work.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Open `app/pages/list/list.html` and give the existing `<TextField>` a new `[(ngModel)]` attribute so that it looks like this:
+
+``` XML
+<TextField id="grocery" [(ngModel)]="grocery" hint="Enter a grocery item" col="0"></TextField>
+```
+
+Next, give image a new tap attribute binding, so that the full `<Image>` looks like this:
+
+``` XML
+<Image src="res://add" id="add-image" (tap)="add()" col="1"></Image>
+```
+
+Next, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below `groceryList`):
+
+``` TypeScript
+grocery: string;
+```
+
+Next, add the following two inputs to the top of the `list.component.ts` file:
+
+``` TypeScript
+import {TextField} from "ui/text-field";
+import {topmost} from "ui/frame";
+```
+
+Then, add the following `add()` function to the existing `ListPage` class:
+
+``` TypeScript
+add() {
+  if (this.grocery.trim() === "") {
+    alert("Enter a grocery item");
+    return;
+  }
+
+  // Dismiss the keyboard
+  var groceryTextField = <TextField>topmost().currentPage.getViewById("grocery");
+  groceryTextField.dismissSoftInput();
+
+  this._groceryListService.add(this.grocery)
+    .subscribe(
+      groceryObject => {
+        this.groceryList.unshift(groceryObject);
+        this.grocery = "";
+      },
+      () => {
+        alert({
+          message: "An error occurred while adding an item to your list.",
+          okButtonText: "OK"
+        });
+        this.grocery = "";
+      }
+    )
+}
+```
+
+Finally, open `app/shared/grocery/grocery-list.service.ts` and paste the following function into the `GroceryService` class:
+
+``` TypeScript
+add(name: string) {
+  var headers = new Headers();
+  headers.append("Authorization", "Bearer " + Config.token);
+  headers.append("Content-Type", "application/json");
+
+  return this._http.post(
+    Config.apiUrl + "Groceries",
+    JSON.stringify({ Name: name }),
+    { headers: headers }
+  )
+  .map(res => res.json())
+  .map(data => {
+    return new Grocery(data.Result.Id, name);
+  })
+  .catch(this.handleErrors);
+}
+```
+
+<div class="exercise-end"></div>
+
+Remind people that the final code for the tutorial is up on GitHub.
+
+Talk about the code you just wrote.
+
+Show a gif of the page in action.
+
 ### ActivityIndicator
 
 

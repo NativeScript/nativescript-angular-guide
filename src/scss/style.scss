@@ -48,6 +48,17 @@ a:hover {
 	color: #333;
 	background: #f8f8f8;
 }
+
+.intro-box {
+	display: flex;
+	align-items: center;
+	img {
+		flex: 0 0 150px;
+		height: 150px;
+		margin-right: 1em;
+	}
+}
+
 strong{
 	font-size:1.2em;
 }

@@ -16,9 +16,10 @@
 	var toc = $("#toc-padding");
 	$(".chapter").each(function(chapterNumber) {
 		$(this).find("h2").each(function() {
+			var valueToPrepend = chapterNumber === 0 ? "" : "<strong>" + chapterNumber + ". </strong>";
 			$(this)
 				.attr("id", "chapter" + chapterNumber)
-				.prepend("<strong>" + chapterNumber + ". </strong>");
+				.prepend(valueToPrepend);
 			toc.append("<h5><a href='#chapter" + chapterNumber + "'>" +
 				$(this).html() + "</a></h5>");
 		});

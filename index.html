@@ -572,7 +572,7 @@ Button, TextField {
 
 <p>In <code>app/app.component.ts</code> replace the current <code>AppComponent</code> declaration with the one shown below, which adds a new <code>email</code> property, and changes the <code>submit()</code> method to display its value:</p>
 <pre><code class="lang-TypeScript">export class AppComponent {
-  email = &quot;nativescriptrocks@telerik.com&quot;;
+  email = &quot;user@nativescript.org&quot;;
   submit() {
     alert(&quot;You’re using: &quot; + this.email);
   }
@@ -619,7 +619,7 @@ Button, TextField {
 </code></pre>
 <p>app.component.ts - Use this for the AppComponent class:</p>
 <pre><code class="lang-TypeScript">export class AppComponent {
-  email = &quot;nativescriptrocks@telerik.com&quot;;
+  email = &quot;user@nativescript.org&quot;;
   isLoggingIn = true;
 
   submit() {
@@ -788,7 +788,7 @@ signUp() {
 <p>Create an account, then hardcode those credentials in your constructor to make testing easier:</p>
 <pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
   this.user = new User();
-  this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
+  this.user.email = &quot;user@nativescript.org&quot;;
   this.user.password = &quot;password&quot;;
 }
 </code></pre>
@@ -810,7 +810,7 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {
     this.user = new User();
-    this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
+    this.user.email = &quot;user@nativescript.org&quot;;
     this.user.password = &quot;password&quot;;
   }
   submit() {
@@ -994,6 +994,170 @@ import {Page} from &quot;ui/page&quot;;
 
 <p>Talk about the color module and animation module. Have gifs. Mention that the hint color looks bad, but that we’ll address that later. Transition to talking about the list page.</p>
 <h3 id="listview">ListView</h3>
+<p>Talk about what list views are.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/pages/list/list.html</code> and paste in the following code:</p>
+<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; class=&quot;small-spacing&quot;&gt;
+  &lt;template #item=&quot;item&quot;&gt;
+    &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
+  &lt;/template&gt;
+&lt;/ListView&gt;
+</code></pre>
+<p>We’ll talk about the syntax in a moment, for now concentrate on the new <code>class</code> attribute. Open <code>app/app.css</code> and paste the following code at the bottom of the file:</p>
+<pre><code class="lang-CSS">.small-spacing {
+  margin: 5;
+}
+.medium-spacing {
+  margin: 10;
+}
+</code></pre>
+<p>Next, open <code>app/pages/list/list.component.ts</code> and paste in the following code:</p>
+<pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
+
+@Component({
+  selector: &quot;list&quot;,
+  templateUrl: &quot;pages/list/list.html&quot;,
+  styleUrls: [&quot;pages/list/list-common.css&quot;, &quot;pages/list/list.css&quot;]
+})
+export class ListPage implements OnInit {
+  groceryList: Array&lt;Object&gt; = [];
+
+  ngOnInit() {
+    this.groceryList.push({ name: &quot;Apples&quot; });
+    this.groceryList.push({ name: &quot;Bananas&quot; });
+    this.groceryList.push({ name: &quot;Oranges&quot; });
+  }
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Break down the new XML and TypeScript code individually.</p>
+<p>This list is hardcoded which isn’t a whole lot of fun.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/shared/grocery/grocery.ts</code> and paste in the following code:</p>
+<pre><code class="lang-TypeScript">export class Grocery {
+  constructor(public id: string, public name: string) {}
+}
+</code></pre>
+<p>Open <code>app/shared/grocery/grocery-list.service.ts</code> and paste in the following code:</p>
+<pre><code class="lang-TypeScript">import {Injectable} from &quot;angular2/core&quot;;
+import {Http, Headers} from &quot;angular2/http&quot;;
+import {Config} from &quot;../config&quot;;
+import {Grocery} from &quot;./grocery&quot;;
+import {Observable} from &quot;rxjs/Rx&quot;;
+import &quot;rxjs/add/operator/map&quot;;
+
+@Injectable()
+export class GroceryListService {
+  constructor(private _http: Http) {}
+
+  load() {
+    var headers = new Headers();
+    headers.append(&quot;Authorization&quot;, &quot;Bearer &quot; + Config.token);
+
+    return this._http.get(Config.apiUrl + &quot;Groceries&quot;, {
+      headers: headers
+    })
+    .map(res =&gt; res.json())
+    .map(data =&gt; {
+      var groceryList = [];
+      data.Result.forEach((grocery) =&gt; {
+        groceryList.push(new Grocery(grocery.Id, grocery.Name));
+      });
+      return groceryList;
+    })
+    .catch(this.handleErrors);
+  }
+
+  handleErrors(error: Response) {
+    console.log(JSON.stringify(error.json()));
+    return Observable.throw(error);
+  }
+}
+</code></pre>
+<p>Open <code>app/pages/list/list.component.ts</code> and add the following two lines to the top of the file:</p>
+<pre><code class="lang-TypeScript">import {Grocery} from &quot;../../shared/grocery/grocery&quot;;
+import {GroceryListService} from &quot;../../shared/grocery/grocery-list.service&quot;;
+</code></pre>
+<p>Next, change the existing <code>groceryList</code> declaration to use the newly imported <code>Grocery</code> class instead of a generic <code>Object</code>:</p>
+<pre><code class="lang-TypeScript">groceryList: Array&lt;Grocery&gt; = [];
+</code></pre>
+<p>Then, add the following <code>constructor</code> function within the <code>ListPage</code> class:</p>
+<pre><code class="lang-TypeScript">constructor(private _groceryListService: GroceryListService) {}
+</code></pre>
+<p>Because we’re injecting a service we must also add it as a provider within our component decorator:</p>
+<pre><code class="lang-TypeScript">@Component({
+  selector: &quot;list&quot;,
+  templateUrl: &quot;pages/list/list.html&quot;,
+  styleUrls: [&quot;pages/list/list-common.css&quot;, &quot;pages/list/list.css&quot;],
+  providers: [GroceryListService]
+})
+</code></pre>
+<p>Finally, replace the existing <code>ngOnInit()</code> function with the code below:</p>
+<pre><code class="lang-TypeScript">ngOnInit() {
+  this._groceryListService.load()
+    .subscribe(loadedGroceries =&gt; {
+      loadedGroceries.forEach((groceryObject) =&gt; {
+        this.groceryList.unshift(groceryObject);
+      });
+    });
+}
+</code></pre>
+<p>The full version of your <code>app/pages/list/list.component.ts</code> file should now look like this:</p>
+<pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
+
+import {Grocery} from &quot;../../shared/grocery/grocery&quot;;
+import {GroceryListService} from &quot;../../shared/grocery/grocery-list.service&quot;;
+
+@Component({
+  selector: &quot;list&quot;,
+  templateUrl: &quot;pages/list/list.html&quot;,
+  styleUrls: [&quot;pages/list/list-common.css&quot;, &quot;pages/list/list.css&quot;],
+  providers: [GroceryListService]
+})
+export class ListPage implements OnInit {
+  groceryList: Array&lt;Grocery&gt; = [];
+
+  constructor(private _groceryListService: GroceryListService) {}
+
+  ngOnInit() {
+    this._groceryListService.load()
+      .subscribe(loadedGroceries =&gt; {
+        loadedGroceries.forEach((groceryObject) =&gt; {
+          this.groceryList.unshift(groceryObject);
+        });
+      });
+  }
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Talk about the code you just added. But then note that if you try the code, you’ll get an exception about no provider for Http. Talk about best practices of where to declare shared providers. Let’s fix the problem now.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/pages/login/login.component.ts</code> and <em>remove</em> the following line from the top of the file:</p>
+<pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
+</code></pre>
+<p>Next, in the same file, remove <code>HTTP_PROVIDERS</code> from the component decorator’s <code>providers</code> array. The array should now look this like:</p>
+<pre><code class="lang-TypeScript">providers: [UserService]
+</code></pre>
+<p>After that, open <code>app/app.component.ts</code> and <em>add</em> the following import to the top of the file:</p>
+<pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
+</code></pre>
+<p>Finally, add <code>HTTP_PROVIDERS</code> to the <code>AppComponent</code> decorator’s <code>providers</code> array so that it looks like this:</p>
+<pre><code class="lang-TypeScript">providers: [HTTP_PROVIDERS, NS_ROUTER_PROVIDERS],
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Show an image of the list with backend-driven data. Talk about how the next step is letting users add to the list.</p>
 <h3 id="gridlayout">GridLayout</h3>
 <h3 id="activityindicator">ActivityIndicator</h3>
 

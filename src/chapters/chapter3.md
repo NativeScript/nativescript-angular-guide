@@ -54,7 +54,7 @@ In `app/app.component.ts` replace the current `AppComponent` declaration with th
 
 ``` TypeScript
 export class AppComponent {
-  email = "nativescriptrocks@telerik.com";
+  email = "user@nativescript.org";
   submit() {
     alert("You’re using: " + this.email);
   }
@@ -123,7 +123,7 @@ app.component.ts - Use this for the AppComponent class:
 
 ``` TypeScript
 export class AppComponent {
-  email = "nativescriptrocks@telerik.com";
+  email = "user@nativescript.org";
   isLoggingIn = true;
 
   submit() {
@@ -345,7 +345,7 @@ Create an account, then hardcode those credentials in your constructor to make t
 ``` TypeScript
 constructor(private _userService: UserService) {
   this.user = new User();
-  this.user.email = "nativescriptrocks@telerik.com";
+  this.user.email = "user@nativescript.org";
   this.user.password = "password";
 }
 ```
@@ -370,7 +370,7 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {
     this.user = new User();
-    this.user.email = "nativescriptrocks@telerik.com";
+    this.user.email = "user@nativescript.org";
     this.user.password = "password";
   }
   submit() {

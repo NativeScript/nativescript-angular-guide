@@ -94,7 +94,7 @@ Talk about what list views are.
 Open `app/pages/list/list.html` and paste in the following code:
 
 ``` XML
-<ListView [items]="groceryList" class="small-spacing">
+<ListView [items]="groceryList" id="grocery-list" class="small-spacing">
   <template #item="item">
     <Label [text]="item.name" class="medium-spacing"></Label>
   </template>
@@ -317,7 +317,7 @@ Open `app/pages/list/list.html` and paste in the following code:
     <Image src="res://add" col="1"></Image>
   </GridLayout>
 
-  <ListView [items]="groceryList" row="1" class="small-spacing">
+  <ListView [items]="groceryList" id="grocery-list" row="1" class="small-spacing">
     <template #item="item">
       <Label [text]="item.name" class="medium-spacing"></Label>
     </template>
@@ -420,8 +420,79 @@ Talk about the code you just wrote.
 
 Show a gif of the page in action.
 
+Let’s make the page look a little nicer.
+
 ### ActivityIndicator
 
+Introduce the activity indicator.
 
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
 
+Open up `app/pages/list/list.html` and paste the following line immediately before the final `</GridLayout>`:
 
+``` XML
+<ActivityIndicator [busy]="isLoading" row="1"></ActivityIndicator>
+```
+
+Next, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (immediately under `grocery: string`):
+
+``` TypeScript
+isLoading = false;
+```
+
+Then, change the existing `ngOnInit()` function to use the code below:
+
+``` TypeScript
+ngOnInit() {
+  this.isLoading = true;
+  this._groceryListService.load()
+    .subscribe(loadedGroceries => {
+      loadedGroceries.forEach((groceryObject) => {
+        this.groceryList.unshift(groceryObject);
+      });
+      this.isLoading = false;
+    });
+}
+```
+
+<div class="exercise-end"></div>
+
+Talk about how that works, then introduce how an animation can add a little polish.
+
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+Open `app/pages/list/list-common.css` and paste the following CSS at the top of the file:
+
+``` CSS
+ListView {
+  opacity: 0;
+}
+```
+
+Next, open `app/pages/list/list-component.ts` and add replace the existing `ngOnInit()` function with the following code:
+
+``` TypeScript
+ngOnInit() {
+  this.isLoading = true;
+  this._groceryListService.load()
+    .subscribe(loadedGroceries => {
+      loadedGroceries.forEach((groceryObject) => {
+        this.groceryList.unshift(groceryObject);
+      });
+      this.isLoading = false;
+      var groceryList = topmost().currentPage.getViewById("grocery-list");
+      groceryList.animate({
+        opacity: 1,
+        duration: 1000
+      });
+    });
+}
+```
+
+<div class="exercise-end"></div>
+
+Talk about what happened. Include a gif. Transition to talking about npm modules and {N} plugins.

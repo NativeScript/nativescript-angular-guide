@@ -1000,7 +1000,7 @@ import {Page} from &quot;ui/page&quot;;
 </h4>
 
 <p>Open <code>app/pages/list/list.html</code> and paste in the following code:</p>
-<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; class=&quot;small-spacing&quot;&gt;
+<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; class=&quot;small-spacing&quot;&gt;
   &lt;template #item=&quot;item&quot;&gt;
     &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
   &lt;/template&gt;
@@ -1172,7 +1172,7 @@ export class ListPage implements OnInit {
     &lt;Image src=&quot;res://add&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
   &lt;/GridLayout&gt;
 
-  &lt;ListView [items]=&quot;groceryList&quot; row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
+  &lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
     &lt;template #item=&quot;item&quot;&gt;
       &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
     &lt;/template&gt;
@@ -1251,7 +1251,63 @@ import {topmost} from &quot;ui/frame&quot;;
 <p>Remind people that the final code for the tutorial is up on GitHub.</p>
 <p>Talk about the code you just wrote.</p>
 <p>Show a gif of the page in action.</p>
+<p>Let’s make the page look a little nicer.</p>
 <h3 id="activityindicator">ActivityIndicator</h3>
+<p>Introduce the activity indicator.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open up <code>app/pages/list/list.html</code> and paste the following line immediately before the final <code>&lt;/GridLayout&gt;</code>:</p>
+<pre><code class="lang-XML">&lt;ActivityIndicator [busy]=&quot;isLoading&quot; row=&quot;1&quot;&gt;&lt;/ActivityIndicator&gt;
+</code></pre>
+<p>Next, open <code>app/pages/list/list.component.ts</code> and add the following property to the <code>ListPage</code> class (immediately under <code>grocery: string</code>):</p>
+<pre><code class="lang-TypeScript">isLoading = false;
+</code></pre>
+<p>Then, change the existing <code>ngOnInit()</code> function to use the code below:</p>
+<pre><code class="lang-TypeScript">ngOnInit() {
+  this.isLoading = true;
+  this._groceryListService.load()
+    .subscribe(loadedGroceries =&gt; {
+      loadedGroceries.forEach((groceryObject) =&gt; {
+        this.groceryList.unshift(groceryObject);
+      });
+      this.isLoading = false;
+    });
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Talk about how that works, then introduce how an animation can add a little polish.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/pages/list/list-common.css</code> and paste the following CSS at the top of the file:</p>
+<pre><code class="lang-CSS">ListView {
+  opacity: 0;
+}
+</code></pre>
+<p>Next, open <code>app/pages/list/list-component.ts</code> and add replace the existing <code>ngOnInit()</code> function with the following code:</p>
+<pre><code class="lang-TypeScript">ngOnInit() {
+  this.isLoading = true;
+  this._groceryListService.load()
+    .subscribe(loadedGroceries =&gt; {
+      loadedGroceries.forEach((groceryObject) =&gt; {
+        this.groceryList.unshift(groceryObject);
+      });
+      this.isLoading = false;
+      var groceryList = topmost().currentPage.getViewById(&quot;grocery-list&quot;);
+      groceryList.animate({
+        opacity: 1,
+        duration: 1000
+      });
+    });
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Talk about what happened. Include a gif. Transition to talking about npm modules and {N} plugins.</p>
 
 			</div>
 			<div class="chapter">

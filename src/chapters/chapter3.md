@@ -64,7 +64,7 @@ export class AppComponent {
 Next, find the first `<TextField>` in your component’s `template` and replace it with the code below, which adds a new `text` attribute:
 
 ``` XML
-<TextField hint="Email Address" keyboardType="email" [text]="email"
+<TextField hint="Email Address" id="email" keyboardType="email" [text]="email"
   autocorrect="false" autocapitalizationType="none"></TextField>
 ```
 
@@ -92,7 +92,7 @@ To fix this, you need to switch to Angular 2’s two-way data binding syntax.
 In `app/app.component.ts`, find the find the first `<TextField>`, and replace it with the `<TextField>` below, which introduces a new `[(ngModel)]` attribute:
 
 ``` XML
-<TextField hint="Email Address" keyboardType="email" [(ngModel)]="email"
+<TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="email"
   autocorrect="false" autocapitalizationType="none"></TextField>
 ```
 
@@ -198,9 +198,9 @@ Instead of storing data on the `AppComponent` directly, you’re now using the `
 Your final step is to use this new model object in your template. To do that, replace the two existing `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
 
 ``` XML
-<TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
+<TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="user.email"
   autocorrect="false" autocapitalizationType="none"></TextField>
-<TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
+<TextField hint="Password" id="password" secure="true" [(ngModel)]="user.password"></TextField>
 ```
 
 TODO: Better explanation. Move the full template into the login.html file and use `templateUrl`. 

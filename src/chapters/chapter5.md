@@ -4,7 +4,7 @@ As you build more complex apps, you'll likely run into functionality that is not
 
 In this chapter, you'll install and use and external email validator module to verify the format of email addresses as they are entered on the registration screen. Then, you'll add a NativeScript plugin, [NativeScript social share](https://www.npmjs.com/package/nativescript-social-share), to let users share their grocery lists using their device's native sharing widget.
 
-### Using an npm module in your app
+### Using npm modules
 
 It would be nice to be able to make sure people are entering well-formatted email addresses into your app on the registration screen. You could write this functionality yourself, but validating email addresses is [surprisingly tricky](http://stackoverflow.com/questions/46155/validate-email-address-in-javascript), and it's a lot easier to use one of many npm modules that already provide this validation. For Groceries let's see how to add this [email-validator module](https://www.npmjs.com/package/email-validator) to test for valid addresses.
 
@@ -87,7 +87,7 @@ In general npm modules greatly expand the number of things you're able to do in 
 
 > **WARNING**: Not all npm modules work in NativeScript apps. Specifically, modules that depend on Node.js or browser APIs will not work, as those APIs do not exist in NativeScript. The NativeScript wiki contains a [list of some of the more popular npm modules that have been verified to work in NativeScript apps](https://github.com/NativeScript/NativeScript/wiki/supported-npm-modules).
 
-### Using a NativeScript plugin in your app
+### Using NativeScript plugins
 
 NativeScript plugins are npm modules that have the added ability to run native code and use iOS and Android frameworks. Because NativeScript plugins are just npm modules, a lot of the techniques you learned in the previous section still apply. The one big difference is in the command you use to install plugins. Let's look at how it works by installing the NativeScript social share plugin.
 

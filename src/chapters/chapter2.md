@@ -138,9 +138,9 @@ Open `app/app.component.ts` and replace the existing `@Component` with the follo
 @Component({
   selector: "my-app",
   template: `
-    <TextField hint="Email Address" keyboardType="email"
+    <TextField hint="Email Address" id="email" keyboardType="email"
       autocorrect="false" autocapitalizationType="none"></TextField>
-    <TextField hint="Password" secure="true"></TextField>
+    <TextField hint="Password" id="password" secure="true"></TextField>
 
     <Button text="Sign in"></Button>
     <Button text="Sign up for Groceries"></Button>
@@ -195,9 +195,9 @@ In `app.component.ts`, add a `<StackLayout>` element within your component’s `
   selector: "my-app",
   template: `
     <StackLayout>
-      <TextField hint="Email Address" keyboardType="email"
+      <TextField hint="Email Address" id="email" keyboardType="email"
         autocorrect="false" autocapitalizationType="none"></TextField>
-      <TextField hint="Password" secure="true"></TextField>
+      <TextField hint="Password" id="password" secure="true"></TextField>
 
       <Button text="Sign in"></Button>
       <Button text="Sign up for Groceries"></Button>
@@ -300,9 +300,9 @@ Open your app’s `app/app.component.ts` file and add a `styleUrls` property suc
   selector: "my-app",
   template: `
     <StackLayout>
-      <TextField hint="Email Address" keyboardType="email"
+      <TextField hint="Email Address" id="email" keyboardType="email"
         autocorrect="false" autocapitalizationType="none"></TextField>
-      <TextField hint="Password" secure="true"></TextField>
+      <TextField hint="Password" id="password" secure="true"></TextField>
 
       <Button text="Sign in"></Button>
       <Button text="Sign up for Groceries"></Button>

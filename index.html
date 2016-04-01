@@ -310,9 +310,9 @@ export class AppComponent {}
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
-    &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
+    &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot;
       autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-    &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+    &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
     &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
     &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
@@ -365,9 +365,9 @@ export class AppComponent {}
   selector: &quot;my-app&quot;,
   template: `
     &lt;StackLayout&gt;
-      &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
+      &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot;
         autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-      &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+      &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
       &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
       &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
@@ -450,9 +450,9 @@ TextField {
   selector: &quot;my-app&quot;,
   template: `
     &lt;StackLayout&gt;
-      &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
+      &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot;
         autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-      &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+      &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
       &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
       &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
@@ -579,7 +579,7 @@ Button, TextField {
 }
 </code></pre>
 <p>Next, find the first <code>&lt;TextField&gt;</code> in your component’s <code>template</code> and replace it with the code below, which adds a new <code>text</code> attribute:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [text]=&quot;email&quot;
+<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [text]=&quot;email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <div class="exercise-end"></div>
@@ -599,7 +599,7 @@ Button, TextField {
 </h4>
 
 <p>In <code>app/app.component.ts</code>, find the find the first <code>&lt;TextField&gt;</code>, and replace it with the <code>&lt;TextField&gt;</code> below, which introduces a new <code>[(ngModel)]</code> attribute:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;email&quot;
+<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <div class="exercise-end"></div>
@@ -671,9 +671,9 @@ Button, TextField {
 </code></pre>
 <p>Instead of storing data on the <code>AppComponent</code> directly, you’re now using the <code>User</code> model object, which is reusable outside of this page and even outside of this application. You instantiate an instance of the <code>User</code> class in a new <code>constructor</code> function, which Angular 2 invokes when it bootstraps your application.</p>
 <p>Your final step is to use this new model object in your template. To do that, replace the two existing <code>&lt;TextField&gt;</code>s with the code shown below, which updates the <code>[(ngModel)]</code> bindings to point at the new <code>User</code> object:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
+<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-&lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
+&lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <p>TODO: Better explanation. Move the full template into the login.html file and use <code>templateUrl</code>. </p>
 <p>If you got lost during this section, here’s a copy-and-paste friendly version of the full <code>app.component.ts</code> you should have at this point:</p>
@@ -1314,7 +1314,7 @@ import {topmost} from &quot;ui/frame&quot;;
 				<h2 id="plugins-and-npm-modules">Plugins and npm modules</h2>
 <p>As you build more complex apps, you&#39;ll likely run into functionality that is not implemented in the NativeScript modules. But no worries, as NativeScript lets you leverage <a href="https://www.npmjs.com/">npm</a> (node package manager) to import npm modules into your apps. Alternately, you can install NativeScript plugins, which are simply npm modules that can access native code and use Android and iOS SDKs, if required. </p>
 <p>In this chapter, you&#39;ll install and use and external email validator module to verify the format of email addresses as they are entered on the registration screen. Then, you&#39;ll add a NativeScript plugin, <a href="https://www.npmjs.com/package/nativescript-social-share">NativeScript social share</a>, to let users share their grocery lists using their device&#39;s native sharing widget.</p>
-<h3 id="using-an-npm-module-in-your-app">Using an npm module in your app</h3>
+<h3 id="using-npm-modules">Using npm modules</h3>
 <p>It would be nice to be able to make sure people are entering well-formatted email addresses into your app on the registration screen. You could write this functionality yourself, but validating email addresses is <a href="http://stackoverflow.com/questions/46155/validate-email-address-in-javascript">surprisingly tricky</a>, and it&#39;s a lot easier to use one of many npm modules that already provide this validation. For Groceries let&#39;s see how to add this <a href="https://www.npmjs.com/package/email-validator">email-validator module</a> to test for valid addresses.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Install the email validator module
@@ -1376,7 +1376,7 @@ export class User {
 <blockquote>
 <p><strong>WARNING</strong>: Not all npm modules work in NativeScript apps. Specifically, modules that depend on Node.js or browser APIs will not work, as those APIs do not exist in NativeScript. The NativeScript wiki contains a <a href="https://github.com/NativeScript/NativeScript/wiki/supported-npm-modules">list of some of the more popular npm modules that have been verified to work in NativeScript apps</a>.</p>
 </blockquote>
-<h3 id="using-a-nativescript-plugin-in-your-app">Using a NativeScript plugin in your app</h3>
+<h3 id="using-nativescript-plugins">Using NativeScript plugins</h3>
 <p>NativeScript plugins are npm modules that have the added ability to run native code and use iOS and Android frameworks. Because NativeScript plugins are just npm modules, a lot of the techniques you learned in the previous section still apply. The one big difference is in the command you use to install plugins. Let&#39;s look at how it works by installing the NativeScript social share plugin.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Install the social sharing plugin
@@ -1432,9 +1432,63 @@ export class User {
 
 			</div>
 			<div class="chapter">
-				<h2 id="running-native-code">Running native code</h2>
-<h3 id="accessing-native-apis">Accessing native APIs</h3>
-<h3 id="branching-ios-android-code">Branching iOS &amp; Android code</h3>
+				<h2 id="accessing-native-apis">Accessing native APIs</h2>
+<p>The beauty of NativeScript is that you can write a native iOS or Android app in JavaScript, XML, and CSS without touching Swift, Objective-C, or Java, if you choose. But what if you want to present a different, more platform-specific UI to your users? Or if you want to access an iOS or Android API that NativeScript doesn&#39;t expose through a NativeScript module or plugin?</p>
+<p>NativeScript gives you the option to dig into native code as needed, and to do so without leaving JavaScript. To show how this works in action, let&#39;s tweak a few of the UI elements in your app using native code.</p>
+<h3 id="accessing-ios-apis">Accessing iOS APIs</h3>
+<p>Ask the reader to remember that the hint text color in the app doesn’t look good.</p>
+<p>Show images.</p>
+<p>Explain how NativeScript doesn’t currently expose a way to style a text field’s hint color (although <a href="https://github.com/NativeScript/NativeScript/issues/712">there is an open issue requesting the feature</a>).</p>
+<p>Show how you can Google something like “style UITextField hint text” and find iOS code that accomplishes that task.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: ???
+</h4>
+
+<p>Open <code>app/utils/hint-util.ts</code> and paste in the following code:</p>
+<pre><code class="lang-TypeScript">import {Color} from &quot;color&quot;;
+import {TextField} from &quot;ui/text-field&quot;;
+
+declare var NSAttributedString: any;
+declare var NSDictionary: any;
+declare var NSForegroundColorAttributeName: any;
+
+export function setHintColor(args: { view: TextField, color: Color }) {
+  var dictionary = new NSDictionary(
+    [args.color.ios],
+    [NSForegroundColorAttributeName]
+  );
+  args.view.ios.attributedPlaceholder = NSAttributedString.alloc().initWithStringAttributes(
+    args.view.hint, dictionary);
+}
+</code></pre>
+<p>Next, open up <code>app/pages/login/login.component.ts</code> and paste in the following imports at the top of the file:</p>
+<pre><code class="lang-TypeScript">import {setHintColor} from &quot;../../utils/hint-util&quot;;
+import {TextField} from &quot;ui/text-field&quot;;
+</code></pre>
+<p>After that, add the following function to the file’s <code>LoginPage</code> class:</p>
+<pre><code class="lang-TypeScript">setTextFieldColors() {
+  var email = &lt;TextField&gt;this.page.getViewById(&quot;email&quot;);
+  var password = &lt;TextField&gt;this.page.getViewById(&quot;password&quot;);
+
+  var mainTextColor = new Color(this.isLoggingIn ? &quot;black&quot; : &quot;#C4AFB4&quot;);
+  email.color = mainTextColor;
+  password.color = mainTextColor;
+
+  var hintColor = new Color(this.isLoggingIn ? &quot;#ACA6A7&quot; : &quot;#C4AFB4&quot;);
+  setHintColor({ view: email, color: hintColor });
+  setHintColor({ view: password, color: hintColor });
+}
+</code></pre>
+<p>Finally, add a call to the new <code>setTextFieldColors()</code> in <code>toggleDisplay()</code>, immediately after the existing <code>this.isLoggingIn = !this.isLoggingIn</code> line:</p>
+<pre><code class="lang-TypeScript">this.setTextFieldColors();
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Talk about what just happened.</p>
+<p>TODO: Insert gifs</p>
+<p>Transition to Android API discussion.</p>
+<h3 id="accessing-android-apis">Accessing Android APIs</h3>
+<h3 id="customizing-the-status-bar">Customizing the status bar</h3>
 
 			</div>
 			<div class="chapter">

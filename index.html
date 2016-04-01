@@ -1312,8 +1312,123 @@ import {topmost} from &quot;ui/frame&quot;;
 			</div>
 			<div class="chapter">
 				<h2 id="plugins-and-npm-modules">Plugins and npm modules</h2>
-<h3 id="npm-modules">npm modules</h3>
-<h3 id="nativescript-plugins">NativeScript plugins</h3>
+<p>As you build more complex apps, you&#39;ll likely run into functionality that is not implemented in the NativeScript modules. But no worries, as NativeScript lets you leverage <a href="https://www.npmjs.com/">npm</a> (node package manager) to import npm modules into your apps. Alternately, you can install NativeScript plugins, which are simply npm modules that can access native code and use Android and iOS SDKs, if required. </p>
+<p>In this chapter, you&#39;ll install and use and external email validator module to verify the format of email addresses as they are entered on the registration screen. Then, you&#39;ll add a NativeScript plugin, <a href="https://www.npmjs.com/package/nativescript-social-share">NativeScript social share</a>, to let users share their grocery lists using their device&#39;s native sharing widget.</p>
+<h3 id="using-an-npm-module-in-your-app">Using an npm module in your app</h3>
+<p>It would be nice to be able to make sure people are entering well-formatted email addresses into your app on the registration screen. You could write this functionality yourself, but validating email addresses is <a href="http://stackoverflow.com/questions/46155/validate-email-address-in-javascript">surprisingly tricky</a>, and it&#39;s a lot easier to use one of many npm modules that already provide this validation. For Groceries let&#39;s see how to add this <a href="https://www.npmjs.com/package/email-validator">email-validator module</a> to test for valid addresses.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Install the email validator module
+</h4>
+
+<p>Return to your terminal and make sure that you are working in the root directory in your Groceries project folder, a.k.a. here:</p>
+<div class="no-copy-button"></div>
+
+<pre><code>sample-Groceries &lt;----------------
+    ├── app
+    │   └── ...
+    ├── package.json
+    └── platforms
+        ├── android
+        └── ios
+</code></pre><p>From the root directory install the email-validator module:</p>
+<pre><code>npm install email-validator --save
+</code></pre><div class="exercise-end"></div>
+
+<p>The install process does a few things in the background. First, because you added the <code>--save</code> flag, npm records this dependency in your app&#39;s <code>package.json</code>. If you open your <code>package.json</code> you should see <code>&quot;email-validator&quot;</code> in your app&#39;s <code>&quot;dependencies&quot;</code> array.</p>
+<pre><code class="lang-JavaScript">&quot;dependencies&quot;: {
+  &quot;email-validator&quot;: &quot;^1.0.4&quot;
+}
+</code></pre>
+<p>The npm CLI also creates a <code>node_modules</code> folder in the root of your app. This folder contains the code for the email-validator module, which is a bit of validation logic in <code>node_modules/email_validator/index.js</code>. </p>
+<blockquote>
+<p><strong>TIP</strong>: By saving your app&#39;s npm dependencies in your <code>package.json</code> file, you can always regenerate your <code>node_modules</code> folder by running <code>npm install</code>. Because of this, it&#39;s a common practice to exclude the <code>node_modules</code> folder from source control. The Groceries app uses git for source control, and as such includes <code>node_modules/</code> in its <code>.gitignore</code>.</p>
+</blockquote>
+<p>Now that you have the module installed let&#39;s look at how to use it.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Use the email validator module
+</h4>
+
+<p>Open <code>/app/shared/user/user.ts</code> and replace the existing contents of the file with the code below:</p>
+<pre><code class="lang-TypeScript">var validator = require(&quot;email-validator&quot;);
+
+export class User {
+  email: string;
+  password: string;
+  isValidEmail() {
+    return validator.validate(this.email);
+  }
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: The NativeScript framework&#39;s <code>require()</code> method is configured to look at the <code>&quot;main&quot;</code> value in an npm module&#39;s <code>package.json</code> file. In the case of this module, the <code>&quot;main&quot;</code> value is <code>&quot;index.js&quot;</code>. Therefore, when you run <code>require(&quot;email-validator&quot;)</code>, you&#39;re actually requiring the file at <code>node_modules/email_validator/index.js</code>. You could also type <code>require(&quot;email-validator/index&quot;)</code> to retrieve the same file.</p>
+</blockquote>
+<p>To make use of this validator, open <code>app/pages/login/login.component.ts</code> and paste the following code at the beginning of the existing <code>submit()</code> function:</p>
+<pre><code class="lang-TypeScript">if (!this.user.isValidEmail()) {
+  alert(&quot;Enter a valid email address.&quot;);
+  return;
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Explain this code.</p>
+<p>TODO: Add images</p>
+<p>In general npm modules greatly expand the number of things you&#39;re able to do in your NativeScript apps. Need date and time formatting? Use <a href="https://www.npmjs.com/package/moment">moment</a>. Need utility functions for objects and arrays? Use <a href="https://www.npmjs.com/package/lodash">lodash</a> or <a href="https://www.npmjs.com/package/underscore">underscore</a>. This code reuse benefit gets even more powerful when you bring NativeScript plugins into the picture.</p>
+<blockquote>
+<p><strong>WARNING</strong>: Not all npm modules work in NativeScript apps. Specifically, modules that depend on Node.js or browser APIs will not work, as those APIs do not exist in NativeScript. The NativeScript wiki contains a <a href="https://github.com/NativeScript/NativeScript/wiki/supported-npm-modules">list of some of the more popular npm modules that have been verified to work in NativeScript apps</a>.</p>
+</blockquote>
+<h3 id="using-a-nativescript-plugin-in-your-app">Using a NativeScript plugin in your app</h3>
+<p>NativeScript plugins are npm modules that have the added ability to run native code and use iOS and Android frameworks. Because NativeScript plugins are just npm modules, a lot of the techniques you learned in the previous section still apply. The one big difference is in the command you use to install plugins. Let&#39;s look at how it works by installing the NativeScript social share plugin.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Install the social sharing plugin
+</h4>
+
+<p>Return to your terminal, make sure you&#39;re still in the root of your app, and run the following command:</p>
+<pre><code>tns plugin add nativescript-social-share
+</code></pre><div class="exercise-end"></div>
+
+<p>The install process does the same thing that the <code>npm install</code> command does—including retrieving the module from npm, installing the module in <code>node_modules</code>, and saving the module as a dependency in your app&#39;s <code>package.json</code>—but the <code>tns plugin add</code> command additionally configures any native code that the plugin needs to use.</p>
+<p>For example the <a href="https://github.com/NativeScript/push-plugin">NativeScript push plugin</a> uses both iOS and Android SDKs, and the <code>tns plugin add</code> command takes care of installing those. The <a href="https://github.com/tjvantoll/nativescript-flashlight">NativeScript flashlight plugin</a> needs permissions to use the camera on Android, and the <code>tns plugin add</code> command takes care of setting that up too.</p>
+<p>Now that you&#39;ve installed the social share plugin, let&#39;s look at how to use it.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Use the social sharing plugin
+</h4>
+
+<p>Open <code>app/pages/list/list.component.ts</code> and add the following line at the top of the file, which requires the social share module you just installed:</p>
+<pre><code class="lang-JavaScript">var socialShare = require(&quot;nativescript-social-share&quot;);
+</code></pre>
+<p>Next you have to build some UI that lets you share a grocery list. To do so, open <code>app/pages/list/list.html</code> and add the following code at the very top of the file:</p>
+<pre><code class="lang-XML">&lt;ActionBar title=&quot;Groceries&quot;&gt;
+  &lt;ActionItem text=&quot;Share&quot; (tap)=&quot;share()&quot; android.systemIcon=&quot;ic_menu_share_holo_dark&quot; ios.systemIcon=&quot;9&quot; ios.position=&quot;right&quot;&gt;&lt;/ActionItem&gt;
+&lt;/ActionBar&gt;
+</code></pre>
+<p>This code defines an <a href="{{site.baseurl}}/ApiReference/ui/action-bar/ActionBar">ActionBar</a>, which is a UI component that includes various menu items, or <code>&lt;ActionItem&gt;</code> components.</p>
+<blockquote>
+<p><strong>NOTE</strong>: On iOS devices, <code>&lt;ActionItem&gt;</code>s are placed from left to right in sequence; you can override that (as the code above does) by providing an <code>ios.position</code> attribute.</p>
+</blockquote>
+<p>Next, to add a bit of styling to this new <code>&lt;ActionBar&gt;</code>, add the following CSS to your <code>app/app.css</code> file:</p>
+<pre><code class="lang-CSS">ActionBar {
+  background-color: black;
+  color: white;
+}
+</code></pre>
+<p>Finally, now that you’ve installed and required the plugin, and setup a UI to use it, your last step is implementing the <code>&lt;ActionItem&gt;</code>&#39;s <code>tap</code> handler (<code>share()</code>). Open <code>app/pages/list/list.component.ts</code> again and add the following function to the <code>ListPage</code> class:</p>
+<pre><code class="lang-TypeScript">share() {
+  var list = [];
+  for (var i = 0, size = this.groceryList.length; i &lt; size ; i++) {
+    list.push(this.groceryList[i].name);
+  }
+  var listString = list.join(&quot;, &quot;).trim();
+  socialShare.shareText(listString);
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>This code takes the grocery data from the grocery list array, converts the data into a comma-separated string, and passes that string to the social share plugin’s <code>shareText()</code> method.</p>
+<p>Now when you run the app, you&#39;ll see a new button at the top of the screen. When you tap it, the native iOS or Android sharing widget will show to let you post your groceries to your social networks, or send them via email, message, or any other method you prefer.</p>
+<p>TODO: Images</p>
+<p>Pretty cool, huh? The ability to use npm modules greatly expands the number of things you&#39;re able to do in a NativeScript app. Need to compose emails in your app? Try out the <a href="https://www.npmjs.com/package/nativescript-email">NativeScript email plugin</a>. Need to use the clipboard in your app? Try out the <a href="https://www.npmjs.com/package/nativescript-clipboard">NativeScript clipboard plugin</a>.</p>
+<p>If you&#39;re looking for NativeScript plugins start by searching both the <a href="http://plugins.telerik.com/nativescript">NativeScript Plugins Marketplace</a> and <a href="https://www.npmjs.com/search?q=nativescript">npm</a>. If you don&#39;t find the plugin you need, you can <a href="https://nativescript.ideas.aha.io/">request the plugin on our ideas portal</a>, or you can take a stab at <a href="https://docs.nativescript.org/plugins">creating the plugin yourself</a>.</p>
+<p>Between NativeScript modules, npm modules, and NativeScript plugins, the NativeScript framework provides a lot of functionality you can use to build your next app. However, we&#39;ve yet to talk about NativeScript&#39;s most powerful feature: the ability to directly access iOS and Android APIs in JavaScript. Let&#39;s look at how it works.</p>
 
 			</div>
 			<div class="chapter">

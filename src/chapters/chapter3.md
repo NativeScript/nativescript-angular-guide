@@ -151,7 +151,7 @@ There are many reasons to segment any application into modular units, and you ca
 
 Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.
 
-To see how this works in action, let’s edit some files in the `/shared` folder and set them up to be imported.
+To see how this works in action, let’s edit some files in the `shared` folder and set them up to be imported.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a model object
@@ -168,7 +168,7 @@ export class User {
 
 This code defines a simple [TypeScript class](http://www.typescriptlang.org/Handbook#classes) that does nothing more than define two properties—`email` and `password`. Note the use of [TypeScript’s `export` keyword](http://www.typescriptlang.org/Handbook#modules-going-external), as we’ll see why that’s important momentarily.
 
-Next, open `app/app.component.ts`, and first add the following `import` to the top of the file:
+Next, open `app/app.component.ts`, and add the following `import` to the top of the file:
 
 ``` JavaScript
 import {User} from "./shared/user/user";
@@ -178,7 +178,6 @@ Here you import the `User` class that you just defined. Note the parallel betwee
 
 Next, replace the existing `AppComponent` definition with the one below, which uses the `User` class you just imported.
 
-<!-- Todo, explain the isLoggingIn piece - from the exercise above I think. The button XML needs to be edited -->
 ``` JavaScript
 export class AppComponent {
   user: User;
@@ -198,7 +197,7 @@ export class AppComponent {
 
 Instead of storing data on the `AppComponent` directly, you’re now using the `User` model object, which is reusable outside of this page and even outside of this application. You instantiate an instance of the `User` class in a new `constructor` function, which Angular 2 invokes when it bootstraps your application.
 
-Your final step is to use this new model object in your template. To do that, replace the two existing `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
+Your next step is to use this new model object in your template. To do that, replace the two existing `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
 
 ``` XML
 <TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="user.email"
@@ -206,11 +205,30 @@ Your final step is to use this new model object in your template. To do that, re
 <TextField hint="Password" id="password" secure="true" [(ngModel)]="user.password"></TextField>
 ```
 
-TODO: Better explanation. Move the full template into the login.html file and use `templateUrl`. 
+As one final change, because this template is getting to be a bit complex, let’s move it into a separate file. Open `app/pages/login/login.html` and paste in the following code:
 
-If you got lost during this section, here’s a copy-and-paste friendly version of the full `app.component.ts` you should have at this point:
+``` XML
+<StackLayout>
+  <Image src="res://logo_login" stretch="none" horizontalAlignment="center"></Image>
 
-``` JavaScript
+  <TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="user.email"
+    autocorrect="false" autocapitalizationType="none"></TextField>
+  <TextField hint="Password" id="password" secure="true" [(ngModel)]="user.password"></TextField>
+
+  <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
+  <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
+</StackLayout>
+```
+
+Finally, in `app/app.component.ts`, replace the existing `template` property with the new `templateUrl` property shown below:
+
+``` TypeScript
+templateUrl: "pages/login/login.html"
+```
+
+In case you got lost during this section, here’s a copy-and-paste friendly of the `app/app.component.ts` file you should have at this point:
+
+``` TypeScript
 import {Component} from "angular2/core";
 import {User} from "./shared/user/user";
 
@@ -233,10 +251,11 @@ export class AppComponent {
     this.isLoggingIn = !this.isLoggingIn;
   }
 }
-
 ```
 
 <div class="exercise-end"></div>
+
+> **TIP**: With Angular 2 components you have the ability to specify templates and CSS styling in two places—directly within the component, or in external files. For simple components feel free to choose either approach based on your personal preference, but once your templates/styles get to ~10 lines of code, consider using external files exclusively, as mixing non-trivial XML, CSS, and JavaScript code makes your component code less readable.
 
 With this setup you now have a `User` class that you can share across pages in your app and even across applications. But a model object that’s four simple lines of code isn’t all that exciting. Where this approach really pays off is when you’re able to share your business logic, and the code that hits your backend systems. In Angular 2 those classes are known as services. Let’s look at them next.
 

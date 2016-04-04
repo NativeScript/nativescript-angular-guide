@@ -156,7 +156,7 @@ tns livesync ios --emulator --watch
 If you have an Android emulator running, start an Android livesync watcher by executing the following command:
 
 ```
-tns livesync android --watch
+tns livesync android --emulator --watch
 ```
 
 The `tns livesync` command updates your app by transferring the updated source code to the device or simulator. By adding the `--watch` flag, the `livesync` command additionally watches the files in your NativeScript project. Whenever one of those files changes, the command detects the update, and patches your app with the updated code.

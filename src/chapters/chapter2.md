@@ -208,9 +208,7 @@ In `app.component.ts`, add a `<StackLayout>` element within your component’s `
 
 <div class="exercise-end"></div>
 
-The stack layout is a UI element, and as such, it has attributes just like the `<TextField>` and `<Button>` elements you used in the previous section. Here, the `orientation="vertical"` attribute tells the stack layout to arrange its child elements vertically.
-
-After your app updates with this change, you'll see that your login page’s UI elements stack up:
+The stack layout is a UI element, and as such, it has attributes just like the `<TextField>` and `<Button>` elements you used in the previous section. After your app updates with this change, you'll see that your login page’s UI elements stack up:
 
 ![login 2](images/chapter2/ios/2.png)
 ![login 2](images/chapter2/android/2.png)
@@ -359,12 +357,12 @@ Open your app’s `app/app.component.ts` file, find `<Button text="Sign in"></Bu
 
 <div class="exercise-end"></div>
 
-And with this last `id` change in place your app is starting to look a little nicer:
+With this last `id` change in place your app is starting to look a little nicer:
 
 ![login 4](images/chapter2/ios/4.png)
 ![login 4](images/chapter2/android/4.png)
 
-As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply rules globally—either for both platforms in `app.css`, for iOS in `platform.ios.css`, or for Android in `platform.android.css`. And you can also apply rules at the component level, while maintaining the same flexibility to target different platforms if required.
+As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply rules globally either for both platforms in `app.css`, for iOS in `platform.ios.css`, or for Android in `platform.android.css`. And you can also apply rules at the component level, while maintaining the same flexibility to target different platforms if required.
 
 To continue polishing the visuals of this login screen, let’s look at how we can add an image of this app’s logo.
 

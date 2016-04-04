@@ -49,7 +49,7 @@
 </div>
 
 <blockquote>
-<p><strong>WARNING</strong>: Although NativeScript itself is a production-ready framework that drives <a href="https://www.nativescript.org/showcases">many apps in the app stores today</a>, NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on <a href="https://github.com/NativeScript/nativescript-angular">https://github.com/NativeScript/nativescript-angular</a>. If you’re looking for a guide on using the production-ready flavor of NativeScript, head to the <a href="http://docs.nativescript.org/start/getting-started">official Getting Started Guide</a>.</p>
+<p><strong>WARNING</strong>: Using Angular 2 with NativeScript is optional. If you’re looking for a guide on how to use NativeScript without Angular 2, head over to our other <a href="http://docs.nativescript.org/start/getting-started">Getting Started Guide</a>.</p>
 </blockquote>
 <h3 id="what-you-re-building">What you&#39;re building</h3>
 <p>This guide will walk you through building <a href="https://github.com/NativeScript/sample-Groceries">Groceries</a>, a groceries management app that does the following things:</p>
@@ -108,10 +108,6 @@
 └─────────┴─────────────────────────────────────────────────────────────────────┘
 </code></pre><h3 id="start-your-app">Start your app</h3>
 <p>With the NativeScript CLI installed, it&#39;s time to start building your app. Normally, you would <a href="https://github.com/NativeScript/NativeScript-cli#create-project">use the <code>tns create</code> command to create an empty NativeScript application</a>. For this guide however, we&#39;ve scaffolded out a boilerplate project to act as a starting point for <a href="https://github.com/NativeScript/sample-Groceries">Groceries</a>.</p>
-<blockquote>
-<p><strong>NOTE</strong>: After completing this guide, if you’d like to start a new NativeScript and Angular 2 app—one that doesn’t clone Groceries—you can use the NativeScript CLI’s <code>tns create</code> command as such:</p>
-<pre><code>tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng
-</code></pre></blockquote>
 <h4 class="exercise-start">
     <b>Exercise</b>: Get the Groceries starting point
 </h4>
@@ -126,11 +122,16 @@
 <pre><code>cd sample-Groceries
 </code></pre><p>Finally, switch to the “angular-start” branch for this guide&#39;s starting point:</p>
 <pre><code>git checkout angular-start
-</code></pre><blockquote>
-<p><strong>TIP:</strong> The “angular-end” branch has the final state of this guide&#39;s tutorial. Feel free to <a href="https://github.com/NativeScript/sample-Groceries/tree/angular-end">refer to the branch on GitHub</a> if you get stuck.</p>
-</blockquote>
-<div class="exercise-end"></div>
+</code></pre><div class="exercise-end"></div>
 
+<blockquote>
+<p><strong>TIP:</strong></p>
+<ul>
+<li>The “angular-end” branch has the final state of this guide&#39;s tutorial. Feel free to <a href="https://github.com/NativeScript/sample-Groceries/tree/angular-end">refer to the branch on GitHub</a> if you get stuck.</li>
+<li>After completing this guide, if you’d like to start a new NativeScript and Angular 2 app—one that doesn’t clone Groceries—you can use the NativeScript CLI’s <code>tns create</code> command as such:<pre><code>tns create my-app-name --template https://github.com/NativeScript/template-hello-world-ng
+</code></pre></li>
+</ul>
+</blockquote>
 <h3 id="add-target-development-platforms">Add target development platforms</h3>
 <p>Your app is now set up, but before you run it, you need to initialize a platform-specific native project for each platform you intend to target.</p>
 <h4 class="exercise-start">
@@ -305,7 +306,7 @@ export class AppComponent {}
 <p>This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.</p>
 <p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
 <p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;Label text=&quot;hello NativeScript&quot;&gt;&lt;/Label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
-<p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so what’s going on here. Let’s dive into this by looking at how NativeScript UI elements work.</p>
+<p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so why do we see it here? Let’s dive into this by looking at how NativeScript UI elements work.</p>
 <blockquote>
 <p><strong>NOTE</strong>: Curious about the <code>@Component</code> decorator’s <code>selector</code> property? The property defines how a component can be used within another component’s template. For instance a component that defines its <code>selector</code> with <code>selector: &quot;foo-bar&quot;</code> can be used by another component as <code>template: &quot;&lt;foo-bar&gt;&lt;/foo-bar&gt;&quot;</code>. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the <code>selector</code> property is currently irrelevant. We’ll use the <code>selector</code> property later in this guide though.</p>
 </blockquote>
@@ -388,8 +389,7 @@ export class AppComponent {}
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> elements you used in the previous section. Here, the <code>orientation=&quot;vertical&quot;</code> attribute tells the stack layout to arrange its child elements vertically.</p>
-<p>After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
+<p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> elements you used in the previous section. After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
 <p><img src="images/chapter2/ios/2.png" alt="login 2">
 <img src="images/chapter2/android/2.png" alt="login 2"></p>
 <p>Although the UI elements are in the correct order, they could use some spacing and color to make the app look a bit nicer. To do that let&#39;s look at another NativeScript feature: CSS.</p>
@@ -472,7 +472,7 @@ TextField {
   styleUrls: [&quot;pages/login/login-common.css&quot;, &quot;pages/login/login.css&quot;]
 })
 </code></pre>
-<p>Next, open your app’s <code>app/pages/login/login.common.css</code> file and paste in the following code:</p>
+<p>Next, open your app’s <code>app/pages/login/login-common.css</code> file and paste in the following code:</p>
 <pre><code class="lang-CSS">StackLayout {
   margin-left: 30;
   margin-right: 30;
@@ -496,7 +496,7 @@ Button, TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>In Angular 2, the <code>stylesUrl</code> points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code>, and <code>login.css</code>, which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code> using the same naming convention we introduced in the previous section.</p>
+<p>In Angular 2, <code>styleUrls</code> points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code>, and <code>login.css</code>, which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code> using the same naming convention we introduced in the previous section.</p>
 <p>Why three files? Much like you divided your global files into <code>app.css</code>, <code>platform.ios.css</code>, and <code>platform.android.css</code>, this structure gives you a similar ability to place common login styling in <code>login-common.css</code>, iOS-specific login styling <code>login.ios.css</code>, and Android-specific login styling in <code>login.android.css</code>.</p>
 <p>The great thing about placing CSS rules at the component level is you can use concise CSS selectors such as <code>Button</code> and <code>TextField</code>, and not worry about those rules applying to all buttons and text fields in your application, as Angular 2 ensures those rules remain scoped to your component.</p>
 <p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface element, but at the moment there’s no UI element in your app with an <code>id</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
@@ -509,10 +509,10 @@ Button, TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>And with this last <code>id</code> change in place your app is starting to look a little nicer:</p>
+<p>With this last <code>id</code> change in place your app is starting to look a little nicer:</p>
 <p><img src="images/chapter2/ios/4.png" alt="login 4">
 <img src="images/chapter2/android/4.png" alt="login 4"></p>
-<p>As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply rules globally—either for both platforms in <code>app.css</code>, for iOS in <code>platform.ios.css</code>, or for Android in <code>platform.android.css</code>. And you can also apply rules at the component level, while maintaining the same flexibility to target different platforms if required.</p>
+<p>As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply rules globally either for both platforms in <code>app.css</code>, for iOS in <code>platform.ios.css</code>, or for Android in <code>platform.android.css</code>. And you can also apply rules at the component level, while maintaining the same flexibility to target different platforms if required.</p>
 <p>To continue polishing the visuals of this login screen, let’s look at how we can add an image of this app’s logo.</p>
 <h3 id="images">Images</h3>
 <p>In NativeScript you use the <code>&lt;Image&gt;</code> UI element and its <code>src</code> attribute to add images to your pages. The <code>src</code> attribute lets you specify your image in three ways. The first (and simplest) way is to point at the URL of an image:</p>
@@ -615,38 +615,45 @@ Button, TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>At first glance the <code>[(ngModel)]</code> syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, <code>[(ngModel)]=&quot;email&quot;</code> is shorthand for <code>[text]=&quot;email&quot; (emailChange)=&quot;email=$event&quot;</code>, which binds the email element’s <code>text</code> attribute to an <code>email</code> property, as well as adds a <code>change</code> event handler that updates the <code>email</code> property’s value whenever the user makes a change.</p>
-<p>Don’t worry too much about the details here while we’re still getting started. In your head you can think of <code>[(ngModel)]</code> as the way to implement two-way data binding when you need it on form controls. And to show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:</p>
+<p>At first glance the <code>[(ngModel)]</code> syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, <code>[(ngModel)]=&quot;email&quot;</code> is shorthand for <code>[text]=&quot;email&quot; (emailChange)=&quot;email=$event&quot;</code>, which binds the email element’s <code>text</code> attribute to an <code>email</code> property and adds a <code>change</code> event handler that updates the <code>email</code> property’s value whenever the user makes a change.</p>
+<p>Don’t worry too much about the details here while we’re still getting started. In your head you can think of <code>[(ngModel)]</code> as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:</p>
 <p><img src="images/chapter3/android/3.png" alt="Android with email addresses that do match"></p>
 <p>At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
-<p>TODO: Transition</p>
-<h4 class="exercise-start">
+<p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
+<!--commenting this out as I don't think it belongs here. We just said we're going to move code out of the single file, then we start talking about more stuff to add to the single file...confuzzled-->
+<!--<h4 class="exercise-start">
     <b>Exercise</b>: ???
 </h4>
 
-<p>app.component.ts — Replace the two buttons with this</p>
-<pre><code class="lang-XML">&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
-&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign up&#39; : &#39;Back to login&#39;&quot; (tap)=&quot;toggleDisplay()&quot;&gt;&lt;/Button&gt;
-</code></pre>
-<p>app.component.ts - Use this for the AppComponent class:</p>
-<pre><code class="lang-TypeScript">export class AppComponent {
-  email = &quot;user@nativescript.org&quot;;
+app.component.ts — Replace the two buttons with this
+
+``` XML
+<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
+<Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
+```
+
+app.component.ts - Use this for the AppComponent class:
+
+``` TypeScript
+export class AppComponent {
+  email = "user@nativescript.org";
   isLoggingIn = true;
 
   submit() {
-    alert(&quot;You’re using: &quot; + this.email);
+    alert("You’re using: " + this.email);
   }
   toggleDisplay() {
     this.isLoggingIn = !this.isLoggingIn;
   }
 }
-</code></pre>
+```
+
 <div class="exercise-end"></div>
 
-<p>TODO: Transition</p>
-<p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
+TODO: Transition
+-->
 <h3 id="structuring-your-app">Structuring your app</h3>
-<p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
+<p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. Modularizing NativeScript apps, in addition, has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
 <p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.</p>
 <p>To see how this works in action, let’s edit some files in the <code>/shared</code> folder and set them up to be imported.</p>
 <h4 class="exercise-start">
@@ -665,6 +672,7 @@ Button, TextField {
 </code></pre>
 <p>Here you import the <code>User</code> class that you just defined. Note the parallel between the <code>export</code> command used in the previous example and the <code>import</code> command used here. The reason the <code>User</code> class is available to import is because it was explicitly exported. You’ll see other examples of <code>import</code> and <code>export</code> as you go through this guide.</p>
 <p>Next, replace the existing <code>AppComponent</code> definition with the one below, which uses the <code>User</code> class you just imported.</p>
+<!-- Todo, explain the isLoggingIn piece - from the exercise above I think. The button XML needs to be edited -->
 <pre><code class="lang-JavaScript">export class AppComponent {
   user: User;
   isLoggingIn = true;
@@ -718,7 +726,7 @@ export class AppComponent {
 <p>A login screen isn’t all that useful if it doesn’t actually log users into anything. Therefore, our next task is to take the user’s email address and password, and send them to a backend endpoint to retrieve an authentication token we’ll use later in this guide. We’ll build this functionality as an Angular 2 service.</p>
 <p>For the purposes of this tutorial we prebuilt a handful of backend endpoints using <a href="http://www.telerik.com/platform/backend-services">Telerik Backend Services</a>, and we’ll be using those endpoints to make this app functional. Let’s see how they work.</p>
 <blockquote>
-<p><strong>NOTE</strong>: You don&#39;t have to use Telerik Backend Services to hit your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.</p>
+<p><strong>NOTE</strong>: You don&#39;t have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.</p>
 </blockquote>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an Angular 2 service
@@ -760,7 +768,7 @@ export class UserService {
 }
 </code></pre>
 <p>TODO: Explain that mess above, and probably break it into a lot of steps.</p>
-<p>In app.component.ts. Add the lines below to the top:</p>
+<p>In <code>app.component.ts</code>, add the lines below to the top:</p>
 <pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
 import {UserService} from &quot;./shared/user/user.service&quot;;
 </code></pre>
@@ -770,7 +778,7 @@ import {UserService} from &quot;./shared/user/user.service&quot;;
 }
 </code></pre>
 <p>Add this line to the @Component:</p>
-<pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS]
+<pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS],
 </code></pre>
 <p>Then change the submit function to this:</p>
 <pre><code class="lang-TypeScript">submit() {

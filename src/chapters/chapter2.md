@@ -118,13 +118,13 @@ Notice the interesting way that the `Component` class is used—with the syntax 
 
 However, this syntax may look a bit odd if you come from a web development background. On the web, the `<label>` HTML element doesn’t have a `text` attribute, so why do we see it here? Let’s dive into this by looking at how NativeScript UI elements work.
 
-> **NOTE**: Curious about the `@Component` decorator’s `selector` property? The property defines how a component can be used within another component’s template. For instance a component that defines its `selector` with `selector: "foo-bar"` can be used by another component as `template: "<foo-bar></foo-bar>"`. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the `selector` property is currently irrelevant. We’ll use the `selector` property later in this guide though.
+> **NOTE**: Curious about the `@Component` decorator’s `selector` property? The property defines how a component can be used within another component’s template. For instance a component that defines its `selector` with `selector: "foo-bar"` can be used by another component as `template: "<foo-bar></foo-bar>"`. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the `selector` property of this first component is irrelevant. We’ll use the `selector` property later in this guide though.
 
 ### Adding UI elements
 
 The primary difference between building an Angular 2 app for the web and an Angular 2 app with NativeScript is in the UI elements that you use. NativeScript apps do not use a browser and do not have a DOM; therefore, elements like `<div>` and `<span>` simply do not work.
 
-No worries though, as NativeScript provides an [extensive suite of UI elements](http://docs.nativescript.org/ui/ui-views), each of which are implemented with native iOS and Android controls. For instance, the [`<label>` control](http://docs.nativescript.org/ui/ui-views#label) our previous example used is actually rendered as a [`UILabel`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/) on iOS and an [`android.widget.TextView`](http://developer.android.com/reference/android/widget/TextView.html) on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type `<label>` and let NativeScript handle the rendering details.
+No worries though, as NativeScript provides an [extensive suite of UI elements](http://docs.nativescript.org/ui/ui-views), each of which are implemented with native iOS and Android controls. For instance, the [`<Label>` control](http://docs.nativescript.org/ui/ui-views#label) our previous example used is actually rendered as a [`UILabel`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/) on iOS and an [`android.widget.TextView`](http://developer.android.com/reference/android/widget/TextView.html) on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type `<Label>` and let NativeScript handle the rendering details.
 
 Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current `<Label>` with something that resembles a typical login screen in a mobile app.
 
@@ -159,7 +159,7 @@ This code adds two new NativeScript UI elements: a [text field](http://docs.nati
     - `keyboardType`: The type of keyboard to present to the user for input. `keyboardType="email"` shows a keyboard optimized for entering email addresses. NativeScript currently supports [five types of keyboards](http://docs.nativescript.org/ui/keyboard.html) for text fields.
     - `autocorrect`: A boolean attribute that determines whether the mobile operating system should autocorrect user input. In the case of email address text fields, the autocorrect behavior is undesirable.
     - `autocapitalizationType`: Determines how the operating system should autocapitalize user input. `autocapitalizationType="none"` turns autocapitalization off altogether. NativeScript supports [four autocapitalization types](http://docs.nativescript.org/ApiReference/ui/enums/AutocapitalizationType/README.html) on text fields.
-    - `secure`: A boolean attribute that determines whether the TextField's text should be masked, which is commonly done on password fields.
+    - `secure`: A boolean attribute that determines whether the text field’s text should be masked, which is commonly done on password fields.
 - `<Button>`
     - `text`: Controls the text displayed within the button.
 
@@ -188,7 +188,7 @@ For your login screen, all you need is a simple `<StackLayout>` for stacking the
     <b>Exercise</b>: Add a stack layout to the login screen
 </h4>
 
-In `app.component.ts`, add a `<StackLayout>` element within your component’s `template` property. The full component should now look like this:
+Open `app/app.component.ts`, and add a `<StackLayout>` element within your component’s `template` property. The full component should now look like this:
 
 ``` JavaScript
 @Component({
@@ -221,7 +221,7 @@ Although the UI elements are in the correct order, they could use some spacing a
 
 ### Global CSS
 
-NativeScript uses a [subset of CSS](http://docs.nativescript.org/styling) to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: [application-wide CSS](http://docs.nativescript.org/styling#application-wide-css) (`app.css`), component-specific CSS, and an [inline `style` attribute](http://docs.nativescript.org/styling#inline-css). In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.
+NativeScript uses a [subset of CSS](http://docs.nativescript.org/styling) to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: [application-wide CSS](http://docs.nativescript.org/styling#application-wide-css), component-specific CSS, and an [inline `style` attribute](http://docs.nativescript.org/styling#inline-css). In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.
 
 > **TIP**: Although inline styles are great for quick testing—e.g. `<StackLayout style="background-color: green;">`—you should avoid them in general because the `style` attributes tend to clutter up your templates, especially if you need to apply multiple rules.
 
@@ -229,7 +229,7 @@ NativeScript uses a [subset of CSS](http://docs.nativescript.org/styling) to cha
     <b>Exercise</b>: Create global styles
 </h4>
 
-Open your app’s `app/app.css` file and paste in the following code:
+Open your `app/app.css` file and paste in the following code:
 
 ``` CSS
 Page {
@@ -245,6 +245,8 @@ TextField {
 <div class="exercise-end"></div>
 
 If you've done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A [full list of the CSS properties that are supported](http://docs.nativescript.org/styling#supported-properties) are listed in the NativeScript docs.
+
+> **NOTE**: In NativeScript, a single `<Page>` UI element wraps the `template` of every page-level Angular component, which you’ll learn about when we introduce routing later in this guide. For now, just know that a `<Page>` exists as the parent of your `AppComponent`’s template, and that you can target that `<Page>` with CSS as you would with any other UI element.
 
 Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let's look at how to make platform-specific style changes in NativeScript.
 

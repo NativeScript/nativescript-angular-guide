@@ -308,11 +308,11 @@ export class AppComponent {}
 <p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;Label text=&quot;hello NativeScript&quot;&gt;&lt;/Label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
 <p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so why do we see it here? Let’s dive into this by looking at how NativeScript UI elements work.</p>
 <blockquote>
-<p><strong>NOTE</strong>: Curious about the <code>@Component</code> decorator’s <code>selector</code> property? The property defines how a component can be used within another component’s template. For instance a component that defines its <code>selector</code> with <code>selector: &quot;foo-bar&quot;</code> can be used by another component as <code>template: &quot;&lt;foo-bar&gt;&lt;/foo-bar&gt;&quot;</code>. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the <code>selector</code> property is currently irrelevant. We’ll use the <code>selector</code> property later in this guide though.</p>
+<p><strong>NOTE</strong>: Curious about the <code>@Component</code> decorator’s <code>selector</code> property? The property defines how a component can be used within another component’s template. For instance a component that defines its <code>selector</code> with <code>selector: &quot;foo-bar&quot;</code> can be used by another component as <code>template: &quot;&lt;foo-bar&gt;&lt;/foo-bar&gt;&quot;</code>. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the <code>selector</code> property of this first component is irrelevant. We’ll use the <code>selector</code> property later in this guide though.</p>
 </blockquote>
 <h3 id="adding-ui-elements">Adding UI elements</h3>
 <p>The primary difference between building an Angular 2 app for the web and an Angular 2 app with NativeScript is in the UI elements that you use. NativeScript apps do not use a browser and do not have a DOM; therefore, elements like <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> simply do not work.</p>
-<p>No worries though, as NativeScript provides an <a href="http://docs.nativescript.org/ui/ui-views">extensive suite of UI elements</a>, each of which are implemented with native iOS and Android controls. For instance, the <a href="http://docs.nativescript.org/ui/ui-views#label"><code>&lt;label&gt;</code> control</a> our previous example used is actually rendered as a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/"><code>UILabel</code></a> on iOS and an <a href="http://developer.android.com/reference/android/widget/TextView.html"><code>android.widget.TextView</code></a> on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type <code>&lt;label&gt;</code> and let NativeScript handle the rendering details.</p>
+<p>No worries though, as NativeScript provides an <a href="http://docs.nativescript.org/ui/ui-views">extensive suite of UI elements</a>, each of which are implemented with native iOS and Android controls. For instance, the <a href="http://docs.nativescript.org/ui/ui-views#label"><code>&lt;Label&gt;</code> control</a> our previous example used is actually rendered as a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UILabel_Class/"><code>UILabel</code></a> on iOS and an <a href="http://developer.android.com/reference/android/widget/TextView.html"><code>android.widget.TextView</code></a> on Android. The great thing about using NativeScript though, is that this native details are transparent to use as a developer. You type <code>&lt;Label&gt;</code> and let NativeScript handle the rendering details.</p>
 <p>Let’s return back to building Groceries. The first screen of Groceries is intended to be a login screen, so let’s replace the current <code>&lt;Label&gt;</code> with something that resembles a typical login screen in a mobile app.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add UI elements to <code>app.component.ts</code>
@@ -343,7 +343,7 @@ export class AppComponent {}
 <li><code>keyboardType</code>: The type of keyboard to present to the user for input. <code>keyboardType=&quot;email&quot;</code> shows a keyboard optimized for entering email addresses. NativeScript currently supports <a href="http://docs.nativescript.org/ui/keyboard.html">five types of keyboards</a> for text fields.</li>
 <li><code>autocorrect</code>: A boolean attribute that determines whether the mobile operating system should autocorrect user input. In the case of email address text fields, the autocorrect behavior is undesirable.</li>
 <li><code>autocapitalizationType</code>: Determines how the operating system should autocapitalize user input. <code>autocapitalizationType=&quot;none&quot;</code> turns autocapitalization off altogether. NativeScript supports <a href="http://docs.nativescript.org/ApiReference/ui/enums/AutocapitalizationType/README.html">four autocapitalization types</a> on text fields.</li>
-<li><code>secure</code>: A boolean attribute that determines whether the TextField&#39;s text should be masked, which is commonly done on password fields.</li>
+<li><code>secure</code>: A boolean attribute that determines whether the text field’s text should be masked, which is commonly done on password fields.</li>
 </ul>
 </li>
 <li><code>&lt;Button&gt;</code><ul>
@@ -372,7 +372,7 @@ export class AppComponent {}
     <b>Exercise</b>: Add a stack layout to the login screen
 </h4>
 
-<p>In <code>app.component.ts</code>, add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
+<p>Open <code>app/app.component.ts</code>, and add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
@@ -401,7 +401,7 @@ export class AppComponent {}
 </ul>
 </blockquote>
 <h3 id="global-css">Global CSS</h3>
-<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a> (<code>app.css</code>), component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
+<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a>, component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
 <blockquote>
 <p><strong>TIP</strong>: Although inline styles are great for quick testing—e.g. <code>&lt;StackLayout style=&quot;background-color: green;&quot;&gt;</code>—you should avoid them in general because the <code>style</code> attributes tend to clutter up your templates, especially if you need to apply multiple rules.</p>
 </blockquote>
@@ -409,7 +409,7 @@ export class AppComponent {}
     <b>Exercise</b>: Create global styles
 </h4>
 
-<p>Open your app’s <code>app/app.css</code> file and paste in the following code:</p>
+<p>Open your <code>app/app.css</code> file and paste in the following code:</p>
 <pre><code class="lang-CSS">Page {
   background-color: white;
   font-size: 15;
@@ -422,6 +422,9 @@ TextField {
 <div class="exercise-end"></div>
 
 <p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="http://docs.nativescript.org/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
+<blockquote>
+<p><strong>NOTE</strong>: In NativeScript, a single <code>&lt;Page&gt;</code> UI element wraps the <code>template</code> of every page-level Angular component, which you’ll learn about when we introduce routing later in this guide. For now, just know that a <code>&lt;Page&gt;</code> exists as the parent of your <code>AppComponent</code>’s template, and that you can target that <code>&lt;Page&gt;</code> with CSS as you would with any other UI element.</p>
+</blockquote>
 <p>Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add platform-specific CSS

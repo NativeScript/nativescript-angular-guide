@@ -98,17 +98,18 @@ In `app/app.component.ts`, find the find the first `<TextField>`, and replace it
 
 <div class="exercise-end"></div>
 
-At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, `[(ngModel)]="email"` is shorthand for `[text]="email" (emailChange)="email=$event"`, which binds the email element’s `text` attribute to an `email` property, as well as adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
+At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, `[(ngModel)]="email"` is shorthand for `[text]="email" (emailChange)="email=$event"`, which binds the email element’s `text` attribute to an `email` property and adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
 
-Don’t worry too much about the details here while we’re still getting started. In your head you can think of `[(ngModel)]` as the way to implement two-way data binding when you need it on form controls. And to show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:
+Don’t worry too much about the details here while we’re still getting started. In your head you can think of `[(ngModel)]` as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:
 
 ![Android with email addresses that do match](images/chapter3/android/3.png)
 
 At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
 
-TODO: Transition
+Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
 
-<h4 class="exercise-start">
+<!--commenting this out as I don't think it belongs here. We just said we're going to move code out of the single file, then we start talking about more stuff to add to the single file...confuzzled-->
+<!--<h4 class="exercise-start">
     <b>Exercise</b>: ???
 </h4>
 
@@ -138,10 +139,9 @@ export class AppComponent {
 <div class="exercise-end"></div>
 
 TODO: Transition
+-->
 
 
-
-Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
 
 ### Structuring your app
 

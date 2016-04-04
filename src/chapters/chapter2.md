@@ -312,7 +312,7 @@ Open your app’s `app/app.component.ts` file and add a `styleUrls` property suc
 })
 ```
 
-Next, open your app’s `app/pages/login/login.common.css` file and paste in the following code:
+Next, open your app’s `app/pages/login/login-common.css` file and paste in the following code:
 
 ``` CSS
 StackLayout {

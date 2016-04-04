@@ -276,7 +276,7 @@ TextField {
 
 NativeScript supports CSS's `@import` statement for importing one CSS file into another. So this new line of code imports the CSS rules from `platform.css` into `app.css`. But, you might have noticed that Groceries does not have a file named `platform.css`—only `app/platform.android.css` and `app/platform.ios.css` exist. What's going on here?
 
-<a id="platform-specific-files"></a>When you execute `tns run`, or `tns livesync`, the NativeScript CLI takes your code from the `app` folder and places it in the native projects located in the `platforms/ios` and `platforms/android` folders. Here the naming convention comes in: while moving files, the CLI intelligently selects `.android.*` and `.ios.*` files. To give a specific example, the CLI moves `platform.ios.css` into `platforms/ios` and renames it to `platform.css`; similarly, the CLI moves `platform.android.css` into `platforms/android`, and again renames it to `platform.css`. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it's supported for any type of file in NativeScript—not just CSS files. You'll see a few more examples of this convention later in this guide.
+<a id="platform-specific-files"></a>When you execute `tns run`, or `tns livesync`, the NativeScript CLI takes the code from your `app` folder and places it in the native projects located in the `platforms/ios` and `platforms/android` folders. Here the naming convention comes in: while moving files, the CLI intelligently selects `.android.*` and `.ios.*` files. To give a specific example, the CLI moves `platform.ios.css` into `platforms/ios` and renames it to `platform.css`; similarly, the CLI moves `platform.android.css` into `platforms/android`, and again renames it to `platform.css`. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it's supported for any type of file in NativeScript—not just CSS files. You'll see a few more examples of this convention later in this guide.
 
 With these changes in place, you'll notice that the app has a bit more spacing, and also that the text fields have borders on iOS but that Android:
 
@@ -293,7 +293,7 @@ Much like on the web, sometimes in your NativeScript apps you want to write CSS 
     <b>Exercise</b>: Add component-specific CSS
 </h4>
 
-Open your app’s `app/app.component.ts` file and add a `styleUrls` property such that that full `@Component` declaration now looks like this:
+Open your `app/app.component.ts` file and add a `styleUrls` property, so that that full `@Component` declaration now looks like this:
 
 ``` JavaScript
 @Component({
@@ -351,7 +351,7 @@ Before we see what your app looks like now, there’s one small change you need 
     <b>Exercise</b>: Add an `id` attribute
 </h4>
 
-Open your app’s `app/app.component.ts` file, find `<Button text="Sign in"></Button>` in your component’s `template`, and replace it with the code below:
+Open your `app/app.component.ts` file, find `<Button text="Sign in"></Button>` in your component’s `template`, and replace it with the code below:
 
 ``` XML
 <Button text="Sign in" id="submit-button"></Button>
@@ -405,6 +405,6 @@ Once these files are in place the NativeScript framework knows how to pick the c
 ![login 5](images/chapter2/ios/5.png)
 ![login 5](images/chapter2/android/5.png)
 
-At this point your UI looks good, but the app still doesn't actually do anything. Let's look at how you can use JavaScript to add some functionality.
+At this point your UI looks better visually, but the app still doesn't actually do anything. Let's look at how you can use JavaScript to add some functionality.
 
 > **TIP**: The community-written [NativeScript Image Builder](http://nsimage.brosteins.com/) can help you generate images in the appropriate resolutions for iOS and Android.

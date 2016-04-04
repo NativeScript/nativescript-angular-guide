@@ -448,7 +448,7 @@ TextField {
 <div class="exercise-end"></div>
 
 <p>NativeScript supports CSS&#39;s <code>@import</code> statement for importing one CSS file into another. So this new line of code imports the CSS rules from <code>platform.css</code> into <code>app.css</code>. But, you might have noticed that Groceries does not have a file named <code>platform.css</code>—only <code>app/platform.android.css</code> and <code>app/platform.ios.css</code> exist. What&#39;s going on here?</p>
-<p><a id="platform-specific-files"></a>When you execute <code>tns run</code>, or <code>tns livesync</code>, the NativeScript CLI takes your code from the <code>app</code> folder and places it in the native projects located in the <code>platforms/ios</code> and <code>platforms/android</code> folders. Here the naming convention comes in: while moving files, the CLI intelligently selects <code>.android.*</code> and <code>.ios.*</code> files. To give a specific example, the CLI moves <code>platform.ios.css</code> into <code>platforms/ios</code> and renames it to <code>platform.css</code>; similarly, the CLI moves <code>platform.android.css</code> into <code>platforms/android</code>, and again renames it to <code>platform.css</code>. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it&#39;s supported for any type of file in NativeScript—not just CSS files. You&#39;ll see a few more examples of this convention later in this guide.</p>
+<p><a id="platform-specific-files"></a>When you execute <code>tns run</code>, or <code>tns livesync</code>, the NativeScript CLI takes the code from your <code>app</code> folder and places it in the native projects located in the <code>platforms/ios</code> and <code>platforms/android</code> folders. Here the naming convention comes in: while moving files, the CLI intelligently selects <code>.android.*</code> and <code>.ios.*</code> files. To give a specific example, the CLI moves <code>platform.ios.css</code> into <code>platforms/ios</code> and renames it to <code>platform.css</code>; similarly, the CLI moves <code>platform.android.css</code> into <code>platforms/android</code>, and again renames it to <code>platform.css</code>. This convention provides a convenient way to branch your code to handle iOS and Android separately, and it&#39;s supported for any type of file in NativeScript—not just CSS files. You&#39;ll see a few more examples of this convention later in this guide.</p>
 <p>With these changes in place, you&#39;ll notice that the app has a bit more spacing, and also that the text fields have borders on iOS but that Android:</p>
 <p><img src="images/chapter2/ios/3.png" alt="login 3">
 <img src="images/chapter2/android/3.png" alt="login 3"></p>
@@ -459,7 +459,7 @@ TextField {
     <b>Exercise</b>: Add component-specific CSS
 </h4>
 
-<p>Open your app’s <code>app/app.component.ts</code> file and add a <code>styleUrls</code> property such that that full <code>@Component</code> declaration now looks like this:</p>
+<p>Open your <code>app/app.component.ts</code> file and add a <code>styleUrls</code> property, so that that full <code>@Component</code> declaration now looks like this:</p>
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
@@ -507,7 +507,7 @@ Button, TextField {
     <b>Exercise</b>: Add an <code>id</code> attribute
 </h4>
 
-<p>Open your app’s <code>app/app.component.ts</code> file, find <code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code> in your component’s <code>template</code>, and replace it with the code below:</p>
+<p>Open your <code>app/app.component.ts</code> file, find <code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code> in your component’s <code>template</code>, and replace it with the code below:</p>
 <pre><code class="lang-XML">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot;&gt;&lt;/Button&gt;
 </code></pre>
 <div class="exercise-end"></div>
@@ -539,7 +539,7 @@ Button, TextField {
 <p>Once these files are in place the NativeScript framework knows how to pick the correct file; all you have to do is reference the image using <code>res://</code> and its base file name—i.e. <code>res://logo_login</code>. Here&#39;s what your login screen should look like on iOS and Android:</p>
 <p><img src="images/chapter2/ios/5.png" alt="login 5">
 <img src="images/chapter2/android/5.png" alt="login 5"></p>
-<p>At this point your UI looks good, but the app still doesn&#39;t actually do anything. Let&#39;s look at how you can use JavaScript to add some functionality.</p>
+<p>At this point your UI looks better visually, but the app still doesn&#39;t actually do anything. Let&#39;s look at how you can use JavaScript to add some functionality.</p>
 <blockquote>
 <p><strong>TIP</strong>: The community-written <a href="http://nsimage.brosteins.com/">NativeScript Image Builder</a> can help you generate images in the appropriate resolutions for iOS and Android.</p>
 </blockquote>

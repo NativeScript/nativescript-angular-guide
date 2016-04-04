@@ -145,7 +145,7 @@ TODO: Transition
 
 ### Structuring your app
 
-There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). However, keeping NativeScript apps modular has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.
+There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). Modularizing NativeScript apps, in addition, has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.
 
 Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.
 
@@ -176,6 +176,7 @@ Here you import the `User` class that you just defined. Note the parallel betwee
 
 Next, replace the existing `AppComponent` definition with the one below, which uses the `User` class you just imported.
 
+<!-- Todo, explain the isLoggingIn piece - from the exercise above I think. The button XML needs to be edited -->
 ``` JavaScript
 export class AppComponent {
   user: User;
@@ -243,7 +244,7 @@ A login screen isn’t all that useful if it doesn’t actually log users into a
 
 For the purposes of this tutorial we prebuilt a handful of backend endpoints using [Telerik Backend Services](http://www.telerik.com/platform/backend-services), and we’ll be using those endpoints to make this app functional. Let’s see how they work.
 
-> **NOTE**: You don't have to use Telerik Backend Services to hit your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.
+> **NOTE**: You don't have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an Angular 2 service
@@ -289,7 +290,7 @@ export class UserService {
 
 TODO: Explain that mess above, and probably break it into a lot of steps.
 
-In app.component.ts. Add the lines below to the top:
+In `app.component.ts`, add the lines below to the top:
 
 ``` TypeScript
 import {HTTP_PROVIDERS} from "angular2/http";
@@ -307,7 +308,7 @@ constructor(private _userService: UserService) {
 Add this line to the @Component:
 
 ``` TypeScript
-providers: [UserService, HTTP_PROVIDERS]
+providers: [UserService, HTTP_PROVIDERS],
 ```
 
 Then change the submit function to this:

@@ -54,7 +54,7 @@ In `app/app.component.ts` replace the current `AppComponent` declaration with th
 
 ``` TypeScript
 export class AppComponent {
-  email = "user@nativescript.org";
+  email = "nativescriptrocks@telerik.com";
   submit() {
     alert("You’re using: " + this.email);
   }
@@ -75,9 +75,9 @@ The key thing to note here is the `[text]="email"` attribute on the `<TextField>
 ![Android with prefilled email](images/chapter3/android/1.png)
 ![iOS with prefilled email](images/chapter3/ios/1.png)
 
-> **NOTE**: It’s very easy to confuse Angular 2’s event binding syntax `(eventName)="functionName()"` with its attribute binding syntax `[attributeName]="propertyName"` 🤔. Don’t worry though; if you get them backwards, the problem is usually easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.
+> **NOTE**: It’s very easy to confuse Angular 2’s event binding syntax `(eventName)="functionName()"` with its attribute binding syntax `[attributeName]="propertyName"`. Don’t worry though; if you get them backwards, the problem is usually easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.
 
-This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—that is, you additionally need changes the user makes to be reflected in your TypeScript code.
+This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—that is, you additionally need changes the user makes to data via form controls to be reflected in your TypeScript code.
 
 To show that the current example’s data binding is only one way, head back to your app, change the email text field’s value (type a few extra letters or something like that), and then tap the “Sign In” button. Because your `submit()` function alerts the current value of your component’s `email` property—`alert("You’re using: " + this.email)`—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.
 
@@ -104,27 +104,25 @@ Don’t worry too much about the details here while we’re still getting starte
 
 ![Android with email addresses that do match](images/chapter3/android/3.png)
 
-At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
+Before we move on, let’s make one additional change to show what else you can do with Angular 2’s data binding APIs. The Groceries app uses the same UI for the “Sign In” form and the “Sign Up” form. Therefore, when the user clicks “Sign Up”, we need to update the text of the buttons (and eventually the functionality that occurs when you tap them). Let’s see how to make that happen.
 
-Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
 
-<!--commenting this out as I don't think it belongs here. We just said we're going to move code out of the single file, then we start talking about more stuff to add to the single file...confuzzled-->
-<!--<h4 class="exercise-start">
-    <b>Exercise</b>: ???
+<h4 class="exercise-start">
+    <b>Exercise</b>: Using the ternary operator in templates
 </h4>
 
-app.component.ts — Replace the two buttons with this
+Open `app/app.component.ts` and replace the two existing buttons with the code below:
 
 ``` XML
 <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
 <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
 ```
 
-app.component.ts - Use this for the AppComponent class:
+Next, replace the existing `AppComponent` declaration with the code below, which adds a new `isLoggingIn` property, and a new `toggleDisplay()` method:
 
 ``` TypeScript
 export class AppComponent {
-  email = "user@nativescript.org";
+  email = "nativescriptrocks@telerik.com";
   isLoggingIn = true;
 
   submit() {
@@ -138,10 +136,14 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
-TODO: Transition
--->
+The previous examples switches each button’s’ `text` attribute from a simple string—e.g. `<Button text="Sign Up">`—to an attribute binding that is dependent on a value defined in the `AppComponent` class—e.g. `<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'">"`. Now, when the value of the `isLoggingIn` attributes changes after the user clicks the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:
 
+![Text changing on Android](images/chapter3/android/4.gif)
+![Text changing on iOS](images/chapter3/ios/4.gif)
 
+At this point, you have a basic login screen setup with two-way data binding—which isn’t bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
+
+Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
 
 ### Structuring your app
 
@@ -346,7 +348,7 @@ Create an account, then hardcode those credentials in your constructor to make t
 ``` TypeScript
 constructor(private _userService: UserService) {
   this.user = new User();
-  this.user.email = "user@nativescript.org";
+  this.user.email = "nativescriptrocks@telerik.com";
   this.user.password = "password";
 }
 ```
@@ -371,7 +373,7 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {
     this.user = new User();
-    this.user.email = "user@nativescript.org";
+    this.user.email = "nativescriptrocks@telerik.com";
     this.user.password = "password";
   }
   submit() {

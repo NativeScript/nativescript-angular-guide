@@ -586,7 +586,7 @@ Button, TextField {
 
 <p>In <code>app/app.component.ts</code> replace the current <code>AppComponent</code> declaration with the one shown below, which adds a new <code>email</code> property, and changes the <code>submit()</code> method to display its value:</p>
 <pre><code class="lang-TypeScript">export class AppComponent {
-  email = &quot;user@nativescript.org&quot;;
+  email = &quot;nativescriptrocks@telerik.com&quot;;
   submit() {
     alert(&quot;You’re using: &quot; + this.email);
   }
@@ -602,9 +602,9 @@ Button, TextField {
 <p><img src="images/chapter3/android/1.png" alt="Android with prefilled email">
 <img src="images/chapter3/ios/1.png" alt="iOS with prefilled email"></p>
 <blockquote>
-<p><strong>NOTE</strong>: It’s very easy to confuse Angular 2’s event binding syntax <code>(eventName)=&quot;functionName()&quot;</code> with its attribute binding syntax <code>[attributeName]=&quot;propertyName&quot;</code> 🤔. Don’t worry though; if you get them backwards, the problem is usually easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.</p>
+<p><strong>NOTE</strong>: It’s very easy to confuse Angular 2’s event binding syntax <code>(eventName)=&quot;functionName()&quot;</code> with its attribute binding syntax <code>[attributeName]=&quot;propertyName&quot;</code>. Don’t worry though; if you get them backwards, the problem is usually easy to debug, as the functionality you’re attempting to add just won’t work. These syntaxes are common enough that you’ll be using them a lot, and eventually you should be able to commit them to memory.</p>
 </blockquote>
-<p>This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—that is, you additionally need changes the user makes to be reflected in your TypeScript code.</p>
+<p>This attribute binding approach works really well when you need the data binding to be one way—that is, when you need TypeScript properties, and changes to those properties done in TypeScript code, to appear in the user interface. But in the case of user interface controls that accept user input, such as the text field in this example, usually you need data binding to work two way—that is, you additionally need changes the user makes to data via form controls to be reflected in your TypeScript code.</p>
 <p>To show that the current example’s data binding is only one way, head back to your app, change the email text field’s value (type a few extra letters or something like that), and then tap the “Sign In” button. Because your <code>submit()</code> function alerts the current value of your component’s <code>email</code> property—<code>alert(&quot;You’re using: &quot; + this.email)</code>—you might expect to see the updated value in the alert. Instead, however, you see the original value. Notice how the typed text and the alert value don’t match in the screenshot below.</p>
 <p><img src="images/chapter3/android/2.png" alt="Android with email address that do not match"></p>
 <p>To fix this, you need to switch to Angular 2’s two-way data binding syntax.</p>
@@ -621,40 +621,35 @@ Button, TextField {
 <p>At first glance the <code>[(ngModel)]</code> syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, <code>[(ngModel)]=&quot;email&quot;</code> is shorthand for <code>[text]=&quot;email&quot; (emailChange)=&quot;email=$event&quot;</code>, which binds the email element’s <code>text</code> attribute to an <code>email</code> property and adds a <code>change</code> event handler that updates the <code>email</code> property’s value whenever the user makes a change.</p>
 <p>Don’t worry too much about the details here while we’re still getting started. In your head you can think of <code>[(ngModel)]</code> as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:</p>
 <p><img src="images/chapter3/android/3.png" alt="Android with email addresses that do match"></p>
-<p>At this point, you have a basic login screen setup with two-way data binding—not bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
-<p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
-<!--commenting this out as I don't think it belongs here. We just said we're going to move code out of the single file, then we start talking about more stuff to add to the single file...confuzzled-->
-<!--<h4 class="exercise-start">
-    <b>Exercise</b>: ???
+<p>Before we move on, let’s make one additional change to show what else you can do with Angular 2’s data binding APIs. The Groceries app uses the same UI for the “Sign In” form and the “Sign Up” form. Therefore, when the user clicks “Sign Up”, we need to update the text of the buttons (and eventually the functionality that occurs when you tap them). Let’s see how to make that happen.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Using the ternary operator in templates
 </h4>
 
-app.component.ts — Replace the two buttons with this
-
-``` XML
-<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
-<Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
-```
-
-app.component.ts - Use this for the AppComponent class:
-
-``` TypeScript
-export class AppComponent {
-  email = "user@nativescript.org";
+<p>Open <code>app/app.component.ts</code> and replace the two existing buttons with the code below:</p>
+<pre><code class="lang-XML">&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
+&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign up&#39; : &#39;Back to login&#39;&quot; (tap)=&quot;toggleDisplay()&quot;&gt;&lt;/Button&gt;
+</code></pre>
+<p>Next, replace the existing <code>AppComponent</code> declaration with the code below, which adds a new <code>isLoggingIn</code> property, and a new <code>toggleDisplay()</code> method:</p>
+<pre><code class="lang-TypeScript">export class AppComponent {
+  email = &quot;nativescriptrocks@telerik.com&quot;;
   isLoggingIn = true;
 
   submit() {
-    alert("You’re using: " + this.email);
+    alert(&quot;You’re using: &quot; + this.email);
   }
   toggleDisplay() {
     this.isLoggingIn = !this.isLoggingIn;
   }
 }
-```
-
+</code></pre>
 <div class="exercise-end"></div>
 
-TODO: Transition
--->
+<p>The previous examples switches each button’s’ <code>text</code> attribute from a simple string—e.g. <code>&lt;Button text=&quot;Sign Up&quot;&gt;</code>—to an attribute binding that is dependent on a value defined in the <code>AppComponent</code> class—e.g. <code>&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot;&gt;&quot;</code>. Now, when the value of the <code>isLoggingIn</code> attributes changes after the user clicks the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:</p>
+<p><img src="images/chapter3/android/4.gif" alt="Text changing on Android">
+<img src="images/chapter3/ios/4.gif" alt="Text changing on iOS"></p>
+<p>At this point, you have a basic login screen setup with two-way data binding—which isn’t bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
+<p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
 <h3 id="structuring-your-app">Structuring your app</h3>
 <p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. Modularizing NativeScript apps, in addition, has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
 <p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.</p>
@@ -810,7 +805,7 @@ signUp() {
 <p>Create an account, then hardcode those credentials in your constructor to make testing easier:</p>
 <pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
   this.user = new User();
-  this.user.email = &quot;user@nativescript.org&quot;;
+  this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
   this.user.password = &quot;password&quot;;
 }
 </code></pre>
@@ -832,7 +827,7 @@ export class AppComponent {
 
   constructor(private _userService: UserService) {
     this.user = new User();
-    this.user.email = &quot;user@nativescript.org&quot;;
+    this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
     this.user.password = &quot;password&quot;;
   }
   submit() {

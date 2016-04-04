@@ -550,6 +550,10 @@ constructor(private _router: Router, private _userService: UserService) {
 
 <div class="exercise-end"></div>
 
-You can login now! And navigate! Show a gif of the navigation. Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.
+You can login now! And navigate! 
+
+<img alt="Login with basic information" src="images/chapter3/login_router.gif" class="plain">
+
+Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.
 
 Then transition to modules.

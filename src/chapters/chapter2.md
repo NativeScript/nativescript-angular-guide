@@ -339,7 +339,7 @@ Button, TextField {
 
 <div class="exercise-end"></div>
 
-In Angular 2, the `stylesUrl` points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, `login-common.css`, and `login.css`, which is actually implemented as `login.ios.css` and `login.android.css` using the same naming convention we introduced in the previous section.
+In Angular 2, `styleUrls` points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, `login-common.css`, and `login.css`, which is actually implemented as `login.ios.css` and `login.android.css` using the same naming convention we introduced in the previous section.
 
 Why three files? Much like you divided your global files into `app.css`, `platform.ios.css`, and `platform.android.css`, this structure gives you a similar ability to place common login styling in `login-common.css`, iOS-specific login styling `login.ios.css`, and Android-specific login styling in `login.android.css`.
 

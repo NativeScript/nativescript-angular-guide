@@ -21,7 +21,7 @@ Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hand
   <p>The result is a software architecture that allows you to build mobile apps using the same framework—and in some cases the same code—that you use to build Angular 2 web apps, with the performance you’d expect from native code. Let’s look at how it all works by building an app.</p>
 </div>
 
-> **WARNING**: Although NativeScript itself is a production-ready framework that drives [many apps in the app stores today](https://www.nativescript.org/showcases), NativeScript’s Angular integration is still in an alpha stage. If you run into issues when using the Angular integration, please report them on https://github.com/NativeScript/nativescript-angular. If you’re looking for a guide on using the production-ready flavor of NativeScript, head to the [official Getting Started Guide](http://docs.nativescript.org/start/getting-started).
+> **WARNING**: Using Angular 2 with NativeScript is optional. If you’re looking for a guide on how to use NativeScript without Angular 2, head over to our other [Getting Started Guide](http://docs.nativescript.org/start/getting-started).
 
 ### What you're building
 

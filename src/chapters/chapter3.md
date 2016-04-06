@@ -525,10 +525,16 @@ export class AppComponent {}
 
 <div class="exercise-end"></div>
 
-Let’s actually log the user in then, shall we?
+The main new concept here is the `@RouteConfig` decorator, which you use to provide a list of all routes that are present in your app. Currently you only have one route, which is why `@RouteConfig` contains a single entry.
+
+> **TIP**: If you haven’t played with Angular 2 routing before, you can refer to [Angular’s tutorial on the topic](https://angular.io/docs/ts/latest/tutorial/toh-pt5.html) for some background.
+
+The other new concept in this example is `<page-router-outlet>`, which is your app’s first directive. You can check out Angular’s docs for [details on what directives do](https://angular.io/docs/ts/latest/api/core/Directive-decorator.html), but the simplest way to think of them is as something that can affect the markup you put in your `template`—in this case `<page-router-outlet>`.
+
+Angular 2 provides a `<router-outlet>` directive for web apps, and NativeScript extends that directive with its own `<page-router-outlet>` directive that handles the unique environment of iOS and Android apps. To see how it works lets add another page.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Create the list page
 </h4>
 
 Open pages/list/list.component.ts and paste in this:

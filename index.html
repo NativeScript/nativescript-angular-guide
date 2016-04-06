@@ -305,6 +305,9 @@ export class AppComponent {}
 </code></pre>
 <p>This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.</p>
 <p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
+<blockquote>
+<p><strong>TIP</strong>: Why <a href="http://www.typescriptlang.org/">TypeScript</a>? It&#39;s strongly recommended that you use TypeScript in your Angular 2 NativeScript app, as it&#39;s a first class citizen in both NativeScript and Angular 2. In fact, both NativeScript and Angular 2 were built with TypeScript. The NativeScript CLI makes compiling your TypeScript files seamless, as each time you livesync, run or build the app, the files are recompiled from TypeScript to JavaScript. In some IDEs, such as Visual Studio Code, you might choose to hide the compiled files. A tutorial on how to do this can be found <a href="https://code.visualstudio.com/Docs/languages/typescript#_hiding-derived-javascript-files">here</a>.</p>
+</blockquote>
 <p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;Label text=&quot;hello NativeScript&quot;&gt;&lt;/Label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
 <p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so why do we see it here? Let’s dive into this by looking at how NativeScript UI elements work.</p>
 <blockquote>
@@ -906,16 +909,20 @@ export class UserService {
 </blockquote>
 <p>Your app now has a fully functional registration process, but users can’t do anything with the accounts they create. Our next step is to allow the users to login and navigate to a new list page. And to do that we need to introduce the concept of routing.</p>
 <h3 id="routing">Routing</h3>
-<p>TODO: Intro</p>
+<p>Most of the Angular 2 concepts you’ve used in the last few sections are the same regardless of whether you’re building for the web or native apps. You are even able to share model objects and services directly between the two environments.</p>
+<p>However, routing is different, as there are some fundamental differences between how the concept of routing works on the web and in apps. Routing on the web revolves around the concept of a URL, but in a native app there is no browser. Likewise, native apps have concepts that aren’t present in the browser, such as Android’s hardware back button, or iOS’s swipe left-to-right gesture to go back.</p>
+<p>Because of that, routing in NativeScript needs to work a bit differently. The main difference is that you must designate certain Angular components in your app as “pages”, which in Groceries are stored in the <code>pages</code> folder. Let’s look at the code needed to make this work, and then step by and discuss why NativeScript takes the approach that it does.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Setting up routing
 </h4>
 
-<p>Copy app/app.component.ts into app/pages/login/login.component.ts, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:</p>
+<p>To this point you’ve been putting your login page code in <code>app.component.ts</code>. Let’s move that logic into the <code>pages/login</code> folder to make room for additional pages.</p>
+<p>First, open <code>app/app.component.ts</code> and copy its contents into <code>app/pages/login/login.component.ts</code>.</p>
+<p>Next, in <code>login.component.ts</code>, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:</p>
 <pre><code class="lang-TypeScript">import {User} from &quot;../../shared/user/user&quot;;
 import {UserService} from &quot;../../shared/user/user.service&quot;;
 </code></pre>
-<p>Open app/app.component.ts back up and paste in the following code:</p>
+<p>Now that <code>app.component.ts</code> is empty, let’s add in the appropriate Angular 2 routing code. Open app/app.component.ts back up and paste in the following code:</p>
 <pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
 import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
 import {RouteConfig} from &quot;angular2/router&quot;;
@@ -933,7 +940,6 @@ import {LoginPage} from &quot;./pages/login/login.component&quot;;
 ])
 export class AppComponent {}
 </code></pre>
-<p>Explain what’s going on here.</p>
 <div class="exercise-end"></div>
 
 <p>Let’s actually log the user in then, shall we?</p>
@@ -996,7 +1002,9 @@ export class ListPage {}
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>You can login now! And navigate! Show a gif of the navigation. Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.</p>
+<p>You can login now! And navigate! </p>
+<p><img alt="Login with basic information" src="images/chapter3/login_router.gif"></p>
+<p>Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.</p>
 <p>Then transition to modules.</p>
 
 			</div>

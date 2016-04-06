@@ -481,20 +481,28 @@ Your app now has a fully functional registration process, but users can’t do a
 
 ### Routing
 
-TODO: Intro
+Most of the Angular 2 concepts you’ve used in the last few sections are the same regardless of whether you’re building for the web or native apps. You are even able to share model objects and services directly between the two environments.
+
+However, routing is different, as there are some fundamental differences between how the concept of routing works on the web and in apps. Routing on the web revolves around the concept of a URL, but in a native app there is no browser. Likewise, native apps have concepts that aren’t present in the browser, such as Android’s hardware back button, or iOS’s swipe left-to-right gesture to go back.
+
+Because of that, routing in NativeScript needs to work a bit differently. The main difference is that you must designate certain Angular components in your app as “pages”, which in Groceries are stored in the `pages` folder. Let’s look at the code needed to make this work, and then step by and discuss why NativeScript takes the approach that it does.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Setting up routing
 </h4>
 
-Copy app/app.component.ts into app/pages/login/login.component.ts, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:
+To this point you’ve been putting your login page code in `app.component.ts`. Let’s move that logic into the `pages/login` folder to make room for additional pages.
+
+First, open `app/app.component.ts` and copy its contents into `app/pages/login/login.component.ts`.
+
+Next, in `login.component.ts`, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:
 
 ``` TypeScript
 import {User} from "../../shared/user/user";
 import {UserService} from "../../shared/user/user.service";
 ```
 
-Open app/app.component.ts back up and paste in the following code:
+Now that `app.component.ts` is empty, let’s add in the appropriate Angular 2 routing code. Open app/app.component.ts back up and paste in the following code:
 
 ``` TypeScript
 import {Component} from "angular2/core";
@@ -514,8 +522,6 @@ import {LoginPage} from "./pages/login/login.component";
 ])
 export class AppComponent {}
 ```
-
-Explain what’s going on here.
 
 <div class="exercise-end"></div>
 
@@ -606,7 +612,7 @@ constructor(private _router: Router, private _userService: UserService) {
 
 You can login now! And navigate! 
 
-<img alt="Login with basic information" src="images/chapter3/login_router.gif" class="plain">
+<img alt="Login with basic information" src="images/chapter3/login_router.gif">
 
 Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.
 

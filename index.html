@@ -947,12 +947,12 @@ export class AppComponent {}
 <p><strong>TIP</strong>: If you haven’t played with Angular 2 routing before, you can refer to <a href="https://angular.io/docs/ts/latest/tutorial/toh-pt5.html">Angular’s tutorial on the topic</a> for some background.</p>
 </blockquote>
 <p>The other new concept in this example is <code>&lt;page-router-outlet&gt;</code>, which is your app’s first directive. You can check out Angular’s docs for <a href="https://angular.io/docs/ts/latest/api/core/Directive-decorator.html">details on what directives do</a>, but the simplest way to think of them is as something that can affect the markup you put in your <code>template</code>—in this case <code>&lt;page-router-outlet&gt;</code>.</p>
-<p>Angular 2 provides a <code>&lt;router-outlet&gt;</code> directive for web apps, and NativeScript extends that directive with its own <code>&lt;page-router-outlet&gt;</code> directive that handles the unique environment of iOS and Android apps. To see how it works lets add another page.</p>
+<p>Angular 2 provides a <code>&lt;router-outlet&gt;</code> directive for web apps, and NativeScript extends that directive with its own <code>&lt;page-router-outlet&gt;</code> directive that handles the unique environment of iOS and Android apps. To see how it works let’s add another page.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Create the list page
 </h4>
 
-<p>Open pages/list/list.component.ts and paste in this:</p>
+<p>Open <code>pages/list/list.component.ts</code> and paste in the following code, which you’ll use as the start of a simple list page:</p>
 <pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
 
 @Component({
@@ -962,16 +962,20 @@ export class AppComponent {}
 })
 export class ListPage {}
 </code></pre>
-<p>Next, open pages/list/list.html and paste in this:</p>
+<p>For now, we’ll keep the list page simple so you can see how the routing works. But so that there’s something to see, open <code>pages/list/list.html</code> and paste the following label:</p>
 <pre><code class="lang-XML">&lt;Label text=&quot;Hello world&quot;&gt;&lt;/Label&gt;
 </code></pre>
-<p>Now, go back to app/app.component.ts and paste in this at the top of the file:</p>
+<p>After that, go back to <code>app/app.component.ts</code> and paste the following import in at the top of the file:</p>
 <pre><code class="lang-TypeScript">import {ListPage} from &quot;./pages/list/list.component&quot;;
 </code></pre>
-<p>And this in the <code>@RouteConfig</code>:</p>
-<pre><code class="lang-TypeScript">{ path: &quot;/List&quot;, component: ListPage, as: &quot;List&quot; }
+<p>Next, replace the existing <code>@RouteConfig</code> with the following code so that it includes this new list page:</p>
+<pre><code class="lang-TypeScript">@RouteConfig([
+  { path: &quot;/Login&quot;, component: LoginPage, as: &quot;Login&quot;, useAsDefault: true },
+  { path: &quot;/List&quot;, component: ListPage, as: &quot;List&quot; }
+])
 </code></pre>
-<p>Now go to app/shared/user/user.service.ts and add this function:</p>
+<p>Angular 2 now knows about the list page, but we still need to navigate the user to that page at the appropriate time. Our next step is to allow users to log into their accounts, and to take navigate them to the new list page after they successfully authenticate.</p>
+<p>To do that, start by opening <code>app/shared/user/user.service.ts</code> and the <code>login()</code> function below to the existing <code>UserService</code> class:</p>
 <pre><code class="lang-TypeScript">login(user: User) {
   var headers = new Headers();
   headers.append(&quot;Content-Type&quot;, &quot;application/json&quot;);
@@ -992,25 +996,36 @@ export class ListPage {}
   .catch(this.handleErrors);
 }
 </code></pre>
-<p>Finally, go to <code>app/login/login.component.ts</code> and change the login function to do this:</p>
-<pre><code class="lang-TypeScript">this._userService.login(this.user)
-  .subscribe(
-    () =&gt; this._router.navigate([&quot;List&quot;]),
-    (error) =&gt; alert(&quot;Unfortunately we could not find your account.&quot;)
-  );
-</code></pre>
-<p>To make this work, in the same file, add this to the top:</p>
+<p>This code hits one of our existing backend endpoints, and stores off a authentication token that we’ll use later in this guide.</p>
+<p>To use this <code>login()</code> function, return to <code>app/login/login.component.ts</code>, and add the following import to the top of the file:</p>
 <pre><code class="lang-TypeScript">import {Router} from &quot;angular2/router&quot;;
 </code></pre>
-<p>And this to the constructor:</p>
+<p>Next, replace the current <code>constructor()</code> declaration with the code below, which adds Angular 2’s <code>Router</code> service:</p>
 <pre><code class="lang-TypeScript">constructor(private _router: Router, private _userService: UserService) {
 </code></pre>
+<p>Finally, replace the <code>LoginPage</code>’s existing <code>login()</code> function with the code below:</p>
+<pre><code class="lang-TypeScript">login() {
+  this._userService.login(this.user)
+    .subscribe(
+      () =&gt; this._router.navigate([&quot;List&quot;]),
+      (error) =&gt; alert(&quot;Unfortunately we could not find your account.&quot;)
+    );
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>:</p>
+<ul>
+<li>You don’t have to add <code>Router</code> to your <code>LoginPage</code> component’s <code>providers</code> array because it’s already included in the parent <code>AppComponent</code> component’s <code>providers</code> list.</li>
+<li>Refer to Angular’s documentation for a <a href="https://angular.io/docs/ts/latest/api/router/Router-class.html">full list of the API available on the <code>Router</code> service</a>.</li>
+</ul>
+</blockquote>
 <div class="exercise-end"></div>
 
-<p>You can login now! And navigate! </p>
-<p><img alt="Login with basic information" src="images/chapter3/login_router.gif"></p>
-<p>Talk about how in NativeScript you get native behavior automatically—aka a back button on iOS and a hardware back button on Android.</p>
-<p>Then transition to modules.</p>
+<p>After this change you can now navigate between the login and list pages in your app:</p>
+<p><img src="images/chapter3/android/7.gif" alt="Navigating on Android">
+<img src="images/chapter3/ios/7.gif" alt="Navigating on iOS"></p>
+<p>The power of NativeScript is you have the ability to use the same Angular conventions that you’d use in a web app—<code>@RouteConfig</code>, <code>Router</code>, and so forth—yet get an app that fits right in on iOS and Android. Notice how on Android the hardware back button works as expected, and how your iOS app uses built-in iOS animations and conventions such as the back button.</p>
+<p>And we’re just getting started. NativeScript provides a number of other ways to tie into native device functionality out of the box through NativeScript modules. Let’s look at how they work.</p>
 
 			</div>
 			<div class="chapter">

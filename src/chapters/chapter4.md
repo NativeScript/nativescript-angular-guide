@@ -1,6 +1,17 @@
 ## NativeScript modules
 
-Explain what modules are. Should be able to copy content almost verbatim from the current guide.
+In this chapter you'll learn about NativeScript modules, which are the JavaScript modules in your app's `node_modules/tns-core-modules` folder. Whether you've realized it or not, you've already used several NativeScript modules, as all of the NativeScript UI elements are actually implemented with JavaScript code.
+
+If you dig into `node_modules/tns-core-modules` you can get an idea of how these modules work. Start by finding the `node_modules/tns-core-modules/camera` folder, which includes the implementation of the camera module. It includes:
+
+- a `package.json` file that sets the name of the module;
+- a file containing the module's Android implementation (`camera.android.js`);
+- a file containing the module's iOS implementation (`camera.ios.js`);
+- a file containing code shared by the Android and iOS implementations (`camera-common.js`)
+
+> **NOTE**: You can refer to the [Node.js documentation on folders as modules](https://nodejs.org/api/modules.html#modules_folders_as_modules) for more detailed information on how NativeScript organizes its modules.
+
+The \*.ios.\* and \*.android.\* naming convention should look familiar, as it’s the exact same convention we used to include Android- and iOS-specific styling in [chapter 2.3](#css). NativeScript uses this same convention to implement its modules on iOS and Android. Now that you know where these modules are, let's take a closer look at what else they can do for your app, starting with a closer looks at what you can do with NativeScript’s UI elements.
 
 ### UI elements
 

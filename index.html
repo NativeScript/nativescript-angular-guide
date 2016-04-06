@@ -737,13 +737,75 @@ export class AppComponent {
 </blockquote>
 <p>With this setup you now have a <code>User</code> class that you can share across pages in your app and even across applications. But a model object that’s four simple lines of code isn’t all that exciting. Where this approach really pays off is when you’re able to share your business logic, and the code that hits your backend systems. In Angular 2 those classes are known as services. Let’s look at them next.</p>
 <h3 id="services">Services</h3>
-<p>A login screen isn’t all that useful if it doesn’t actually log users into anything. Therefore, our next task is to take the user’s email address and password, and send them to a backend endpoint to retrieve an authentication token we’ll use later in this guide. We’ll build this functionality as an Angular 2 service.</p>
+<p>A login screen isn’t all that useful if it doesn’t actually log users into anything. Therefore, our next task is to allow users to create and log into accounts. We’ll build this functionality as an <a href="https://angular.io/docs/ts/latest/tutorial/toh-pt4.html">Angular 2 service</a>, which is Angular 2’s mechanism for reusable classes that operate on data.</p>
 <p>For the purposes of this tutorial we prebuilt a handful of backend endpoints using <a href="http://www.telerik.com/platform/backend-services">Telerik Backend Services</a>, and we’ll be using those endpoints to make this app functional. Let’s see how they work.</p>
 <blockquote>
 <p><strong>NOTE</strong>: You don&#39;t have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.</p>
 </blockquote>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an Angular 2 service
+</h4>
+
+<p>There’s are several new concepts to introduce with Angular services, so we’re going to start by stubbing out a new <code>register()</code> method, and then come back to the implementation later in this section. With that in mind, open <code>app/shared/user/user.service.ts</code> and paste in the following code:</p>
+<pre><code class="lang-TypeScript">import {Injectable} from &quot;angular2/core&quot;;
+import {User} from &quot;./user&quot;;
+
+@Injectable()
+export class UserService {
+  register(user: User) {
+    alert(&quot;About to register: &quot; + user.email);
+  }
+}
+</code></pre>
+<p>This creates a basic Angular service with a single method that takes an instance of the <code>User</code> object you created in the previous section. The one new thing is the <code>@Injectable</code> decorator. This decorator denotes this class as a candidate for <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html">Angular’s dependency injection mechanism</a>. For now just think of adding the <code>@Injectable</code> as a required convention for all services that you write.</p>
+<p>Next, add the following line to the top of <code>app/app.component.ts</code>, which imports the service you just defined:</p>
+<pre><code class="lang-TypeScript">import {UserService} from &quot;./shared/user/user.service&quot;;
+</code></pre>
+<p>After that, add a new <code>providers</code> property to the existing <code>@Component</code> decorator. The full <code>@Component</code> declaration should now look like this:</p>
+<pre><code class="lang-TypeScript">@Component({
+  selector: &quot;my-app&quot;,
+  providers: [UserService],
+  templateUrl: &quot;pages/login/login.html&quot;,
+  styleUrls: [&quot;pages/login/login-common.css&quot;, &quot;pages/login/login.css&quot;],
+})
+</code></pre>
+<p>The <code>providers</code> array is a simple list of all the Angular 2 services that you need to use in your component. At the moment you only have one service, so your <code>providers</code> array only has one entry.</p>
+<p>Next, replace <code>AppComponent</code>’s existing <code>constructor</code> with the code below:</p>
+<pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
+  this.user = new User();
+}
+</code></pre>
+<p>We’ll discuss what this <code>constructor</code> syntax is doing momentarily, as it can be confusing if you’ve never worked with Angular 2 before, but first let’s make the final change to get this example running. Find the existing <code>submit()</code> function in <code>AppComponent</code>, and replace it with the following three functions:</p>
+<pre><code class="lang-TypeScript">submit() {
+  if (this.isLoggingIn) {
+    this.login();
+  } else {
+    this.signUp();
+  }
+}
+login() {
+  // TODO: Define
+}
+signUp() {
+  this._userService.register(this.user);
+}
+</code></pre>
+<div class="exercise-end"></div>
+
+<p>Now, in your app, tap the “Sign Up” button, type an email address, and tap the “Sign Up” button again. If all went well, you should see the alert below:</p>
+<p><img src="images/chapter3/android/5.png" alt="Alert on Android">
+<img src="images/chapter3/ios/5.png" alt="Alert on iOS"></p>
+<p>How does this code work? Let’s return to this bit of code:</p>
+<pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
+  this.user = new User();
+}
+</code></pre>
+<p>This is Angular 2’s dependency injection implementation in action. Because you registered <code>UserService</code> as a provider in this component’s <code>providers</code> array, when Angular sees this syntax it creates an instance of the <code>UserService</code> class, and passes that instance into the component’s constructor.</p>
+<p>This begs a bigger question though: why bother with all of this? Why not run <code>this._userService = new UserService()</code> in the component’s constructor and forget the complexity of <code>@Injectable</code> and <code>providers</code>?</p>
+<p>The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular for a <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html">more thorough discussion of the benefits of dependency injection</a>.</p>
+<p>Let’s return to our example and make the registration process actually work.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Use an Angular 2 service
 </h4>
 
 <p>Open <code>app/shared/user/user.service.ts</code> and paste in the following code:</p>
@@ -781,33 +843,8 @@ export class UserService {
   }
 }
 </code></pre>
-<p>TODO: Explain that mess above, and probably break it into a lot of steps.</p>
-<p>In <code>app.component.ts</code>, add the lines below to the top:</p>
-<pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
-import {UserService} from &quot;./shared/user/user.service&quot;;
-</code></pre>
-<p>Then change the constructor to this:</p>
-<pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
-  this.user = new User();
-}
-</code></pre>
-<p>Add this line to the @Component:</p>
-<pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS],
-</code></pre>
-<p>Then change the submit function to this:</p>
-<pre><code class="lang-TypeScript">submit() {
-  if (this.isLoggingIn) {
-    this.login();
-  } else {
-    this.signUp();
-  }
-}
-</code></pre>
-<p>Then add these two functions:</p>
-<pre><code class="lang-TypeScript">login() {
-  // TODO: Define
-}
-signUp() {
+<p>Next, in <code>app/app.component.ts</code>, replace the existing <code>signUp()</code> function with the following code:</p>
+<pre><code class="lang-TypeScript">signUp() {
   this._userService.register(this.user)
     .subscribe(
       () =&gt; {
@@ -818,62 +855,56 @@ signUp() {
     );
 }
 </code></pre>
-<p>Create an account, then hardcode those credentials in your constructor to make testing easier:</p>
+<div class="exercise-end"></div>
+
+<p>The first thing to note here is the new <code>constructor</code> code in <code>user.service.ts</code>:</p>
+<pre><code class="lang-TypeScript">constructor(private _http: Http) {}
+</code></pre>
+<p>The <code>UserService</code> class is using the same dependency injection technique to bring in a service that it needs, in this case the Http class, which is Angular 2’s way of letting you perform HTTP calls. And thanks to NativeScript, those same HTTP APIs work on iOS and Android without any extra work.</p>
+<blockquote>
+<p><strong>TIP</strong>: Refer to <a href="https://angular.io/docs/ts/latest/api/http/Http-class.html">Angular 2’s docs on Http</a> for specifics on what HTTP APIs are available.</p>
+</blockquote>
+<p>The other new bit of code is the return value of this new <code>register()</code> method. <code>register()</code> returns <code>this._http.post()</code>, which is an RxJS <code>Observable</code>. You can refer to docs for a <a href="https://angular.io/docs/ts/latest/guide/server-communication.html">full tutorial on how RxJS observables work</a>, but for now just know that the most common thing you’ll need to do with observables is subscribe to them, which is what the new code you added to <code>app.component.ts</code> does:</p>
+<pre><code class="lang-TypeScript">this._userService.register(this.user)
+  .subscribe(
+    () =&gt; {
+      alert(&quot;Your account was successfully created.&quot;);
+      this.toggleDisplay();
+    },
+    () =&gt; alert(&quot;Unfortunately we were unable to create your account.&quot;)
+  );
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: The <code>() =&gt; {}</code> syntax defines an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">ES2015 arrow function</a>, which TypeScript supports out of the box. In this example, the arrow functions are the equivalent of writing <code>function() {}</code>.</p>
+</blockquote>
+<p>The two functions you provide are success and failure handlers. If The call to <code>register()</code> succeeds, your first alert will fire, and if the call to <code>register()</code> fails, your second alert will fire. Now that your service code is setup and ready to go, let’s create make the final few changes and create an account.</p>
+<h4 class="exercise-start">
+    <b>Exercise</b>: Create an account
+</h4>
+
+<p>Because the <code>UserService</code> makes use of the Http service, your final step is registering the Http provider in <code>AppComponent</code>. Start by opening <code>app/app.component.ts</code> and adding the following import to the top of the file:</p>
+<pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
+</code></pre>
+<p>Next, in the same file, replace the current <code>providers</code> array with the following code:</p>
+<pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS],
+</code></pre>
+<p>At this point you should be ready to create an account to verify this whole setup worked.</p>
+<p>After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password (fake credentials are fine, just make up something you can remember), and then click the orange “Sign Up” button.</p>
+<div class="exercise-end"></div>
+
+<p>If all went well, you should see a confirmation dialog that looks like this:</p>
+<p><img src="images/chapter3/android/6.png" alt="Alert on Android">
+<img src="images/chapter3/ios/6.png" alt="Alert on iOS"></p>
+<blockquote>
+<p><strong>TIP</strong>:  After creating your account, you may wish to hardcore your credentials in your <code>AppComponent</code>’s <code>constructor</code> to make development faster for the rest of this guide.</p>
 <pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
   this.user = new User();
-  this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
+  this.user.email = &quot;user@nativescript.org&quot;;
   this.user.password = &quot;password&quot;;
 }
 </code></pre>
-<p>Full app.component.ts:</p>
-<pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
-import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
-import {User} from &quot;./shared/user/user&quot;;
-import {UserService} from &quot;./shared/user/user.service&quot;;
-
-@Component({
-  selector: &quot;my-app&quot;,
-  templateUrl: &quot;pages/login/login.html&quot;,
-  styleUrls: [&quot;pages/login/login-common.css&quot;, &quot;pages/login/login.css&quot;],
-  providers: [UserService, HTTP_PROVIDERS]
-})
-export class AppComponent {
-  user: User;
-  isLoggingIn = true;
-
-  constructor(private _userService: UserService) {
-    this.user = new User();
-    this.user.email = &quot;nativescriptrocks@telerik.com&quot;;
-    this.user.password = &quot;password&quot;;
-  }
-  submit() {
-    if (this.isLoggingIn) {
-      this.login();
-    } else {
-      this.signUp();
-    }
-  }
-  login() {
-    // TODO: Define
-  }
-  signUp() {
-    this._userService.register(this.user)
-      .subscribe(
-        () =&gt; {
-          alert(&quot;Your account was successfully created.&quot;);
-          this.toggleDisplay();
-        },
-        () =&gt; alert(&quot;Unfortunately we were unable to create your account.&quot;)
-      );
-  }
-  toggleDisplay() {
-    this.isLoggingIn = !this.isLoggingIn;
-  }
-}
-</code></pre>
-<div class="exercise-end"></div>
-
-<p>TODO: Show that user account creation now works and transition to routing.</p>
+</blockquote>
+<p>Your app now has a fully functional registration process, but users can’t do anything with the accounts they create. Our next step is to allow the users to login and navigate to a new list page. And to do that we need to introduce the concept of routing.</p>
 <h3 id="routing">Routing</h3>
 <p>TODO: Intro</p>
 <h4 class="exercise-start">

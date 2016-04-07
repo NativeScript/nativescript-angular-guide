@@ -15,6 +15,8 @@ The \*.ios.\* and \*.android.\* naming convention should look familiar, as it’
 
 ### UI elements
 
+So far, you’ve only used NativeScript UI elements by including them in an Angular 2’s components `template`.
+
 Explain that UI elements are actually NativeScript modules. Say that we’re going to make this app look nice—it’s a native app after all.
 
 <h4 class="exercise-start">

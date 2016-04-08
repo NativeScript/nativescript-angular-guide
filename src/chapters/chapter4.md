@@ -93,23 +93,25 @@ The ability to run robust and performant animations is the one of the biggest re
 - [Scaling]({{site.baseurl}}/ui/animation#scale)
 - [Rotating]({{site.baseurl}}/ui/animation#rotate)
 
+Let’s add a simple animation so you can see how they work.
+
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Add a color animation
 </h4>
 
-Open `app/pages/login/login.html` and add an `id` to the `<StackLayout>`:
+Open `app/pages/login/login.html` and add an `id` to the existing `<StackLayout>`:
 
 ``` XML
 <StackLayout id="container">
 ```
 
-Open `app/pages/login/login.component.ts` and add the following line at the top:
+Next, open `app/pages/login/login.component.ts` and add the following line at the top, which imports the [`Color` class](http://docs.nativescript.org/ApiReference/color/Color.html) from the NativeScript color module:
 
 ``` TypeScript
 import {Color} from "color";
 ```
 
-Change the `toggleDisplay()` function in the same file to look like this:
+Finally, change the `LoginPage`’s `toggleDisplay()` function in the same file to use this code:
 
 ``` TypeScript
 toggleDisplay() {
@@ -123,7 +125,18 @@ toggleDisplay() {
 
 <div class="exercise-end"></div>
 
-Talk about the color module and animation module. Have gifs. Mention that the hint color looks bad, but that we’ll address that later. Transition to talking about the list page.
+All NativeScript UI elements inherit from a base [`View` class](http://docs.nativescript.org/ApiReference/ui/core/view/View.html), which contains a number of useful methods—including the `getViewById()` and `animate()` methods used in the previous example. The `getViewById()` method, as its name implies, allows you to get a reference to a child view by its `id` attribute.
+
+One you have a reference to a UI element, you can call any of the methods that element inherits from `View`. In this case, you call the `<StackLayout id="container">` element’s `animate()` method to change its background color over a duration of `200`, or 2/10 of a second. The effect is a subtle color change that helps user differentiate between the “Sign In” and “Sign Up” functionality that your form provides.
+
+![Color animation on Android](images/chapter4/android/2.gif)
+![Color animation on iOS](images/chapter4/ios/2.gif)
+
+> **NOTE**: You may notice that the text color is off with the brown background. Don’t worry about that for now; we’ll address that in chapter 6.
+
+The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using `getViewById()`, and then call that element’s `animate()` method. You may want to take a few minutes to look through our [animation samples]({{site.baseurl}}/ui/animation#examples) and try a few of these animations for yourself in Groceries.
+
+For now, let’s move on to another commonly used NativeScript UI element: the `<ListView>`.
 
 ### ListView
 

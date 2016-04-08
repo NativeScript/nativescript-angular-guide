@@ -49,7 +49,7 @@
 </div>
 
 <blockquote>
-<p><strong>TIP</strong>: Using Angular 2 with NativeScript is optional. If you’re looking for a guide on how to use NativeScript without Angular 2, head over to our other <a href="http://docs.nativescript.org/start/getting-started">Getting Started Guide</a>.</p>
+<p><strong>TIP</strong>: Using Angular 2 with NativeScript is optional. If you’re looking for a tutorial on how to use NativeScript without Angular 2, head over to our other <a href="http://docs.nativescript.org/start/getting-started">Getting Started Guide</a>.</p>
 </blockquote>
 <h3 id="what-you-re-building">What you&#39;re building</h3>
 <p>This guide will walk you through building <a href="https://github.com/NativeScript/sample-Groceries">Groceries</a>, a groceries management app that does the following things:</p>
@@ -1095,17 +1095,18 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 <li><a href="{{site.baseurl}}/ui/animation#scale">Scaling</a></li>
 <li><a href="{{site.baseurl}}/ui/animation#rotate">Rotating</a></li>
 </ul>
+<p>Let’s add a simple animation so you can see how they work.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Add a color animation
 </h4>
 
-<p>Open <code>app/pages/login/login.html</code> and add an <code>id</code> to the <code>&lt;StackLayout&gt;</code>:</p>
+<p>Open <code>app/pages/login/login.html</code> and add an <code>id</code> to the existing <code>&lt;StackLayout&gt;</code>:</p>
 <pre><code class="lang-XML">&lt;StackLayout id=&quot;container&quot;&gt;
 </code></pre>
-<p>Open <code>app/pages/login/login.component.ts</code> and add the following line at the top:</p>
+<p>Next, open <code>app/pages/login/login.component.ts</code> and add the following line at the top, which imports the <a href="http://docs.nativescript.org/ApiReference/color/Color.html"><code>Color</code> class</a> from the NativeScript color module:</p>
 <pre><code class="lang-TypeScript">import {Color} from &quot;color&quot;;
 </code></pre>
-<p>Change the <code>toggleDisplay()</code> function in the same file to look like this:</p>
+<p>Finally, change the <code>LoginPage</code>’s <code>toggleDisplay()</code> function in the same file to use this code:</p>
 <pre><code class="lang-TypeScript">toggleDisplay() {
   this.isLoggingIn = !this.isLoggingIn;
   this.page.getViewById(&quot;container&quot;).animate({
@@ -1116,7 +1117,15 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Talk about the color module and animation module. Have gifs. Mention that the hint color looks bad, but that we’ll address that later. Transition to talking about the list page.</p>
+<p>All NativeScript UI elements inherit from a base <a href="http://docs.nativescript.org/ApiReference/ui/core/view/View.html"><code>View</code> class</a>, which contains a number of useful methods—including the <code>getViewById()</code> and <code>animate()</code> methods used in the previous example. The <code>getViewById()</code> method, as its name implies, allows you to get a reference to a child view by its <code>id</code> attribute.</p>
+<p>One you have a reference to a UI element, you can call any of the methods that element inherits from <code>View</code>. In this case, you call the <code>&lt;StackLayout id=&quot;container&quot;&gt;</code> element’s <code>animate()</code> method to change its background color over a duration of <code>200</code>, or 2/10 of a second. The effect is a subtle color change that helps user differentiate between the “Sign In” and “Sign Up” functionality that your form provides.</p>
+<p><img src="images/chapter4/android/2.gif" alt="Color animation on Android">
+<img src="images/chapter4/ios/2.gif" alt="Color animation on iOS"></p>
+<blockquote>
+<p><strong>NOTE</strong>: You may notice that the text color is off with the brown background. Don’t worry about that for now; we’ll address that in chapter 6.</p>
+</blockquote>
+<p>The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using <code>getViewById()</code>, and then call that element’s <code>animate()</code> method. You may want to take a few minutes to look through our <a href="{{site.baseurl}}/ui/animation#examples">animation samples</a> and try a few of these animations for yourself in Groceries.</p>
+<p>For now, let’s move on to another commonly used NativeScript UI element: the <code>&lt;ListView&gt;</code>.</p>
 <h3 id="listview">ListView</h3>
 <p>Talk about what list views are.</p>
 <h4 class="exercise-start">

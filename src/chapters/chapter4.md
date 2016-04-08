@@ -85,7 +85,13 @@ Let’s look at a few other NativeScript modules you can use to help improve the
 
 ### Animations
 
-Talk about animations and the animation module.
+The ability to run robust and performant animations is the one of the biggest reasons people choose to build native mobile apps, and NativeScript makes running these animations simple. The NativeScript animation modules provides a [series of JavaScript APIs]({{site.baseurl}}/ui/animation) that let you perform a wide variety of animations to elements on the screen, including the following:
+
+- [Opacity]({{site.baseurl}}/ui/animation#opacity)
+- [Background Color]({{site.baseurl}}/ui/animation#background-color)
+- [Translations]({{site.baseurl}}/ui/animation#translate)
+- [Scaling]({{site.baseurl}}/ui/animation#scale)
+- [Rotating]({{site.baseurl}}/ui/animation#rotate)
 
 <h4 class="exercise-start">
     <b>Exercise</b>: ???

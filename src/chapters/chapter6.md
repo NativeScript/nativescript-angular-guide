@@ -126,7 +126,7 @@ Talk about status bars.
     <b>Exercise</b>: ???
 </h4>
 
-Open `app.main.ts` and replace the contents of the file with the following code:
+Open `app/main.ts` and replace the contents of the file with the following code:
 
 ``` TypeScript
 import {nativeScriptBootstrap} from "nativescript-angular/application";

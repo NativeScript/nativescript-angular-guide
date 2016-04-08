@@ -1041,25 +1041,24 @@ export class ListPage {}
 <blockquote>
 <p><strong>NOTE</strong>: You can refer to the <a href="https://nodejs.org/api/modules.html#modules_folders_as_modules">Node.js documentation on folders as modules</a> for more detailed information on how NativeScript organizes its modules.</p>
 </blockquote>
-<p>The *.ios.* and *.android.* naming convention should look familiar, as it’s the exact same convention we used to include Android- and iOS-specific styling in <a href="#css">chapter 2.3</a>. NativeScript uses this same convention to implement its modules on iOS and Android. Now that you know where these modules are, let&#39;s take a closer look at what else they can do for your app, starting with a closer looks at what you can do with NativeScript’s UI elements.</p>
+<p>The <code>*.ios.*</code> and <code>*.android.*</code> naming convention should look familiar, as it’s the exact same convention we used to include Android- and iOS-specific styling in <a href="#css">chapter 2.3</a>. NativeScript uses this same convention to implement its modules on iOS and Android. Now that you know where these modules are, let&#39;s take a closer look at what else they can do for your app, starting with a closer looks at what you can do with NativeScript’s UI elements.</p>
 <h3 id="ui-elements">UI elements</h3>
-<p>So far, you’ve only used NativeScript UI elements by including them in an Angular 2’s components <code>template</code>.</p>
-<p>Explain that UI elements are actually NativeScript modules. Say that we’re going to make this app look nice—it’s a native app after all.</p>
+<p>So far, you’ve only used NativeScript UI elements by including them in an Angular 2 component’s <code>template</code>, but you can also programmaticly create and access UI elements, and each UI element has a set of properties and methods you can use to customize your app. To see how this works lets access the <code>&lt;Page&gt;</code> UI element and make some changes to it.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Customize the Page
 </h4>
 
-<p>In app/pages/login/login.component.ts, first add these imports:</p>
+<p>Open <code>app/pages/login/login.component.ts</code>, and add the following two imports to the top of the file:</p>
 <pre><code class="lang-TypeScript">import {topmost} from &quot;ui/frame&quot;;
 import {Page} from &quot;ui/page&quot;;
 </code></pre>
-<p>Then include <code>OnInit</code> in the existing <code>&quot;angular2/core&quot;</code> import:</p>
+<p>Next, alter the same file’s existing <code>&quot;angular2/core&quot;</code> import to include the <code>OnInit</code> interface:</p>
 <pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
 </code></pre>
-<p>Add the following as a new property in the <code>LoginPage</code> class:</p>
-<pre><code class="lang-TypeScript">page: Page;
+<p><code>OnInit</code> is a <a href="http://www.typescriptlang.org/docs/handbook/interfaces.html#class-types">TypeScript class interface</a>. To see how it works, make the following change to the declaration of your <code>LoginPage</code> class:</p>
+<pre><code class="lang-TypeScript">export class LoginPage implements OnInit {
 </code></pre>
-<p>Then add the following function to the <code>LoginPage</code> class:</p>
+<p>If you’re using an editor that supports TypeScript, you should see an error that says something like <em>“Class ‘LoginPage’ incorrectly implements interface ‘OnInit’”</em>. When you implement a TypeScript class interface, you’re telling the TypeScript compiler that you will implement any of the methods that the interface requires. In the case of <code>OnInit</code>, Angular 2 requires you to implement a single <code>ngOnInit()</code> method. To implement it, add the following code within the <code>LoginPage</code> class:</p>
 <pre><code class="lang-TypeScript">ngOnInit() {
   this.page = &lt;Page&gt;topmost().currentPage;
   this.page.actionBarHidden = true;
@@ -1067,12 +1066,26 @@ import {Page} from &quot;ui/page&quot;;
 }
 </code></pre>
 <blockquote>
-<p><strong>NOTE</strong>: The <code>this.page.ios</code> check can go away in 2.0. It’s there because of <a href="https://github.com/NativeScript/NativeScript/issues/1788">this bug</a>.</p>
+<p><strong>NOTE</strong>: The <code>this.page.ios</code> in this function can go away after NativeScript 2.0 is released. The check is there because of <a href="https://github.com/NativeScript/NativeScript/issues/1788">this bug</a>.</p>
 </blockquote>
+<p><code>ngOnInit</code> is one of several <a href="https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html">component lifecycle hooks</a> that Angular 2 provides. As its name implies, <code>ngOnInit</code> gets invoked when Angular initializes this component.</p>
+<p>We’ll discuss what the code within <code>ngOnInit()</code> does momentarily, but finally, to make these changes compile and run, add the following property to the <code>LoginPage</code> class. (You can put it right under the <code>user: User;</code> line.)</p>
+<pre><code class="lang-TypeScript">page: Page;
+</code></pre>
 <div class="exercise-end"></div>
 
-<p>Explain what <code>OnInit</code> is. Explain how to look up {N} modules on the docs. Show images of what the app looks like now.</p>
-<p>Transition to animations</p>
+<p>Now that you have this code in place, let’s discuss what happens in these three lines:</p>
+<pre><code class="lang-TypeScript">this.page = &lt;Page&gt;topmost().currentPage;
+this.page.actionBarHidden = true;
+this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &quot;res://bg_login&quot;;
+</code></pre>
+<p>This code uses the <code>topmost()</code> function from the <a href="http://docs.nativescript.org/ApiReference/ui/frame/Frame">NativeScript frame module</a>, and the <a href="http://docs.nativescript.org/ApiReference/ui/page/Page"><code>Page</code> class</a> from the <a href="http://docs.nativescript.org/ApiReference/ui/page/README">NativeScript page module</a>. The <code>topmost()</code> function gives you access to the app’s current page with its <code>currentPage</code> property, and you use that reference to set that page’s <code>actionBarHidden</code> and <code>backgroundImage</code> properties.</p>
+<p>Although you can peruse the NativeScript API documentation for a full list of these properties and what they do, if you’re using a TypeScript-friendly IDE, you can get a full list of these properties at any point.</p>
+<p><img alt="TypeScript autocomplete" class="plain" src="images/chapter4/typescript.png" style="border: 1px solid black;"></p>
+<p>If you run your app you should see that the action bar—the bar beneath the status bar that had previously displayed on Android—is now hidden, and the page uses a gorgeous new background image:</p>
+<p><img src="images/chapter4/android/1.png" alt="Background image on Android">
+<img src="images/chapter4/ios/1.png" alt="Background image on iOS"></p>
+<p>Let’s look at a few other NativeScript modules you can use to help improve the look of this app.</p>
 <h3 id="animations">Animations</h3>
 <p>Talk about animations and the animation module.</p>
 <h4 class="exercise-start">

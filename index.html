@@ -1430,7 +1430,7 @@ import {topmost} from &quot;ui/frame&quot;;
 			<div class="chapter">
 				<h2 id="plugins-and-npm-modules">Plugins and npm modules</h2>
 <p>As you build more complex apps, you&#39;ll likely run into functionality that is not implemented in the NativeScript modules. But no worries, as NativeScript lets you leverage <a href="https://www.npmjs.com/">npm</a> (node package manager) to import npm modules into your apps. Alternately, you can install NativeScript plugins, which are simply npm modules that can access native code and use Android and iOS SDKs, if required. </p>
-<p>In this chapter, you&#39;ll install and use and external email validator module to verify the format of email addresses as they are entered on the registration screen. Then, you&#39;ll add a NativeScript plugin, <a href="https://www.npmjs.com/package/nativescript-social-share">NativeScript social share</a>, to let users share their grocery lists using their device&#39;s native sharing widget.</p>
+<p>In this chapter, you&#39;ll install and use an external email validator module to verify the format of email addresses as they are entered on the registration screen. Then, you&#39;ll add a NativeScript plugin, <a href="https://www.npmjs.com/package/nativescript-social-share">NativeScript social share</a>, to let users share their grocery lists using their device&#39;s native sharing widget.</p>
 <h3 id="using-npm-modules">Using npm modules</h3>
 <p>It would be nice to be able to make sure people are entering well-formatted email addresses into your app on the registration screen. You could write this functionality yourself, but validating email addresses is <a href="http://stackoverflow.com/questions/46155/validate-email-address-in-javascript">surprisingly tricky</a>, and it&#39;s a lot easier to use one of many npm modules that already provide this validation. For Groceries let&#39;s see how to add this <a href="https://www.npmjs.com/package/email-validator">email-validator module</a> to test for valid addresses.</p>
 <h4 class="exercise-start">
@@ -1644,7 +1644,7 @@ export function setHintColor(args: { view: TextField, color: Color }) {
     <b>Exercise</b>: ???
 </h4>
 
-<p>Open <code>app.main.ts</code> and replace the contents of the file with the following code:</p>
+<p>Open <code>app/main.ts</code> and replace the contents of the file with the following code:</p>
 <pre><code class="lang-TypeScript">import {nativeScriptBootstrap} from &quot;nativescript-angular/application&quot;;
 import {AppComponent} from &quot;./app.component&quot;;
 import {setStatusBarColors} from &quot;./utils/status-bar-util&quot;;

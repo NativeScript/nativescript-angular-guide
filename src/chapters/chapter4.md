@@ -474,7 +474,7 @@ Next, give image a new tap attribute binding, so that the full `<Image>` looks l
 Next, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below `groceryList`):
 
 ``` TypeScript
-grocery: string;
+grocery: string = "";
 ```
 
 Next, add the following two inputs to the top of the `list.component.ts` file:

@@ -1,8 +1,6 @@
 (function() {
 	"use strict";
 
-	FastClick.attach(document.body);
-
 	function isMobile() {
 		return $(window).width() <= 700;
 	}

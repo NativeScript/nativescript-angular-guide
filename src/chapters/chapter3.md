@@ -506,7 +506,6 @@ Now that `app.component.ts` is empty, let’s add in the appropriate Angular 2 r
 
 ``` TypeScript
 import {Component} from "angular2/core";
-import {HTTP_PROVIDERS} from "angular2/http";
 import {RouteConfig} from "angular2/router";
 import {NS_ROUTER_DIRECTIVES, NS_ROUTER_PROVIDERS} from "nativescript-angular/router";
 import {LoginPage} from "./pages/login/login.component";

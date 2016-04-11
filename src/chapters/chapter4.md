@@ -149,11 +149,13 @@ The ListView element lets you show a list of things on the screen, which is exac
 Open `app/pages/list/list.html` and replace its contents with the following code:
 
 ``` XML
-<ListView [items]="groceryList" id="grocery-list" class="small-spacing">
-  <template #item="item">
-    <Label [text]="item.name" class="medium-spacing"></Label>
-  </template>
-</ListView>
+<GridLayout>
+  <ListView [items]="groceryList" id="grocery-list" class="small-spacing">
+    <template #item="item">
+      <Label [text]="item.name" class="medium-spacing"></Label>
+    </template>
+  </ListView>
+</GridLayout>
 ```
 
 We’ll talk about the new syntax in a moment, but first let’s define the class names used in the previous example. Open `app/app.css` and paste the following code at the bottom of the file, which defines a few utility class names you can use throughout your app:
@@ -205,10 +207,14 @@ How does this work? Let’s return to this chunk of code:
 </ListView>
 ```
 
+The [`<ListView>` UI element](http://docs.nativescript.org/ApiReference/ui/list-view/ListView) requires an `items` property that points at an array of data—in this case, the `groceryList` array you added to your `ListPage` class. The list view element requires a child `<template>` element that specifies how to render each item in the `items` array.
 
+The `#item` syntax is Angular 2’s for syntax for [creating local template variables](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#star-template). This gives you the ability to refer to each item in the array as `item` within the template. For this template, you render each item in the array with a single `<Label>` UI element, and because of the `[text]="item.name"` binding, those labels contain the text from the `name` property of each of the items in `groceryList` TypeScript array.
+
+Now that you have a hardcoded list displaying, let’s see how to swap that out with live data.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Populate the list view
 </h4>
 
 Open `app/shared/grocery/grocery.ts` and paste in the following code:
@@ -219,7 +225,7 @@ export class Grocery {
 }
 ```
 
-Open `app/shared/grocery/grocery-list.service.ts` and paste in the following code:
+This creates a simple `Grocery` model object that you can use throughout your app. Next, let’s create a simple service that reads grocery lists from our backend.  Open `app/shared/grocery/grocery-list.service.ts` and paste in the following code:
 
 ``` TypeScript
 import {Injectable} from "angular2/core";
@@ -258,7 +264,9 @@ export class GroceryListService {
 }
 ```
 
-Open `app/pages/list/list.component.ts` and add the following two lines to the top of the file:
+The code here is very similar to the code you used in the `UserService` earlier in this guide. You use the `Http` service’s `get()` method to load JSON data, and RxJS’s `map()` function to format the data into an array of `Grocery` objects.
+
+To use this service, open `app/pages/list/list.component.ts` and add the following two lines to the top of the file:
 
 ``` TypeScript
 import {Grocery} from "../../shared/grocery/grocery";
@@ -277,7 +285,7 @@ Then, add the following `constructor` function within the `ListPage` class:
 constructor(private _groceryListService: GroceryListService) {}
 ```
 
-Because we’re injecting a service we must also add it as a provider within our component decorator:
+Next, because you’re injecting a service into your constructor you must also include it as a provider within your component decorator. To do so, replace the existing `@Component` decorator with the code below:
 
 ``` TypeScript
 @Component({
@@ -288,7 +296,7 @@ Because we’re injecting a service we must also add it as a provider within our
 })
 ```
 
-Finally, replace the existing `ngOnInit()` function with the code below:
+Finally, to kick off the call to `load()` when this page initializes, replace the existing `ngOnInit()` function with the code below:
 
 ``` TypeScript
 ngOnInit() {
@@ -305,7 +313,6 @@ The full version of your `app/pages/list/list.component.ts` file should now look
 
 ``` TypeScript
 import {Component, OnInit} from "angular2/core";
-
 import {Grocery} from "../../shared/grocery/grocery";
 import {GroceryListService} from "../../shared/grocery/grocery-list.service";
 
@@ -333,13 +340,25 @@ export class ListPage implements OnInit {
 
 <div class="exercise-end"></div>
 
-Talk about the code you just added. But then note that if you try the code, you’ll get an exception about no provider for Http. Talk about best practices of where to declare shared providers. Let’s fix the problem now.
+Once you run this code you may expect to see a list of groceries, but instead you’ll see this error in your terminal:
+
+```
+JS: EXCEPTION: No provider for Http! (ListPage -> GroceryListService -> Http)
+JS: STACKTRACE:
+JS: Error: DI Exception
+JS:     at NoProviderError.BaseException [as constructor] (/data/data/org.nativescript.groceries/files/app/tns_modules/angular2/src/facade/exceptions.js:16:23)
+JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/org.nativescript.groceries/files/app/tns_modules/angular2/src/core/di/exceptions.js:38:16)
+```
+
+The problem here is your new `GroceryListService` uses the `Http` service, but that `Http` service is never included in your component’s `providers` array. You could add `HTTP_PROVIDERS` to this array, as you did in `login.component.ts`, but it seems a little silly to add `HTTP_PROVIDERS` to every page that you build. And as it turns out, Angular 2 providers a simpler way of handling this, by allowing you to add common providers to parent components.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Declaring providers
 </h4>
 
 Open `app/pages/login/login.component.ts` and _remove_ the following line from the top of the file:
+
+<div class="no-copy-button"></div>
 
 ``` TypeScript
 import {HTTP_PROVIDERS} from "angular2/http";
@@ -348,7 +367,7 @@ import {HTTP_PROVIDERS} from "angular2/http";
 Next, in the same file, remove `HTTP_PROVIDERS` from the component decorator’s `providers` array. The array should now look this like:
 
 ``` TypeScript
-providers: [UserService]
+providers: [UserService],
 ```
 
 After that, open `app/app.component.ts` and _add_ the following import to the top of the file:
@@ -365,7 +384,14 @@ providers: [HTTP_PROVIDERS, NS_ROUTER_PROVIDERS],
 
 <div class="exercise-end"></div>
 
-Show an image of the list with backend-driven data. Talk about how the next step is letting users add to the list.
+Generally, it’s only a good idea to declare providers in parent components if all of the component’s children actually use that provider. Although you _could_ declare all your providers in `AppComponent`, your `providers` would become unwieldy as your app grows, and difficult to refactor as your app changes.
+
+If you load the list page with the account you created earlier you’ll see a blank page, as your account is newly created, and therefore your grocery list is empty. If you want to see some data to verify your changes worked, try logging in with the credentials “user@nativescript.org” and “password”. You should some data that looks something like this:
+
+![Grocery data on Android](images/chapter4/android/4.png)
+![Grocery data on iOS](images/chapter4/ios/4.png)
+
+At this point you have a list of data associated with each account that you display in a list view control, but a grocery list isn’t very useful if you can’t add to the list. Let’s look at how to do that next.
 
 ### GridLayout
 

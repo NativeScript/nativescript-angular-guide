@@ -45,7 +45,6 @@ gulp.task( "sass", function () {
 
 gulp.task( "scripts", function() {
 	return gulp.src([
-			"src/scripts/fastclick.js",
 			"src/scripts/jquery.js",
 			"src/scripts/prism.js",
 			"src/scripts/app.js"

@@ -140,13 +140,13 @@ For now, let’s move on to another commonly used NativeScript UI element: the `
 
 ### ListView
 
-Talk about what list views are.
+The ListView element lets you show a list of things on the screen, which is exactly what you need for showing a list of groceries. Before tying the grocery list to a backend API, let's start by seeing how to show a hardcoded list of items on the screen.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Build a list view
 </h4>
 
-Open `app/pages/list/list.html` and paste in the following code:
+Open `app/pages/list/list.html` and replace its contents with the following code:
 
 ``` XML
 <ListView [items]="groceryList" id="grocery-list" class="small-spacing">
@@ -156,7 +156,7 @@ Open `app/pages/list/list.html` and paste in the following code:
 </ListView>
 ```
 
-We’ll talk about the syntax in a moment, for now concentrate on the new `class` attribute. Open `app/app.css` and paste the following code at the bottom of the file:
+We’ll talk about the new syntax in a moment, but first let’s define the class names used in the previous example. Open `app/app.css` and paste the following code at the bottom of the file, which defines a few utility class names you can use throughout your app:
 
 ``` CSS
 .small-spacing {
@@ -167,7 +167,7 @@ We’ll talk about the syntax in a moment, for now concentrate on the new `class
 }
 ```
 
-Next, open `app/pages/list/list.component.ts` and paste in the following code:
+Next, open `app/pages/list/list.component.ts` and replace its contents with the code below:
 
 ``` TypeScript
 import {Component, OnInit} from "angular2/core";
@@ -190,9 +190,22 @@ export class ListPage implements OnInit {
 
 <div class="exercise-end"></div>
 
-Break down the new XML and TypeScript code individually.
+Your `ListPage` class now has a single `groceryList` property, that you fill with three objects in an `ngOnInit` handler. If you run your app and login, you should see the same list of groceries on the screen:
 
-This list is hardcoded which isn’t a whole lot of fun.
+![List view on Android](images/chapter4/android/3.png)
+![List view on iOS](images/chapter4/ios/3.png)
+
+How does this work? Let’s return to this chunk of code:
+
+``` XML
+<ListView [items]="groceryList" id="grocery-list" class="small-spacing">
+  <template #item="item">
+    <Label [text]="item.name" class="medium-spacing"></Label>
+  </template>
+</ListView>
+```
+
+
 
 <h4 class="exercise-start">
     <b>Exercise</b>: ???

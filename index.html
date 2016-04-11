@@ -1127,19 +1127,19 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 <p>The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using <code>getViewById()</code>, and then call that element’s <code>animate()</code> method. You may want to take a few minutes to look through our <a href="{{site.baseurl}}/ui/animation#examples">animation samples</a> and try a few of these animations for yourself in Groceries.</p>
 <p>For now, let’s move on to another commonly used NativeScript UI element: the <code>&lt;ListView&gt;</code>.</p>
 <h3 id="listview">ListView</h3>
-<p>Talk about what list views are.</p>
+<p>The ListView element lets you show a list of things on the screen, which is exactly what you need for showing a list of groceries. Before tying the grocery list to a backend API, let&#39;s start by seeing how to show a hardcoded list of items on the screen.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Build a list view
 </h4>
 
-<p>Open <code>app/pages/list/list.html</code> and paste in the following code:</p>
+<p>Open <code>app/pages/list/list.html</code> and replace its contents with the following code:</p>
 <pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; class=&quot;small-spacing&quot;&gt;
   &lt;template #item=&quot;item&quot;&gt;
     &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
   &lt;/template&gt;
 &lt;/ListView&gt;
 </code></pre>
-<p>We’ll talk about the syntax in a moment, for now concentrate on the new <code>class</code> attribute. Open <code>app/app.css</code> and paste the following code at the bottom of the file:</p>
+<p>We’ll talk about the new syntax in a moment, but first let’s define the class names used in the previous example. Open <code>app/app.css</code> and paste the following code at the bottom of the file, which defines a few utility class names you can use throughout your app:</p>
 <pre><code class="lang-CSS">.small-spacing {
   margin: 5;
 }
@@ -1147,7 +1147,7 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
   margin: 10;
 }
 </code></pre>
-<p>Next, open <code>app/pages/list/list.component.ts</code> and paste in the following code:</p>
+<p>Next, open <code>app/pages/list/list.component.ts</code> and replace its contents with the code below:</p>
 <pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
 
 @Component({
@@ -1167,8 +1167,16 @@ export class ListPage implements OnInit {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Break down the new XML and TypeScript code individually.</p>
-<p>This list is hardcoded which isn’t a whole lot of fun.</p>
+<p>Your <code>ListPage</code> class now has a single <code>groceryList</code> property, that you fill with three objects in an <code>ngOnInit</code> handler. If you run your app and login, you should see the same list of groceries on the screen:</p>
+<p><img src="images/chapter4/android/3.png" alt="List view on Android">
+<img src="images/chapter4/ios/3.png" alt="List view on iOS"></p>
+<p>How does this work? Let’s return to this chunk of code:</p>
+<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; class=&quot;small-spacing&quot;&gt;
+  &lt;template #item=&quot;item&quot;&gt;
+    &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
+  &lt;/template&gt;
+&lt;/ListView&gt;
+</code></pre>
 <h4 class="exercise-start">
     <b>Exercise</b>: ???
 </h4>

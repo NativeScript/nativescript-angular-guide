@@ -456,7 +456,7 @@ Here the `columns` attribute divides the top of the screen into two columns. The
 Now that we have the UI ready, let’s make the add button work.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Allow users to add groceries
 </h4>
 
 Open `app/pages/list/list.html` and give the existing `<TextField>` a new `[(ngModel)]` attribute so that it looks like this:
@@ -465,13 +465,13 @@ Open `app/pages/list/list.html` and give the existing `<TextField>` a new `[(ngM
 <TextField id="grocery" [(ngModel)]="grocery" hint="Enter a grocery item" col="0"></TextField>
 ```
 
-Next, give image a new tap attribute binding, so that the full `<Image>` looks like this:
+Next, give the same file’s image a new `tap` attribute binding, so that the full `<Image>` looks like this:
 
 ``` XML
-<Image src="res://add" id="add-image" (tap)="add()" col="1"></Image>
+<Image src="res://add" (tap)="add()" col="1"></Image>
 ```
 
-Next, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below `groceryList`):
+With these attributes in place, your next steps are to define the `grocery` property and the `add()` method. To do that, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below the existing `groceryList` property):
 
 ``` TypeScript
 grocery: string = "";
@@ -514,7 +514,9 @@ add() {
 }
 ```
 
-Finally, open `app/shared/grocery/grocery-list.service.ts` and paste the following function into the `GroceryService` class:
+In this function you first ensure the user didn’t submit without typing a grocery. If the user did type something, you dismiss the device’s keyboard with the TextField element’s `dismissSoftInput()` method, and then call a new `add()` method on the `GroceryListService`.
+
+To finish this example you have to define that new `add()` method. To do so, open `app/shared/grocery/grocery-list.service.ts` and paste the following function into the `GroceryService` class:
 
 ``` TypeScript
 add(name: string) {
@@ -537,13 +539,27 @@ add(name: string) {
 
 <div class="exercise-end"></div>
 
-Remind people that the final code for the tutorial is up on GitHub.
+The `add()` code should look familiar as you’re again using the `Http` service’s `post()` method to make an HTTP call to our backend, and then using RxJS’s `map()` function to convert the returned data into a `Grocery` object. You consume that object in the `ListPage` component’s `add()` method, which adds the grocery to the page’s list by calling `this.groceryList.unshift()`, and then empties that page’s text field by setting `this.grocery` equal to `""`.
 
-Talk about the code you just wrote.
+``` TypeScript
+this._groceryListService.add(this.grocery)
+  .subscribe(
+    groceryObject => {
+      this.groceryList.unshift(groceryObject);
+      this.grocery = "";
+    },
+    () => { ... }
+  );
+```
 
-Show a gif of the page in action.
+The end result looks like this:
 
-Let’s make the page look a little nicer.
+![Adding to a list on Android](images/chapter4/android/6.gif)
+![Adding to a list on iOS](images/chapter4/ios/6.gif)
+
+At this point you can add a grocery item and it will appear immediately in your list—and, all of this is completely driven by a backend service. Pretty cool, huh?
+
+Let's look at how you can polish this page with a NativeScript module for showing activity indicators.
 
 ### ActivityIndicator
 

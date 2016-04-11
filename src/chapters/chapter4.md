@@ -395,13 +395,13 @@ At this point you have a list of data associated with each account that you disp
 
 ### GridLayout
 
-Introduce what a grid layout actually is. Should be able to copy from the existing guide liberally.
+In order to allow users to add to their grocery lists you need to add a few additional UI controls to the list page. While you could layout these elements with a `<StackLayout>`, let’s look at how to create a slightly more complex layout using the `<GridLayout>` element.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Add a GridLayout
 </h4>
 
-Open `app/pages/list/list.html` and paste in the following code:
+Open `app/pages/list/list.html` and replace the contents of the file with the following code:
 
 ``` XML
 <GridLayout rows="auto, *">
@@ -422,9 +422,38 @@ Open `app/pages/list/list.html` and paste in the following code:
 
 <div class="exercise-end"></div>
 
-Show an image of what this looks like first and then break down the syntax in detail.
+When your app runs with these changes your UI should now look like this:
 
-Now let’s make the add button actually work.
+![Updated view on Android](images/chapter4/android/5.png)
+![Updated view on  iOS](images/chapter4/ios/5.png)
+
+To break down how this layout works, let’s start with the outer structure of the markup:
+
+``` XML
+<GridLayout rows="auto, *">
+  <GridLayout row="0" class="add-bar">...</GridLayout>
+  <ListView row="1">...</ListView>
+</GridLayout>
+```
+
+The outer grid layout’s `rows` attribute divides the screen into two rows, the first auto-sized according to its childrens' height, and the other to contain *, or the remaining height of the screen. You place UI elements into these rows using the zero-based `row` attribute. You place inner grid layout in the top row with the `row="0"` attribute, and the list view in the bottom row with the `row="1"` attribute.
+
+Grid layouts can also divide the screen into columns, which is what the inner grid layout does:
+
+``` XML
+<GridLayout columns="*, auto" class="add-bar">
+  <TextField col="0"></TextField>
+  <Image col="1"></Image>
+</GridLayout>
+```
+
+Here the `columns` attribute divides the top of the screen into two columns. The `col="0"` attribute puts the text field in the first column, and the `col="1"` attribute puts the plus image in the last column. Grid layouts are the most commonly used NativeScript layout, so you may wish to take a minute to play around with the `columns` and `rows` attributes to figure out how they work.
+
+> **TIP**:
+> * You can nest any of the [NativeScript layouts](http://docs.nativescript.org/ui/layout-containers.html)—not just grid layouts.
+> * You can pass numbers, percentages, and a variety of other values to create more complex grid layouts. Refer to the [grid layout docs](http://docs.nativescript.org/ui/layout-containers.html#gridlayout) for more information.
+
+Now that we have the UI ready, let’s make the add button work.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: ???

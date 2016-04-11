@@ -1316,12 +1316,12 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 <img src="images/chapter4/ios/4.png" alt="Grocery data on iOS"></p>
 <p>At this point you have a list of data associated with each account that you display in a list view control, but a grocery list isn’t very useful if you can’t add to the list. Let’s look at how to do that next.</p>
 <h3 id="gridlayout">GridLayout</h3>
-<p>Introduce what a grid layout actually is. Should be able to copy from the existing guide liberally.</p>
+<p>In order to allow users to add to their grocery lists you need to add a few additional UI controls to the list page. While you could layout these elements with a <code>&lt;StackLayout&gt;</code>, let’s look at how to create a slightly more complex layout using the <code>&lt;GridLayout&gt;</code> element.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Add a GridLayout
 </h4>
 
-<p>Open <code>app/pages/list/list.html</code> and paste in the following code:</p>
+<p>Open <code>app/pages/list/list.html</code> and replace the contents of the file with the following code:</p>
 <pre><code class="lang-XML">&lt;GridLayout rows=&quot;auto, *&quot;&gt;
 
   &lt;GridLayout row=&quot;0&quot; columns=&quot;*, auto&quot; class=&quot;add-bar&quot;&gt;
@@ -1339,8 +1339,31 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Show an image of what this looks like first and then break down the syntax in detail.</p>
-<p>Now let’s make the add button actually work.</p>
+<p>When your app runs with these changes your UI should now look like this:</p>
+<p><img src="images/chapter4/android/5.png" alt="Updated view on Android">
+<img src="images/chapter4/ios/5.png" alt="Updated view on  iOS"></p>
+<p>To break down how this layout works, let’s start with the outer structure of the markup:</p>
+<pre><code class="lang-XML">&lt;GridLayout rows=&quot;auto, *&quot;&gt;
+  &lt;GridLayout row=&quot;0&quot; class=&quot;add-bar&quot;&gt;...&lt;/GridLayout&gt;
+  &lt;ListView row=&quot;1&quot;&gt;...&lt;/ListView&gt;
+&lt;/GridLayout&gt;
+</code></pre>
+<p>The outer grid layout’s <code>rows</code> attribute divides the screen into two rows, the first auto-sized according to its childrens&#39; height, and the other to contain *, or the remaining height of the screen. You place UI elements into these rows using the zero-based <code>row</code> attribute. You place inner grid layout in the top row with the <code>row=&quot;0&quot;</code> attribute, and the list view in the bottom row with the <code>row=&quot;1&quot;</code> attribute.</p>
+<p>Grid layouts can also divide the screen into columns, which is what the inner grid layout does:</p>
+<pre><code class="lang-XML">&lt;GridLayout columns=&quot;*, auto&quot; class=&quot;add-bar&quot;&gt;
+  &lt;TextField col=&quot;0&quot;&gt;&lt;/TextField&gt;
+  &lt;Image col=&quot;1&quot;&gt;&lt;/Image&gt;
+&lt;/GridLayout&gt;
+</code></pre>
+<p>Here the <code>columns</code> attribute divides the top of the screen into two columns. The <code>col=&quot;0&quot;</code> attribute puts the text field in the first column, and the <code>col=&quot;1&quot;</code> attribute puts the plus image in the last column. Grid layouts are the most commonly used NativeScript layout, so you may wish to take a minute to play around with the <code>columns</code> and <code>rows</code> attributes to figure out how they work.</p>
+<blockquote>
+<p><strong>TIP</strong>:</p>
+<ul>
+<li>You can nest any of the <a href="http://docs.nativescript.org/ui/layout-containers.html">NativeScript layouts</a>—not just grid layouts.</li>
+<li>You can pass numbers, percentages, and a variety of other values to create more complex grid layouts. Refer to the <a href="http://docs.nativescript.org/ui/layout-containers.html#gridlayout">grid layout docs</a> for more information.</li>
+</ul>
+</blockquote>
+<p>Now that we have the UI ready, let’s make the add button work.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: ???
 </h4>

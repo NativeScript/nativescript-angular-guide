@@ -1445,18 +1445,19 @@ import {topmost} from &quot;ui/frame&quot;;
 <p>At this point you can add a grocery item and it will appear immediately in your list—and, all of this is completely driven by a backend service. Pretty cool, huh?</p>
 <p>Let&#39;s look at how you can polish this page with a NativeScript module for showing activity indicators.</p>
 <h3 id="activityindicator">ActivityIndicator</h3>
-<p>Introduce the activity indicator.</p>
+<p>Currently there&#39;s a bit of a delay when you first visit the list page before groceries appear. This delay could confuse a new user, who might think the app is stuck rather than retrieving data from a backend.</p>
+<p>In NativeScript apps you can use the <a href="http://docs.nativescript.org/ApiReference/ui/activity-indicator/README">ActivityIndicator</a> module to show a spinner icon in your UI while your app is busy performing actions. The ActivityIndicator is a relatively simple UI element as it primarily uses one attribute—<code>busy</code>. When an ActivityIndicator&#39;s <code>busy</code> attribute is set to <code>true</code> the ActivityIndicator shows, and when its <code>busy</code> attribute is set to <code>false</code> it doesn&#39;t. Let&#39;s see how the module works by adding an ActivityIndicator to the list page.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Add an ActivityIndicator
 </h4>
 
 <p>Open up <code>app/pages/list/list.html</code> and paste the following line immediately before the final <code>&lt;/GridLayout&gt;</code>:</p>
 <pre><code class="lang-XML">&lt;ActivityIndicator [busy]=&quot;isLoading&quot; row=&quot;1&quot;&gt;&lt;/ActivityIndicator&gt;
 </code></pre>
-<p>Next, open <code>app/pages/list/list.component.ts</code> and add the following property to the <code>ListPage</code> class (immediately under <code>grocery: string</code>):</p>
+<p>This binds the ActivityIndicator’s <code>busy</code> attribute to an <code>isLoading</code> property in the <code>ListPage</code> component. To define that property, open <code>app/pages/list/list.component.ts</code> and add the following line of code immediately under <code>grocery: string = &quot;&quot;</code>:</p>
 <pre><code class="lang-TypeScript">isLoading = false;
 </code></pre>
-<p>Then, change the existing <code>ngOnInit()</code> function to use the code below:</p>
+<p>Now that the property exists, your final step is to set this flag to to <code>true</code> when the grocery data is loading. To do that, change the existing <code>ngOnInit()</code> function to use the code below:</p>
 <pre><code class="lang-TypeScript">ngOnInit() {
   this.isLoading = true;
   this._groceryListService.load()
@@ -1470,12 +1471,21 @@ import {topmost} from &quot;ui/frame&quot;;
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Talk about how that works, then introduce how an animation can add a little polish.</p>
+<p>When you first visit the list page, you should now see the following loading indicators:</p>
+<p><img src="images/chapter4/android/7.png" alt="ActivityIndicator on Android">
+<img src="images/chapter4/ios/7.png" alt="ActivityIndicator on iOS"></p>
+<blockquote>
+<p><strong>TIP</strong>: You can apply the same <code>row</code> or <code>column</code> attribute to multiple UI controls to have them take up the same space on the screen. The UI control that is defined last will appear on top, which is why the <code>&lt;ActivityIndicator&gt;</code> appears on top of the <code>&lt;ListView&gt;</code> in the previous example.</p>
+<pre><code class="lang-XML">&lt;ListView row=&quot;1&quot;&gt;...&lt;/ListView&gt;
+&lt;ActivityIndicator row=&quot;1&quot;&gt;&lt;/ActivityIndicator&gt;
+</code></pre>
+</blockquote>
+<p>To finish off this chapter, let’s look at how you can use the animation module to add a final bit of polish to how the list page loads.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Add a fade-in animation
 </h4>
 
-<p>Open <code>app/pages/list/list-common.css</code> and paste the following CSS at the top of the file:</p>
+<p>In this exercise, you’ll use the animation module to animate the <code>opacity</code> of the list page’s <code>&lt;ListView&gt;</code> to add a fade-in effect. Start by opening <code>app/pages/list/list-common.css</code> and pasting in the following CSS at the top of the file:</p>
 <pre><code class="lang-CSS">ListView {
   opacity: 0;
 }
@@ -1499,7 +1509,15 @@ import {topmost} from &quot;ui/frame&quot;;
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Talk about what happened. Include a gif. Transition to talking about npm modules and {N} plugins.</p>
+<p>A few things are happening in the code above.</p>
+<p>First, in CSS, you assign an <code>opacity</code> of <code>0</code> to the list page’s <code>&lt;ListView&gt;</code>. This hides the grocery list completely when the page loads. Next, in TypeScript, after the <code>GroceryListService</code>’s <code>load()</code> call completes, you call the list view’s <code>animate()</code> function. This changes the element&#39;s <code>opacity</code> from <code>0</code> (completely hidden) to <code>1</code> (completely visible) over one full second.</p>
+<p>The result of this code is a nice fade-in animation:</p>
+<p><img src="images/chapter4/android/8.gif" alt="Loading animation on Android">
+<img src="images/chapter4/ios/8.gif" alt="Loading animation on iOS"></p>
+<p>Now that you have functional login and list pages, let’s enhance the app’s functionality as a grocery list management tool. In the next chapters you&#39;ll add functionality such as email validation, social sharing, and more. And you’ll use one of NativeScript&#39;s most useful features to do so: npm modules.</p>
+<blockquote>
+<p><strong>TIP</strong>: There are several modules that come out of the box with your NativeScript installation that we did not have time to cover in this guide—including a <a href="{{site.baseurl}}/ApiReference/location/HOW-TO">location service</a>, a <a href="{{site.baseurl}}/ApiReference/file-system/HOW-TO">file-system helper</a>, a <a href="{{site.baseurl}}/ApiReference/timer/HOW-TO">timer module</a>, a <a href="{{site.baseurl}}/ApiReference/camera/HOW-TO">camera module</a>, and a whole lot more. Make sure to peruse the “Modules API” of the docs, or just look around <code>node_modules/tns-core-modules</code> to see all of what’s available.</p>
+</blockquote>
 
 			</div>
 			<div class="chapter">

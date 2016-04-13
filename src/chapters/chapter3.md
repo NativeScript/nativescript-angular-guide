@@ -517,7 +517,7 @@ import {LoginPage} from "./pages/login/login.component";
   template: "<page-router-outlet></page-router-outlet>"
 })
 @RouteConfig([
-  { path: "/Login", component: LoginPage, as: "Login", useAsDefault: true },
+  { path: "/Login", component: LoginPage, name: "Login", useAsDefault: true },
 ])
 export class AppComponent {}
 ```
@@ -565,8 +565,8 @@ Next, replace the existing `@RouteConfig` with the following code so that it inc
 
 ``` TypeScript
 @RouteConfig([
-  { path: "/Login", component: LoginPage, as: "Login", useAsDefault: true },
-  { path: "/List", component: ListPage, as: "List" }
+  { path: "/Login", component: LoginPage, name: "Login", useAsDefault: true },
+  { path: "/List", component: ListPage, name: "List" }
 ])
 ```
 

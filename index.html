@@ -34,17 +34,17 @@
 </blockquote>
 <h3 id="what-is-nativescript-what-is-angular-2-">What is NativeScript? What is Angular 2?</h3>
 <div class="intro-box">
-  <img src="images/NativeScript_logo.png" class="plain" alt="NativeScript logo">
+  <img src="images/chapter0/NativeScript_logo.png" class="plain" alt="NativeScript logo">
   <p><a href="https://www.nativescript.org/">NativeScript</a>  is a framework for building native iOS and Android apps using JavaScript and CSS. NativeScript renders UIs with the native platform’s rendering engine—no <a href="http://developer.telerik.com/featured/what-is-a-webview/">WebViews</a>—resulting in native-like performance and UX.</p>
 </div>
 
 <div class="intro-box">
-  <img src="images/Angular_logo.png" class="plain" alt="Angular logo">
+  <img src="images/chapter0/Angular_logo.png" class="plain" alt="Angular logo">
   <p><a href="https://angularjs.org/">Angular JS</a> is one of the most popular open source JavaScript frameworks for application development. The latest version of Angular, <a href="https://angular.io/">Angular 2</a>, makes it possible to use Angular outside of a web browser, and developers at <a href="http://www.telerik.com/">Telerik</a> (the company that created and maintains NativeScript) <a href="https://docs.google.com/document/d/1J6fZcVbVa6uONVCJIox2A3Jn5TWgspLufmryfA1OXGk/edit#heading=h.trgonlvb0z3j">have been working closely with developers at Google</a> to make Angular 2 in NativeScript a reality.</p>
 </div>
 
 <div class="intro-box">
-  <img src="images/NativeScript_Angular_logo.png" class="plain" alt="Angular logo">
+  <img src="images/chapter0/NativeScript_Angular_logo.png" class="plain" alt="Angular logo">
   <p>The result is a software architecture that allows you to build mobile apps using the same framework—and in some cases the same code—that you use to build Angular 2 web apps, with the performance you’d expect from native code. Let’s look at how it all works by building an app.</p>
 </div>
 
@@ -935,7 +935,7 @@ import {LoginPage} from &quot;./pages/login/login.component&quot;;
   template: &quot;&lt;page-router-outlet&gt;&lt;/page-router-outlet&gt;&quot;
 })
 @RouteConfig([
-  { path: &quot;/Login&quot;, component: LoginPage, as: &quot;Login&quot;, useAsDefault: true },
+  { path: &quot;/Login&quot;, component: LoginPage, name: &quot;Login&quot;, useAsDefault: true },
 ])
 export class AppComponent {}
 </code></pre>
@@ -969,8 +969,8 @@ export class ListPage {}
 </code></pre>
 <p>Next, replace the existing <code>@RouteConfig</code> with the following code so that it includes this new list page:</p>
 <pre><code class="lang-TypeScript">@RouteConfig([
-  { path: &quot;/Login&quot;, component: LoginPage, as: &quot;Login&quot;, useAsDefault: true },
-  { path: &quot;/List&quot;, component: ListPage, as: &quot;List&quot; }
+  { path: &quot;/Login&quot;, component: LoginPage, name: &quot;Login&quot;, useAsDefault: true },
+  { path: &quot;/List&quot;, component: ListPage, name: &quot;List&quot; }
 ])
 </code></pre>
 <p>Angular 2 now knows about the list page, but we still need to navigate the user to that page at the appropriate time. Our next step is to allow users to log into their accounts, and to take navigate them to the new list page after they successfully authenticate.</p>

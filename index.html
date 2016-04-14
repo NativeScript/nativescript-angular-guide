@@ -1628,17 +1628,17 @@ export class User {
   &lt;ActionItem text=&quot;Share&quot; (tap)=&quot;share()&quot; android.systemIcon=&quot;ic_menu_share_holo_dark&quot; ios.systemIcon=&quot;9&quot; ios.position=&quot;right&quot;&gt;&lt;/ActionItem&gt;
 &lt;/ActionBar&gt;
 </code></pre>
-<p>This code defines an <a href="{{site.baseurl}}/ApiReference/ui/action-bar/ActionBar">ActionBar</a>, which is a UI component that includes various menu items, or <code>&lt;ActionItem&gt;</code> components.</p>
+<p>This code defines an <a href="{{site.baseurl}}/ApiReference/ui/action-bar/ActionBar">ActionBar</a>, which is a UI component that appears on the top of the screen, and which can optionally include menu items, or <a href="http://docs.nativescript.org/ApiReference/ui/action-bar/ActionItem"><code>&lt;ActionItem&gt;</code></a> components.</p>
 <blockquote>
 <p><strong>NOTE</strong>: On iOS devices, <code>&lt;ActionItem&gt;</code>s are placed from left to right in sequence; you can override that (as the code above does) by providing an <code>ios.position</code> attribute.</p>
 </blockquote>
-<p>Next, to add a bit of styling to this new <code>&lt;ActionBar&gt;</code>, add the following CSS to your <code>app/app.css</code> file:</p>
+<p>Next, to add a bit of styling to this new <code>&lt;ActionBar&gt;</code>, add the following CSS to the top of your <code>app/app.css</code> file:</p>
 <pre><code class="lang-CSS">ActionBar {
   background-color: black;
   color: white;
 }
 </code></pre>
-<p>Finally, now that you’ve installed and required the plugin, and setup a UI to use it, your last step is implementing the <code>&lt;ActionItem&gt;</code>&#39;s <code>tap</code> handler (<code>share()</code>). Open <code>app/pages/list/list.component.ts</code> again and add the following function to the <code>ListPage</code> class:</p>
+<p>Finally, now that you’ve installed and required the plugin, and setup a UI to use it, your last step is implementing the <code>&lt;ActionItem&gt;</code>&#39;s <code>tap</code> handler. Open <code>app/pages/list/list.component.ts</code> again and add the following function to the <code>ListPage</code> class:</p>
 <pre><code class="lang-TypeScript">share() {
   var list = [];
   for (var i = 0, size = this.groceryList.length; i &lt; size ; i++) {
@@ -1651,8 +1651,12 @@ export class User {
 <div class="exercise-end"></div>
 
 <p>This code takes the grocery data from the grocery list array, converts the data into a comma-separated string, and passes that string to the social share plugin’s <code>shareText()</code> method.</p>
-<p>Now when you run the app, you&#39;ll see a new button at the top of the screen. When you tap it, the native iOS or Android sharing widget will show to let you post your groceries to your social networks, or send them via email, message, or any other method you prefer.</p>
-<p>TODO: Images</p>
+<blockquote>
+<p><strong>WARNING</strong>: Because this section had you install a NativeScript plugin, you’ll have to rebuild your app one last time in order to test your changes. If you don’t remember how refer back to chapter 5.0 for instructions.</p>
+</blockquote>
+<p>After you run the app, you&#39;ll see a new button at the top of the screen. When you tap it, the native iOS or Android sharing widget will show to let you post your groceries to your social networks, or send them via email, message, or any other method you prefer.</p>
+<p><img src="images/chapter5/android/2.gif" alt="Social sharing on Android">
+<img src="images/chapter5/ios/2.gif" alt="Social sharing on iOS"></p>
 <p>Pretty cool, huh? The ability to use npm modules greatly expands the number of things you&#39;re able to do in a NativeScript app. Need to compose emails in your app? Try out the <a href="https://www.npmjs.com/package/nativescript-email">NativeScript email plugin</a>. Need to use the clipboard in your app? Try out the <a href="https://www.npmjs.com/package/nativescript-clipboard">NativeScript clipboard plugin</a>.</p>
 <p>If you&#39;re looking for NativeScript plugins start by searching both the <a href="http://plugins.telerik.com/nativescript">Telerik NativeScript Plugins Marketplace</a> and our <a href="http://plugins.nativescript.rocks">community-curated list of plugins on npm</a>. If you don&#39;t find the plugin you need, you can <a href="https://nativescript.ideas.aha.io/">request the plugin on our ideas portal</a>, or you can take a stab at <a href="https://docs.nativescript.org/plugins">creating the plugin yourself</a>.</p>
 <p>Between NativeScript modules, npm modules, and NativeScript plugins, the NativeScript framework provides a lot of functionality you can use to build your next app. However, we&#39;ve yet to talk about NativeScript&#39;s most powerful feature: the ability to directly access iOS and Android APIs in JavaScript. Let&#39;s look at how it works.</p>

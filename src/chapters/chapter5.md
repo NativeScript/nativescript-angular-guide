@@ -162,11 +162,11 @@ Next you have to build some UI that lets you share a grocery list. To do so, ope
 </ActionBar>
 ```
 
-This code defines an [ActionBar]({{site.baseurl}}/ApiReference/ui/action-bar/ActionBar), which is a UI component that includes various menu items, or `<ActionItem>` components.
+This code defines an [ActionBar]({{site.baseurl}}/ApiReference/ui/action-bar/ActionBar), which is a UI component that appears on the top of the screen, and which can optionally include menu items, or [`<ActionItem>`](http://docs.nativescript.org/ApiReference/ui/action-bar/ActionItem) components.
 
 > **NOTE**: On iOS devices, `<ActionItem>`s are placed from left to right in sequence; you can override that (as the code above does) by providing an `ios.position` attribute.
 
-Next, to add a bit of styling to this new `<ActionBar>`, add the following CSS to your `app/app.css` file:
+Next, to add a bit of styling to this new `<ActionBar>`, add the following CSS to the top of your `app/app.css` file:
 
 ``` CSS
 ActionBar {
@@ -175,7 +175,7 @@ ActionBar {
 }
 ```
 
-Finally, now that you’ve installed and required the plugin, and setup a UI to use it, your last step is implementing the `<ActionItem>`'s `tap` handler (`share()`). Open `app/pages/list/list.component.ts` again and add the following function to the `ListPage` class:
+Finally, now that you’ve installed and required the plugin, and setup a UI to use it, your last step is implementing the `<ActionItem>`'s `tap` handler. Open `app/pages/list/list.component.ts` again and add the following function to the `ListPage` class:
 
 
 ``` TypeScript
@@ -193,9 +193,12 @@ share() {
 
 This code takes the grocery data from the grocery list array, converts the data into a comma-separated string, and passes that string to the social share plugin’s `shareText()` method.
 
-Now when you run the app, you'll see a new button at the top of the screen. When you tap it, the native iOS or Android sharing widget will show to let you post your groceries to your social networks, or send them via email, message, or any other method you prefer.
+> **WARNING**: Because this section had you install a NativeScript plugin, you’ll have to rebuild your app one last time in order to test your changes. If you don’t remember how refer back to chapter 5.0 for instructions.
 
-TODO: Images
+After you run the app, you'll see a new button at the top of the screen. When you tap it, the native iOS or Android sharing widget will show to let you post your groceries to your social networks, or send them via email, message, or any other method you prefer.
+
+![Social sharing on Android](images/chapter5/android/2.gif)
+![Social sharing on iOS](images/chapter5/ios/2.gif)
 
 Pretty cool, huh? The ability to use npm modules greatly expands the number of things you're able to do in a NativeScript app. Need to compose emails in your app? Try out the [NativeScript email plugin](https://www.npmjs.com/package/nativescript-email). Need to use the clipboard in your app? Try out the [NativeScript clipboard plugin](https://www.npmjs.com/package/nativescript-clipboard).
 

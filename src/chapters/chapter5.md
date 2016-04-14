@@ -79,9 +79,44 @@ if (!this.user.isValidEmail()) {
 
 <div class="exercise-end"></div>
 
-Explain this code.
+Now, if the user attempts to login or register with an invalid email address, they’ll see an alert that points out the error. However in order to test out this change you’ll need to do one more thing.
 
-TODO: Add images
+<h4 class="exercise-start">
+    <b>Exercise</b>: Rebuild your app
+</h4>
+
+As we mentioned in chapter 1.4, although the `tns livesync` command is smart enough to reload your app for most changes you make to your app, the command cannot hot reload your app for all changes—most notably, changes to native files in `app/App_Resources`, new modules installed with `npm install`, and new NativeScript plugins.
+
+For NativeScript to recognize this new email-validator npm module, type `Ctrl+C` in your terminal to kill the existing `tns livesync` watcher if it’s still running, and then use `tns run` to rebuild your application and deploy it to an emulator or device.
+
+```
+tns run ios --emulator
+```
+
+Or
+
+```
+tns run android --emulator
+```
+
+After the app deploys you can again run the `livesync` command to setup the watcher again.
+
+```
+tns livesync ios --emulator --watch
+```
+
+Or
+
+```
+tns livesync android --emulator --watch
+```
+
+<div class="exercise-end"></div>
+
+After your app launches again, if you type an invalid email address and attempt to login, you should see an alert that prevents the submission:
+
+![Validation alert on Android](images/chapter5/android/1.png)
+![Validation alert on iOS](images/chapter5/ios/1.png)
 
 In general npm modules greatly expand the number of things you're able to do in your NativeScript apps. Need date and time formatting? Use [moment](https://www.npmjs.com/package/moment). Need utility functions for objects and arrays? Use [lodash](https://www.npmjs.com/package/lodash) or [underscore](https://www.npmjs.com/package/underscore). This code reuse benefit gets even more powerful when you bring NativeScript plugins into the picture.
 

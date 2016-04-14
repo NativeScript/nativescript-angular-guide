@@ -157,7 +157,7 @@ To see how this works in action, let’s edit some files in the `shared` folder 
     <b>Exercise</b>: Add a model object
 </h4>
 
-Let’s start by creating a simple model object to store user data. Open `app/user/user.ts` and paste in the following code:
+Let’s start by creating a simple model object to store user data. Open `app/shared/user/user.ts` and paste in the following code:
 
 ``` JavaScript
 export class User {

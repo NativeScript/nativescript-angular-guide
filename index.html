@@ -1667,15 +1667,16 @@ export class User {
 <p>The beauty of NativeScript is that you can write a native iOS or Android app in JavaScript, XML, and CSS without touching Swift, Objective-C, or Java, if you choose. But what if you want to present a different, more platform-specific UI to your users? Or if you want to access an iOS or Android API that NativeScript doesn&#39;t expose through a NativeScript module or plugin?</p>
 <p>NativeScript gives you the option to dig into native code as needed, and to do so without leaving JavaScript. To show how this works in action, let&#39;s tweak a few of the UI elements in your app using native code.</p>
 <h3 id="accessing-ios-apis">Accessing iOS APIs</h3>
-<p>Ask the reader to remember that the hint text color in the app doesn’t look good.</p>
-<p>Show images.</p>
-<p>Explain how NativeScript doesn’t currently expose a way to style a text field’s hint color (although <a href="https://github.com/NativeScript/NativeScript/issues/712">there is an open issue requesting the feature</a>).</p>
-<p>Show how you can Google something like “style UITextField hint text” and find iOS code that accomplishes that task.</p>
+<p>You may recall from earlier chapters that the hint color on your sign up screen could use a little more contrast. Notice the unappealing black on brown color of the text in the images below (if you can see the text at all).</p>
+<p><img src="images/chapter6/android/1.png" alt="Bad contrast on Android">
+<img src="images/chapter6/ios/1.png" alt="Bad contrast on iOS"></p>
+<p>At the time of this writing, NativeScript doesn’t expose a way to style a text field’s hint color through CSS—although <a href="https://github.com/NativeScript/NativeScript/issues/712">there is an open issue requesting the feature</a>—however, both iOS and Android have ways to accomplish this task, and with NativeScript you have direct access to these native APIs.</p>
+<p>Let’s start with iOS. If you run a <a href="https://www.google.com/#q=style%20ios%20text%20field%20hint%20text">generic search for “style iOS text field hint text”</a>, the first result is a <a href="http://stackoverflow.com/questions/1340224/iphone-uitextfield-change-placeholder-text-color">Stack Overflow post</a> that recommends setting a <code>UITextField</code>’s <code>attributedPlaceholder</code> property. Let’s look at how to do that.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Change hint colors on iOS
 </h4>
 
-<p>Open <code>app/utils/hint-util.ts</code> and paste in the following code:</p>
+<p>Because there are multiple text fields in Groceries, we’ll write the functionality to change hint colors as a utility that lives in your app’s <code>utils</code> folder. Open <code>app/utils/hint-util.ts</code> and paste in the following code:</p>
 <pre><code class="lang-TypeScript">import {Color} from &quot;color&quot;;
 import {TextField} from &quot;ui/text-field&quot;;
 
@@ -1692,7 +1693,8 @@ export function setHintColor(args: { view: TextField, color: Color }) {
     args.view.hint, dictionary);
 }
 </code></pre>
-<p>Next, open up <code>app/pages/login/login.component.ts</code> and paste in the following imports at the top of the file:</p>
+<p>This creates a function called <code>setHintColor()</code> that accepts a <code>&lt;TextField&gt;</code> and <code>Color</code>. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.</p>
+<p>Open up <code>app/pages/login/login.component.ts</code> and add the following two imports to the top of the file:</p>
 <pre><code class="lang-TypeScript">import {setHintColor} from &quot;../../utils/hint-util&quot;;
 import {TextField} from &quot;ui/text-field&quot;;
 </code></pre>
@@ -1710,14 +1712,36 @@ import {TextField} from &quot;ui/text-field&quot;;
   setHintColor({ view: password, color: hintColor });
 }
 </code></pre>
-<p>Finally, add a call to the new <code>setTextFieldColors()</code> in <code>toggleDisplay()</code>, immediately after the existing <code>this.isLoggingIn = !this.isLoggingIn</code> line:</p>
+<p>Finally, add a call to the new <code>setTextFieldColors()</code> in your <code>LoginPage</code>’s existing <code>toggleDisplay()</code> method—ideally immediately after the existing <code>this.isLoggingIn = !this.isLoggingIn</code> line:</p>
 <pre><code class="lang-TypeScript">this.setTextFieldColors();
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Talk about what just happened.</p>
-<p>TODO: Insert gifs</p>
-<p>Transition to Android API discussion.</p>
+<p>After your app refreshes with this change, you should now see a far more readable hint color:</p>
+<p><img src="images/chapter6/ios/2.png" alt="Better contrast on iOS"></p>
+<p>Let’s back up to the contents of the <code>setHintColor()</code> function so we can discuss what’s going on here.</p>
+<pre><code class="lang-TypeScript">var dictionary = new NSDictionary(
+  [args.color.ios],
+  [NSForegroundColorAttributeName]
+);
+args.view.ios.attributedPlaceholder = NSAttributedString.alloc().initWithStringAttributes(
+  args.view.hint, dictionary);
+</code></pre>
+<p>By convention, NativeScript controls make their iOS and Android native implementations available via <code>ios</code> and <code>android</code> properties, respectively. In this code that means that <code>args.color.ios</code> resolves to a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIColor_Class/"><code>UIColor</code></a>, and <code>args.view.ios</code> resolves to a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITextField_Class/"><code>UITextField</code></a>. Once you have a reference to these controls you can set native properties on them directly in TypeScript, which this code does with the <code>UITextField</code>’s <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITextField_Class/#//apple_ref/occ/instp/UITextField/attributedPlaceholder"><code>attributedPlaceholder</code> property</a>.</p>
+<p>The power with NativeScript is you can perform these customizations in TypeScript—there’s no need to jump into Xcode and write Objective-C or Swift. And this doesn’t apply just to attributes. Notice the global <code>NSDictionary</code>, <code>NSAttributedString</code>, and <code>NSForegroundColorAttributeName</code> attributes. In NativeScript, all iOS and Android APIs are globally available to use—again, directly in TypeScript code.</p>
+<p>Admittedly, this code can seem a bit arcane if you’ve never written an iOS app before, but the key here is that you’re never limited by the APIs that NativeScript provides out of the box. Most of the time you’ll be able to solve problems using the NativeScript module APIs, but if you hit a scenario your app needs that NativeScript doesn’t provide a module for, you can always hit the native APIs directly.</p>
+<blockquote>
+<p><strong>TIP</strong>:</p>
+<ul>
+<li>NativeScript provides TypeScript declaration files (<code>.d.ts</code> files) for all iOS and Android APIs. You can download the files using the links below. One word of warning though: because the declaration files include the entirety of the iOS and Android SDKs, they’re quite large, and can slow TypeScript builds to a crawl because of their sheer size. Nevertheless, the files can be invaluable during development, as they make accessing native APIs a whole lot easier.<ul>
+<li><a href="https://raw.githubusercontent.com/NativeScript/NativeScript/master/ios.d.ts">iOS TypeScript declaration file</a></li>
+<li><a href="https://raw.githubusercontent.com/NativeScript/NativeScript/master/android17.d.ts">Android TypeScript declaration file</a></li>
+</ul>
+</li>
+<li>For detailed information on how NativeScript makes native APIs globally available, read about <a href="http://developer.telerik.com/featured/nativescript-works/">“How NativeScript Works”</a> on our blog, and <a href="http://docs.nativescript.org/core-concepts/accessing-native-apis-with-javascript">“Accessing Native APIs with JavaScript”</a> on our documentation.</li>
+</ul>
+</blockquote>
+<p>Let’s move onto how to accomplish this same hint color task on Android.</p>
 <h3 id="accessing-android-apis">Accessing Android APIs</h3>
 <p>Talk about Googling the same sort of thing for Android APIs (setting the hint color).</p>
 <h4 class="exercise-start">

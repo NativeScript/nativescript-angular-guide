@@ -104,10 +104,10 @@ Let’s move onto how to accomplish this same hint color task on Android.
 
 ### Accessing Android APIs
 
-Talk about Googling the same sort of thing for Android APIs (setting the hint color).
+Much like with iOS, if you’ve not a native Android developer, figuring out how to accomplish a task on Android often starts with a web search. If you run a [search for “style Android text field hint text”](https://www.google.com/#q=style%20android%20text%20field%20hint%20text), you’ll end up on a [Stack Overflow answer](http://stackoverflow.com/questions/6438478/sethinttextcolor-in-edittext) that recommends using a [`android.widget.TextView`’s `setTextHintColor()` method](http://developer.android.com/reference/android/widget/TextView.html#attr_android:textColorHint). Let’s alter our code to do that.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Change hint colors on Android
 </h4>
 
 Open `app/utils/hint-util.ts` and replace the existing contents of the file with the following code:
@@ -116,7 +116,6 @@ Open `app/utils/hint-util.ts` and replace the existing contents of the file with
 import {Color} from "color";
 import {TextField} from "ui/text-field";
 
-declare var android: any;
 declare var NSAttributedString: any;
 declare var NSDictionary: any;
 declare var NSForegroundColorAttributeName: any;
@@ -138,21 +137,25 @@ export function setHintColor(args: { view: TextField, color: Color }) {
 
 <div class="exercise-end"></div>
 
-Talk about what just happened.
+Remember from the previous section that NativeScript makes native objects available via a `android` property. In this case `args.view.android` refers to a [`TextView`](http://developer.android.com/reference/android/widget/TextView.html), and therefore has the `setHintTextColor()` method that the Stack Overflow post said to call.
 
-TODO: Insert gifs
+One other thing to notice is the if checks that you added around each of the native calls. Your TypeScript code runs across both platforms, and iOS APIs are not available on Android (and vice versa). Testing for the existence of the native object properties is a common way to fork your code in NativeScript to avoid errors. And with this change in place, your hint colors on Android are now far more legible.
 
-Transition to status bar discussion
+![Better contrast on Android](images/chapter6/android/2.png)
+
+Let’s look at one last way we can improve the look of this app with native code.
 
 ### Customizing the status bar
 
-Talk about status bars.
+At the time of this writing, NativeScript does not expose a way to make translucent status bars—aka status bars that you can see through. There is an [open issue requesting this feature](https://github.com/NativeScript/NativeScript/issues/601), but as with anything else when building with NativeScript, you don’t have to be limited by what NativeScript provides out of the box. Let’s look at how you can use that power to make your status bars look a little nicer.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: ???
+    <b>Exercise</b>: Making translucent status bars
 </h4>
 
-Open `app/main.ts` and replace the contents of the file with the following code:
+Sometimes accomplishing tasks with native code is simple, as it was with setting hint text on Android, and sometimes it takes a little more work. Because setting a status bar’s appearance is slightly more involved, the code has been prepopulated in `app/utils/status-bar-util.ts`. There are a few comments the link to detailed information on the techniques used, if you’re curious about how it all works.
+
+Because this code changes the appearance of the status bar, we’ll want to call this method as soon as possible, so that the status bar doesn’t awkwardly update after the app has already loaded. Therefore to use this new utility, open `app/main.ts` and replace the contents of the file with the following code, which calls a new `setStatusBarColors()` before the app is bootstrapped.
 
 ``` TypeScript
 import {nativeScriptBootstrap} from "nativescript-angular/application";
@@ -163,7 +166,7 @@ setStatusBarColors();
 nativeScriptBootstrap(AppComponent);
 ```
 
-Next, open `app/platform.ios.css` and paste in the following code:
+Finally, because a translucent status bar continues to take up space on iOS, open `app/platform.ios.css` and paste in the following code, which bumps the content of the page on top of the status bar.
 
 ``` CSS
 Page {
@@ -173,14 +176,11 @@ Page {
 
 <div class="exercise-end"></div>
 
-Talk about what just happened.
+And with that, your status bar is not translucent on iOS and Android:
 
-TODO: Insert images
+![Updated status bar on Android](images/chapter6/android/3.png)
+![Updated status bar on iOS](images/chapter6/ios/3.png)
 
 And... that's it! You've created a functional, cross-platform, backend-driven app to manage your grocery list. In the process you've created a unique UI for Android and iOS, leveraged NativeScript plugins and npm modules, learned how to log in and register, managed backend services, created a list with add and delete functionality, and more. 
 
 Congratulations! Feel free to [share your accomplishment on Twitter](https://twitter.com/intent/tweet?text=I%20just%20built%20an%20iOS%20and%20Android%20app%20using%20@NativeScript%20%F0%9F%8E%89.%20You%20can%20too!%20http://docs.nativescript.org/start/getting-started%20%23opensource) or [Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdocs.nativescript.org%2Fstart%2Fgetting-started&p%5B) to impress your friends 😀.
-
-> **TIP**:
-> * If you're curious about how NativeScript makes it possible to directly invoke iOS and Android APIs, you can read about [“How NativeScript Works”](http://developer.telerik.com/featured/nativescript-works/) on our blog.
-> * Remember that the [Groceries app's “angular-end” branch](https://github.com/NativeScript/sample-Groceries/tree/angular-end) has the final state of this tutorial. Feel free to refer back to it at any time.

@@ -85,13 +85,13 @@ Let’s look at a few other NativeScript modules you can use to help improve the
 
 ### Animations
 
-The ability to run robust and performant animations is the one of the biggest reasons people choose to build native mobile apps, and NativeScript makes running these animations simple. The NativeScript animation modules provides a [series of JavaScript APIs]({{site.baseurl}}/ui/animation) that let you perform a wide variety of animations to elements on the screen, including the following:
+The ability to run robust and performant animations is the one of the biggest reasons people choose to build native mobile apps, and NativeScript makes running these animations simple. The NativeScript animation modules provides a [series of JavaScript APIs](https://docs.nativescript.org/ui/animation) that let you perform a wide variety of animations to elements on the screen, including the following:
 
-- [Opacity]({{site.baseurl}}/ui/animation#opacity)
-- [Background Color]({{site.baseurl}}/ui/animation#background-color)
-- [Translations]({{site.baseurl}}/ui/animation#translate)
-- [Scaling]({{site.baseurl}}/ui/animation#scale)
-- [Rotating]({{site.baseurl}}/ui/animation#rotate)
+- [Opacity](https://docs.nativescript.org/ui/animation#opacity)
+- [Background Color](https://docs.nativescript.org/ui/animation#background-color)
+- [Translations](https://docs.nativescript.org/ui/animation#translate)
+- [Scaling](https://docs.nativescript.org/ui/animation#scale)
+- [Rotating](https://docs.nativescript.org/ui/animation#rotate)
 
 Let’s add a simple animation so you can see how they work.
 
@@ -134,7 +134,7 @@ One you have a reference to a UI element, you can call any of the methods that e
 
 > **NOTE**: You may notice that the text color is off with the brown background. Don’t worry about that for now; we’ll address that in chapter 6.
 
-The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using `getViewById()`, and then call that element’s `animate()` method. You may want to take a few minutes to look through our [animation samples]({{site.baseurl}}/ui/animation#examples) and try a few of these animations for yourself in Groceries.
+The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using `getViewById()`, and then call that element’s `animate()` method. You may want to take a few minutes to look through our [animation samples](https://docs.nativescript.org/ui/animation#examples) and try a few of these animations for yourself in Groceries.
 
 For now, let’s move on to another commonly used NativeScript UI element: the `<ListView>`.
 

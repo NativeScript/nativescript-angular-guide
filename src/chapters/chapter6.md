@@ -176,7 +176,7 @@ Page {
 
 <div class="exercise-end"></div>
 
-And with that, your status bar is not translucent on iOS and Android:
+And with that, your status bar is now translucent on iOS and Android:
 
 ![Updated status bar on Android](images/chapter6/android/3.png)
 ![Updated status bar on iOS](images/chapter6/ios/3.png)

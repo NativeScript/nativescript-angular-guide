@@ -2,8 +2,6 @@
 
 Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.
 
-> **WARNING 🚧**: This guide is being actively written and is not complete. If you find an error in the guide please report the problem at <https://github.com/tjvantoll/nativescript-angular-guide>. Pull requests are also welcome 😀.
-
 ### What is NativeScript? What is Angular 2?
 
 <div class="intro-box">
@@ -13,15 +11,13 @@ Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hand
 
 <div class="intro-box">
   <img src="images/chapter0/Angular_logo.png" class="plain" alt="Angular logo">
-  <p>[Angular JS](https://angularjs.org/) is one of the most popular open source JavaScript frameworks for application development. The latest version of Angular, [Angular 2](https://angular.io/), makes it possible to use Angular outside of a web browser, and developers at [Telerik](http://www.telerik.com/) (the company that created and maintains NativeScript) [have been working closely with developers at Google](https://docs.google.com/document/d/1J6fZcVbVa6uONVCJIox2A3Jn5TWgspLufmryfA1OXGk/edit#heading=h.trgonlvb0z3j) to make Angular 2 in NativeScript a reality.</p>
+  <p>[Angular JS](https://angularjs.org/) is one of the most popular open source JavaScript frameworks for application development. The latest version of Angular, [Angular 2](https://angular.io/), makes it possible to use Angular outside of a web browser, and developers at [Telerik](http://www.telerik.com/)—the company that created and maintains NativeScript—[have been working closely with developers at Google](https://docs.google.com/document/d/1J6fZcVbVa6uONVCJIox2A3Jn5TWgspLufmryfA1OXGk/edit#heading=h.trgonlvb0z3j) to make Angular 2 in NativeScript a reality.</p>
 </div>
 
 <div class="intro-box">
   <img src="images/chapter0/NativeScript_Angular_logo.png" class="plain" alt="Angular logo">
   <p>The result is a software architecture that allows you to build mobile apps using the same framework—and in some cases the same code—that you use to build Angular 2 web apps, with the performance you’d expect from native code. Let’s look at how it all works by building an app.</p>
 </div>
-
-> **TIP**: Using Angular 2 with NativeScript is optional. If you’re looking for a tutorial on how to use NativeScript without Angular 2, head over to our other [Getting Started Guide](http://docs.nativescript.org/start/getting-started).
 
 ### What you're building
 

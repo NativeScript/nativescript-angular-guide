@@ -29,6 +29,9 @@
 			<div class="chapter">
 				<h2 id="building-apps-with-nativescript-and-angular-2">Building Apps with NativeScript and Angular 2</h2>
 <p>Welcome to the NativeScript &amp; Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.</p>
+<blockquote>
+<p><strong>WARNING 🚧</strong>: NativeScript’s Angular integration is in beta. Refer to <a href="#chapter8.0">this guide’s appendix</a> for a list of known issues that may affect you while going through this tutorial.</p>
+</blockquote>
 <h3 id="what-is-nativescript-what-is-angular-2-">What is NativeScript? What is Angular 2?</h3>
 <div class="intro-box">
   <img src="images/chapter0/NativeScript_logo.png" class="plain" alt="NativeScript logo">
@@ -1863,6 +1866,17 @@ nativeScriptBootstrap(AppComponent);
 <h3 id="let-us-know-what-you-think">Let us know what you think</h3>
 <p>Finally, we’d love if you could take a minute to tell us what you thought about the this guide. Your feedback helps us make this tutorial better.</p>
 <iframe src="https://docs.google.com/forms/d/1r0q8YJ7yzXcDClfu29FTFITvU1_x-2MdGjZBMPrSXCw/viewform?embedded=true" width="760" height="1300" style="max-width: 100%;" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+
+			</div>
+			<div class="chapter">
+				<h2 id="appendix">Appendix</h2>
+<h3 id="known-issues">Known issues</h3>
+<p>As NativeScript’s Angular integration is still in beta, there are a few outstanding issues you may hit while completing this guide. Here are the major ones:</p>
+<ul>
+<li>1) You may get a “Service exited due to signal: Killed: 9” error when deploying an app to an iOS simulator. If you hit this issue, <a href="https://github.com/NativeScript/nativescript-angular/issues/101">refer to the GitHub issue</a> for details on the problem and workarounds.</li>
+<li>2) The <code>tns livesync</code> command currently does not work on iOS apps. Because of this, for now, you must run <code>tns run ios --emulator</code> after each change you make to your app in order to see the changes rendered. <a href="https://github.com/NativeScript/nativescript-angular/issues/167">Follow this problem’s GitHub issue</a> for updates.</li>
+</ul>
+<p>You can refer to the <a href="https://github.com/NativeScript/nativescript-angular/issues">nativescript-angular</a> repo on GitHub for a <a href="https://github.com/NativeScript/nativescript-angular/issues">full list of issues</a>, and to <a href="https://github.com/NativeScript/nativescript-angular/issues/new">report any problems you have</a>.</p>
 
 			</div>
 		</div>

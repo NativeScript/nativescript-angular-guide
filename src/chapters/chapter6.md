@@ -166,7 +166,7 @@ setStatusBarColors();
 nativeScriptBootstrap(AppComponent);
 ```
 
-Finally, because a translucent status bar continues to take up space on iOS, open `app/platform.ios.css` and paste in the following code, which bumps the content of the page on top of the status bar.
+Finally, there are a few last CSS tweaks you to make to account for the now translucent status bars. On iOS a translucent status bar continues to take up space open, so you need to adjust the content of the page to sit on top of the status bar’s location. To do so, open `app/platform.ios.css` and paste in the following code:
 
 ``` CSS
 Page {
@@ -174,13 +174,62 @@ Page {
 }
 ```
 
+Next, open `app/pages/list/list.ios.css` and paste in the following code, which moves the add bar down from underneath the list page’s `<ActionBar>`:
+
+``` CSS
+.add-bar {
+  margin-top: 20;
+}
+```
+
+On Android a translucent does not take up space, so you need to add a bit of padding to the top of the list page so the status bar and `<ActionBar>` don’t sit on top of one another. To do so, open `app/pages/list/list.android.css` and paste in the following code:
+
+``` CSS
+ActionBar {
+  padding-top: 10;
+}
+```
+
 <div class="exercise-end"></div>
 
-And with that, your status bar is now translucent on iOS and Android:
+And with that, your status bar is now translucent and properly spaced on iOS and Android:
 
 ![Updated status bar on Android](images/chapter6/android/3.png)
 ![Updated status bar on iOS](images/chapter6/ios/3.png)
 
-And... that's it! You've created a functional, cross-platform, backend-driven app to manage your grocery list. In the process you've created a unique UI for Android and iOS, leveraged NativeScript plugins and npm modules, learned how to log in and register, managed backend services, created a list with add and delete functionality, and more. 
+And... that's it! You've created a functional, cross-platform, backend-driven app to manage your grocery list. In the process you've created a unique UI for Android and iOS, leveraged NativeScript plugins and npm modules, learned how to log in and register, managed backend services, created a list, and more. 
 
 Congratulations! Feel free to [share your accomplishment on Twitter](https://twitter.com/intent/tweet?text=I%20just%20built%20an%20iOS%20and%20Android%20app%20using%20@NativeScript%20%F0%9F%8E%89.%20You%20can%20too!%20http://docs.nativescript.org/start/getting-started%20%23opensource) or [Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdocs.nativescript.org%2Fstart%2Fgetting-started&p%5B) to impress your friends 😀.
+
+<h4 class="exercise-start">
+    <b>Challenge</b>: Add the ability to delete groceries
+</h4>
+
+As cool as Groceries is, it’s currently missing one crucial feature for a grocery management app: the ability to delete groceries from the list.
+
+The Groceries backend already supports deleting, but it’s up to you to implement the feature in the app. You do get two hints though. First, this is a function you can use in the `GroceryListService` for performing the necessary HTTP call to delete a grocery:
+
+``` TypeScript
+delete(id: string) {
+  var headers = new Headers();
+  headers.append("Authorization", "Bearer " + Config.token);
+  headers.append("Content-Type", "application/json");
+
+  return this._http.delete(
+    Config.apiUrl + "Groceries/" + id,
+    { headers: headers }
+  )
+  .map(res => res.json())
+  .catch(this.handleErrors);
+}
+```
+
+Second, here’s an image you can use in your template for users to tap to delete items. One note though: the image is a white “X”, so you’ll have to find a way to create a non-white background in order to see the image.
+
+``` XML
+<Image src="res://delete"></Image>
+```
+
+If you get stuck the Groceries app’s [“angular-end” branch](https://github.com/NativeScript/sample-Groceries/tree/angular-end) has a solution you can check.
+
+<div class="exercise-end"></div>

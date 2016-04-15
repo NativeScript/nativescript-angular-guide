@@ -41,4 +41,4 @@ There are a variety of NativeScript learning materials that go above and beyond 
 
 Finally, we’d love if you could take a minute to tell us what you thought about the this guide. Your feedback helps us make this tutorial better.
 
-TODO: Link to updated form
+<iframe src="https://docs.google.com/forms/d/1r0q8YJ7yzXcDClfu29FTFITvU1_x-2MdGjZBMPrSXCw/viewform?embedded=true" width="760" height="1300" style="max-width: 100%;" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>

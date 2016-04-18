@@ -454,7 +454,7 @@ The two functions you pass `subscribe()` are success and failure handlers. If th
     <b>Exercise</b>: Create an account
 </h4>
 
-Because the `UserService` makes use of the Http service, your final step is registering the Http provider in `AppComponent`. Start by opening `app/app.component.ts` and adding the following import to the top of the file:
+Because the `UserService` makes use of the `Http` service, your final step is registering the Http provider in `AppComponent`. Start by opening `app/app.component.ts` and adding the following import to the top of the file:
 
 ``` TypeScript
 import {HTTP_PROVIDERS} from "angular2/http";
@@ -466,9 +466,15 @@ Next, in the same file, replace the current `providers` array with the following
 providers: [UserService, HTTP_PROVIDERS],
 ```
 
-At this point you should be ready to create an account to verify this whole setup worked.
+[`HTTP_PROVIDERS`](https://angular.io/docs/ts/latest/api/http/HTTP_PROVIDERS-let.html) is an Angular-provided shorthand array that includes all of Angular’s HTTP-based services, including the `Http` service that `UserService` uses.
 
-After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password—fake credentials are fine, just make up something you can remember—and then click the orange “Sign Up” button.
+> **NOTE**: Angular supports the concept of [hierarchical dependency injectors](https://angular.io/docs/ts/latest/guide/hierarchical-dependency-injection.html), which is a fancy way of saying that you can declare `providers` in parent components. In this example, this concept means you can declare `HTTP_PROVIDERS` in `AppComponent`, even though the `Http` service is used in `UserService`. We’ll discuss best practices around where to declare `providers` for services later in this guide.
+
+At this point you should be ready to create an account to verify this whole setup worked. After the provider changes have livesync’d, perform the following tasks to create an account:
+
+* 1) Click the gray “Sign Up” button in your app.
+* 2) Type in an email address and password. Fake credentials are fine, just make up something you can remember.
+* 3) Click the orange “Sign Up” button.
 
 <div class="exercise-end"></div>
 

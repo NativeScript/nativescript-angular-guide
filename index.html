@@ -920,14 +920,22 @@ export class UserService {
     <b>Exercise</b>: Create an account
 </h4>
 
-<p>Because the <code>UserService</code> makes use of the Http service, your final step is registering the Http provider in <code>AppComponent</code>. Start by opening <code>app/app.component.ts</code> and adding the following import to the top of the file:</p>
+<p>Because the <code>UserService</code> makes use of the <code>Http</code> service, your final step is registering the Http provider in <code>AppComponent</code>. Start by opening <code>app/app.component.ts</code> and adding the following import to the top of the file:</p>
 <pre><code class="lang-TypeScript">import {HTTP_PROVIDERS} from &quot;angular2/http&quot;;
 </code></pre>
 <p>Next, in the same file, replace the current <code>providers</code> array with the following code:</p>
 <pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS],
 </code></pre>
-<p>At this point you should be ready to create an account to verify this whole setup worked.</p>
-<p>After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password—fake credentials are fine, just make up something you can remember—and then click the orange “Sign Up” button.</p>
+<p><a href="https://angular.io/docs/ts/latest/api/http/HTTP_PROVIDERS-let.html"><code>HTTP_PROVIDERS</code></a> is an Angular-provided shorthand array that includes all of Angular’s HTTP-based services, including the <code>Http</code> service that <code>UserService</code> uses.</p>
+<blockquote>
+<p><strong>NOTE</strong>: Angular supports the concept of <a href="https://angular.io/docs/ts/latest/guide/hierarchical-dependency-injection.html">hierarchical dependency injectors</a>, which is a fancy way of saying that you can declare <code>providers</code> in parent components. In this example, this concept means you can declare <code>HTTP_PROVIDERS</code> in <code>AppComponent</code>, even though the <code>Http</code> service is used in <code>UserService</code>. We’ll discuss best practices around where to declare <code>providers</code> for services later in this guide.</p>
+</blockquote>
+<p>At this point you should be ready to create an account to verify this whole setup worked. After the provider changes have livesync’d, perform the following tasks to create an account:</p>
+<ul>
+<li>1) Click the gray “Sign Up” button in your app.</li>
+<li>2) Type in an email address and password. Fake credentials are fine, just make up something you can remember.</li>
+<li>3) Click the orange “Sign Up” button.</li>
+</ul>
 <div class="exercise-end"></div>
 
 <p>If all went well, you should see a confirmation dialog that looks like this:</p>

@@ -390,7 +390,7 @@ export class AppComponent {}
     <b>Exercise</b>: Add a stack layout to the login screen
 </h4>
 
-<p>Open <code>app/app.component.ts</code>, and add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
+<p>Open <code>app/app.component.ts</code> and add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
@@ -407,19 +407,23 @@ export class AppComponent {}
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> elements you used in the previous section. After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
+<p>After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
 <p><img src="images/chapter2/ios/2.png" alt="login 2">
 <img src="images/chapter2/android/2.png" alt="login 2"></p>
 <p>Although the UI elements are in the correct order, they could use some spacing and color to make the app look a bit nicer. To do that let&#39;s look at another NativeScript feature: CSS.</p>
 <blockquote>
 <p><strong>TIP</strong>:</p>
 <ul>
-<li>Refer to the NativeScript docs for a <a href="http://docs.nativescript.org/layouts">more detailed look at how NativeScript layouts work</a> and the various things you can do to configure them.</li>
+<li>Refer to the NativeScript docs for <a href="http://docs.nativescript.org/layouts">a discussion on how NativeScript layouts work</a>, and the various attributes you can use to configure them.</li>
 <li>Check out Jen Looper&#39;s article on <a href="https://www.nativescript.org/blog/demystifying-nativescript-layouts">demystifying NativeScript layouts</a> for a more thorough look at NativeScript layouts in action.</li>
 </ul>
 </blockquote>
 <h3 id="global-css">Global CSS</h3>
-<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a>, component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
+<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. Why a subset? In NativeScript you’re building native iOS and Android apps, and some CSS properties either aren’t possible to replicate with native iOS and Android APIs, or would incur too great of a performance penalty. Don’t worry though; most common CSS properties are supported, and the CSS language syntax is the same—so styling native apps in NativeScript really does feel like styling web apps.</p>
+<blockquote>
+<p><strong>TIP</strong>: The NativeScript docs have <a href="http://docs.nativescript.org/ui/styling#supported-properties">a full list of the supported CSS properties you can use</a>.</p>
+</blockquote>
+<p>You can use three mechanisms to add CSS properties to NativeScript UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a>, component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
 <blockquote>
 <p><strong>TIP</strong>: Although inline styles are great for quick testing—e.g. <code>&lt;StackLayout style=&quot;background-color: green;&quot;&gt;</code>—you should avoid them in general because the <code>style</code> attributes tend to clutter up your templates, especially if you need to apply multiple rules.</p>
 </blockquote>
@@ -439,9 +443,9 @@ TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="http://docs.nativescript.org/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
+<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs.</p>
 <blockquote>
-<p><strong>NOTE</strong>: In NativeScript, a single <code>&lt;Page&gt;</code> UI element wraps the <code>template</code> of every page-level Angular component, which you’ll learn about when we introduce routing later in this guide. For now, just know that a <code>&lt;Page&gt;</code> exists as the parent of your <code>AppComponent</code>’s template, and that you can target that <code>&lt;Page&gt;</code> with CSS as you would with any other UI element.</p>
+<p><strong>NOTE</strong>: In NativeScript, a single <code>&lt;Page&gt;</code> UI element wraps the <code>template</code> of every page-level Angular component, which you’ll learn about when we introduce routing later in this guide. For now, just know that a <code>&lt;Page&gt;</code> element exists as the parent of your <code>AppComponent</code>’s template, and that you can target that <code>&lt;Page&gt;</code> with CSS as you would with any other UI element.</p>
 </blockquote>
 <p>Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
 <h4 class="exercise-start">
@@ -517,10 +521,10 @@ Button, TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>In Angular 2, <code>styleUrls</code> points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code>, and <code>login.css</code>, which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code> using the same naming convention we introduced in the previous section.</p>
+<p>In Angular 2, the <code>styleUrls</code> property points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code> and <code>login.css</code>—the latter of which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code>, using the same naming convention we introduced in the previous section.</p>
 <p>Why three files? Much like you divided your global files into <code>app.css</code>, <code>platform.ios.css</code>, and <code>platform.android.css</code>, this structure gives you a similar ability to place common login styling in <code>login-common.css</code>, iOS-specific login styling <code>login.ios.css</code>, and Android-specific login styling in <code>login.android.css</code>.</p>
 <p>The great thing about placing CSS rules at the component level is you can use concise CSS selectors such as <code>Button</code> and <code>TextField</code>, and not worry about those rules applying to all buttons and text fields in your application, as Angular 2 ensures those rules remain scoped to your component.</p>
-<p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface element, but at the moment there’s no UI element in your app with an <code>id</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
+<p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface elements, but at the moment there’s no UI element in your app with an <code>id</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an <code>id</code> attribute
 </h4>
@@ -559,7 +563,7 @@ Button, TextField {
 <img src="images/chapter2/android/5.png" alt="login 5"></p>
 <p>At this point your UI looks better visually, but the app still doesn&#39;t actually do anything. Let&#39;s look at how you can use JavaScript to add some functionality.</p>
 <blockquote>
-<p><strong>TIP</strong>: The community-written <a href="http://nsimage.brosteins.com/">NativeScript Image Builder</a> can help you generate images in the appropriate resolutions for iOS and Android.</p>
+<p><strong>TIP</strong>: The community-written <a href="http://nsimage.brosteins.com/">NativeScript Image Builder</a> can help you generate images with the appropriate naming conventions and resolutions for iOS and Android.</p>
 </blockquote>
 
 			</div>

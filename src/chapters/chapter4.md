@@ -240,7 +240,7 @@ export class GroceryListService {
   constructor(private _http: Http) {}
 
   load() {
-    var headers = new Headers();
+    let headers = new Headers();
     headers.append("Authorization", "Bearer " + Config.token);
 
     return this._http.get(Config.apiUrl + "Groceries", {
@@ -248,7 +248,7 @@ export class GroceryListService {
     })
     .map(res => res.json())
     .map(data => {
-      var groceryList = [];
+      let groceryList = [];
       data.Result.forEach((grocery) => {
         groceryList.push(new Grocery(grocery.Id, grocery.Name));
       });
@@ -494,7 +494,7 @@ add() {
   }
 
   // Dismiss the keyboard
-  var groceryTextField = <TextField>topmost().currentPage.getViewById("grocery");
+  let groceryTextField = <TextField>topmost().currentPage.getViewById("grocery");
   groceryTextField.dismissSoftInput();
 
   this._groceryListService.add(this.grocery)
@@ -520,7 +520,7 @@ To finish this example you have to define that new `add()` method. To do so, ope
 
 ``` TypeScript
 add(name: string) {
-  var headers = new Headers();
+  let headers = new Headers();
   headers.append("Authorization", "Bearer " + Config.token);
   headers.append("Content-Type", "application/json");
 
@@ -636,7 +636,7 @@ ngOnInit() {
         this.groceryList.unshift(groceryObject);
       });
       this.isLoading = false;
-      var groceryList = topmost().currentPage.getViewById("grocery-list");
+      let groceryList = topmost().currentPage.getViewById("grocery-list");
       groceryList.animate({
         opacity: 1,
         duration: 1000

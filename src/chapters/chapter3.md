@@ -89,7 +89,7 @@ To fix this, you need to switch to Angular 2’s two-way data binding syntax.
     <b>Exercise</b>: Two-way data binding with Angular 2
 </h4>
 
-In `app/app.component.ts`, find the find the first `<TextField>`, and replace it with the `<TextField>` below, which introduces a new `[(ngModel)]` attribute:
+In `app/app.component.ts`, find the first `<TextField>`, and replace it with the `<TextField>` below, which introduces a new `[(ngModel)]` attribute:
 
 ``` XML
 <TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="email"
@@ -136,7 +136,7 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
-The previous examples switches each button’s’ `text` attribute from a simple string—e.g. `<Button text="Sign Up">`—to an attribute binding that is dependent on a value defined in the `AppComponent` class—e.g. `<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'">"`. Now, when the value of the `isLoggingIn` attributes changes after the user taps the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:
+The previous examples switches each button’s `text` attribute from a simple string—e.g. `<Button text="Sign Up">`—to an attribute binding that is dependent on a value defined in the `AppComponent` class—e.g. `<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'">"`. Now, when the value of the `isLoggingIn` attributes changes after the user taps the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:
 
 ![Text changing on Android](images/chapter3/android/4.gif)
 ![Text changing on iOS](images/chapter3/ios/4.gif)
@@ -273,7 +273,7 @@ For the purposes of this tutorial we prebuilt a handful of backend endpoints usi
     <b>Exercise</b>: Add an Angular 2 service
 </h4>
 
-There’s are several new concepts to introduce with Angular services, so we’re going to start by stubbing out a new `register()` method, and then come back to the implementation later in this section. With that in mind, open `app/shared/user/user.service.ts` and paste in the following code:
+There are several new concepts to introduce with Angular services, so we’re going to start by stubbing out a new `register()` method, and then come back to the implementation later in this section. With that in mind, open `app/shared/user/user.service.ts` and paste in the following code:
 
 ``` TypeScript
 import {Injectable} from "angular2/core";
@@ -353,7 +353,12 @@ This is Angular 2’s dependency injection implementation in action. Because you
 
 This begs a bigger question though: why bother with all of this? Why not run `this._userService = new UserService()` in the component’s constructor and forget the complexity of `@Injectable` and `providers`?
 
-The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular’s docs for a [more thorough discussion of the benefits of dependency injection](https://angular.io/docs/ts/latest/guide/dependency-injection.html).
+The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular’s docs for a [thorough discussion of the benefits of dependency injection](https://angular.io/docs/ts/latest/guide/dependency-injection.html).
+
+> **NOTE**: If you’re looking to learn more about Angular 2’s `providers` array and dependency injection implementation, the [thoughtram blog](http://blog.thoughtram.io/) has a great 3-part series that covers the topic in more detail than this guide.
+  * [Part 1—Dependency Injection](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
+  * [Part 2—Host and Visibility](http://blog.thoughtram.io/angular/2015/08/20/host-and-visibility-in-angular-2-dependency-injection.html)
+  * [Part 3—Multi Providers](http://blog.thoughtram.io/angular2/2015/11/23/multi-providers-in-angular-2.html).
 
 Let’s return to our example and make the registration process actually work.
 
@@ -377,7 +382,7 @@ export class UserService {
   constructor(private _http: Http) {}
 
   register(user: User) {
-    var headers = new Headers();
+    let headers = new Headers();
     headers.append("Content-Type", "application/json");
 
     return this._http.post(
@@ -497,7 +502,7 @@ To this point you’ve been putting your login page code in `app.component.ts`. 
 
 First, open `app/app.component.ts` and copy its contents into `app/pages/login/login.component.ts`.
 
-Next, in `login.component.ts`, change the name of the class from “AppComponent” to “LoginPage, and update the two paths below accordingly:
+Next, in `login.component.ts`, change the name of the class from “AppComponent” to “LoginPage”, and update the two paths below accordingly:
 
 ``` TypeScript
 import {User} from "../../shared/user/user";
@@ -572,13 +577,13 @@ Next, replace the existing `@RouteConfig` with the following code so that it inc
 ])
 ```
 
-Angular 2 now knows about the list page, but we still need to navigate the user to that page at the appropriate time. Our next step is to allow users to log into their accounts, and to take navigate them to the new list page after they successfully authenticate.
+Angular 2 now knows about the list page, but we still need to navigate the user to that page at the appropriate time. Our next step is to allow users to log into their accounts, then navigate them to the new list page after they have successfully authenticated.
 
-To do that, start by opening `app/shared/user/user.service.ts` and the `login()` function below to the existing `UserService` class:
+To do that, start by opening `app/shared/user/user.service.ts` and add the `login()` function below to the existing `UserService` class:
 
 ``` TypeScript
 login(user: User) {
-  var headers = new Headers();
+  let headers = new Headers();
   headers.append("Content-Type", "application/json");
 
   return this._http.post(
@@ -606,7 +611,7 @@ To use this `login()` function, return to `app/login/login.component.ts`, and ad
 import {Router} from "angular2/router";
 ```
 
-Next, replace the current `constructor()` declaration with the code below, which adds Angular 2’s `Router` service:
+Next, replace the current `constructor()` declaration with the code below, which injects Angular 2’s `Router` service:
 
 ``` TypeScript
 constructor(private _router: Router, private _userService: UserService) {

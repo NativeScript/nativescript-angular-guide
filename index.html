@@ -953,8 +953,8 @@ export class UserService {
 <p>Your app now has a fully functional registration process, but users can’t do anything with the accounts they create. Our next step is to allow the users to login and navigate to a new list page. And to do that we need to introduce the concept of routing.</p>
 <h3 id="routing">Routing</h3>
 <p>Most of the Angular 2 concepts you’ve used in the last few sections are the same regardless of whether you’re building for the web or native apps. You are even able to share model objects and services directly between the two environments.</p>
-<p>However, routing is different, as there are some fundamental differences between how the concept of routing works on the web and in apps. Routing on the web revolves around the concept of a URL, but in a native app there is no browser. Likewise, native apps have concepts that aren’t present in the browser, such as Android’s hardware back button, or iOS’s swipe left-to-right gesture to go back.</p>
-<p>Because of that, routing in NativeScript needs to work a bit differently. The main difference is that you must designate certain Angular components in your app as “pages”, which in Groceries are stored in the <code>pages</code> folder. Let’s look at the code needed to make this work, and then step by and discuss why NativeScript takes the approach that it does.</p>
+<p>However, routing is a bit different, as there are some fundamental differences between how the concept of routing works on the web and in apps. Routing on the web revolves around the concept of a URL, but in a native app there is no browser. Likewise, native apps have concepts that aren’t present in the browser, such as Android’s hardware back button, or iOS’s swipe left-to-right gesture to go back.</p>
+<p>Because of that, even though NativeScript uses the same Angular 2 routing APIs, you must designate certain Angular components in your app as “pages”—which is something you don’t necessarily have to do in an Angular 2 web app. In Groceries the code for these pages is in the app’s <code>pages</code> folder. Let’s look at this works in an exercise, and then step back and discuss why NativeScript takes the approach that it does.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Setting up routing
 </h4>
@@ -965,7 +965,7 @@ export class UserService {
 <pre><code class="lang-TypeScript">import {User} from &quot;../../shared/user/user&quot;;
 import {UserService} from &quot;../../shared/user/user.service&quot;;
 </code></pre>
-<p>Now that <code>app.component.ts</code> is empty, let’s add in the appropriate Angular 2 routing code. Open app/app.component.ts back up and paste in the following code:</p>
+<p>Now that <code>app.component.ts</code> is empty, let’s add in the appropriate Angular 2 routing code. Open <code>app/app.component.ts</code> back up and paste in the following code:</p>
 <pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
 import {RouteConfig} from &quot;angular2/router&quot;;
 import {NS_ROUTER_DIRECTIVES, NS_ROUTER_PROVIDERS} from &quot;nativescript-angular/router&quot;;
@@ -984,12 +984,10 @@ export class AppComponent {}
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The main new concept here is the <code>@RouteConfig</code> decorator, which you use to provide a list of all routes that are present in your app. Currently you only have one route, which is why <code>@RouteConfig</code> contains a single entry.</p>
-<blockquote>
-<p><strong>TIP</strong>: If you haven’t played with Angular 2 routing before, you can refer to <a href="https://angular.io/docs/ts/latest/tutorial/toh-pt5.html">Angular’s tutorial on the topic</a> for some background.</p>
-</blockquote>
-<p>The other new concept in this example is <code>&lt;page-router-outlet&gt;</code>, which is your app’s first directive. You can check out Angular’s docs for <a href="https://angular.io/docs/ts/latest/api/core/Directive-decorator.html">details on what directives do</a>, but the simplest way to think of them is as something that can affect the markup you put in your <code>template</code>—in this case <code>&lt;page-router-outlet&gt;</code>.</p>
-<p>Angular 2 provides a <code>&lt;router-outlet&gt;</code> directive for web apps, and NativeScript extends that directive with its own <code>&lt;page-router-outlet&gt;</code> directive that handles the unique environment of iOS and Android apps. To see how it works let’s add another page.</p>
+<p>If you haven’t played with routing in Angular 2 before, you can refer to <a href="https://angular.io/docs/ts/latest/tutorial/toh-pt5.html">Angular’s tutorial on the topic</a> for some background, but the basic concept is you include a  <code>@RouteConfig</code> decorator, and pass that decorator a list of all routes that are present in your app. Currently you only have one route, which is why <code>@RouteConfig</code> contains a single entry.</p>
+<p>The other new concept in this example is the <code>&lt;page-router-outlet&gt;</code> tag, which is your app’s first directive. You can again check out Angular’s docs if you want <a href="https://angular.io/docs/ts/latest/api/core/Directive-decorator.html">detailed information on what directives are and do</a>, but the simplest way to think of a directive is as something that can affect the markup you put in your <code>template</code>—in this case <code>&lt;page-router-outlet&gt;</code>.</p>
+<p>And to take a step back, that directive, <code>&lt;page-router-outlet&gt;</code> is the only difference in routing between the routing code above and the <a href="https://github.com/tjvantoll/Groceries/blob/master/app/app.component.ts">same code in the Groceries web implementation</a>. Angular 2 provides a <code>&lt;router-outlet&gt;</code> directive for web apps, and NativeScript extends that directive with its own <code>&lt;page-router-outlet&gt;</code> directive that handles the unique environment of iOS and Android apps. The great thing about NativeScript is those details are transparent to you as a developer.</p>
+<p>Let’s add another page to see the routing in action.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Create the list page
 </h4>
@@ -1067,6 +1065,9 @@ export class ListPage {}
 <p><img src="images/chapter3/android/7.gif" alt="Navigating on Android">
 <img src="images/chapter3/ios/7.gif" alt="Navigating on iOS"></p>
 <p>The power of NativeScript is you have the ability to use the same Angular conventions that you’d use in a web app—<code>@RouteConfig</code>, <code>Router</code>, and so forth—yet get an app that fits right in on iOS and Android. Notice how on Android the hardware back button works as expected, and how your iOS app uses built-in iOS animations and conventions such as the back button.</p>
+<blockquote>
+<p><strong>TIP</strong>: There are other ways to share code between native and web apps besides the <code>shared</code> folder convention Groceries uses. For an approach that places web and native code in the same codebase, that also provides some additional tooling around testing and internationalization, check out <a href="https://github.com/NathanWalker/angular2-seed-advanced">Nathan Walker’s advanced Angular 2 seed project</a>.</p>
+</blockquote>
 <p>And we’re just getting started. NativeScript provides a number of other ways to tie into native device functionality out of the box through NativeScript modules. Let’s look at how they work.</p>
 
 			</div>

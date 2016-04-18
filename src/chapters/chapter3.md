@@ -1,6 +1,6 @@
 ## Application Logic
 
-In this chapter you’ll learn how to add JavaScript logic to your app, how to create services that talk to backend endpoints, and how to architect an app that uses multiple pages. There’s a lot to cover, so let’s start by discussing how to handle events and data binding.
+In this chapter you’ll learn how to add TypeScript logic to your app, how to create services that talk to backend endpoints, and how to architect an app to share code with Angular 2 web apps. There’s a lot to cover, so let’s start by discussing how to handle events and data binding.
 
 ### Events
 
@@ -12,13 +12,13 @@ Most user interfaces are driven by events. In NativeScript apps, those events ar
 
 Open `app/app.component.ts`, find the existing sign in button within your component’s `template` (`<Button text="Sign in"></Button>`), and replace it with the following code:
 
-``` JavaScript
+``` TypeScript
 <Button text="Sign in" id="submit-button" (tap)="submit()"></Button>
 ```
 
 Next, in the same file, replace the current `AppComponent` declaration with the one shown below:
 
-``` JavaScript
+``` TypeScript
 export class AppComponent {
   submit() {
     console.log("hello");
@@ -35,7 +35,7 @@ To verify this binding works tap the “Sign In” button in your app; you shoul
 <img alt="Terminal showing the word hello logged" src="images/chapter3/terminal-1.png" class="plain">
 
 > **TIP**:
-> * In NativeScript you can find a list of events available in the appropriate UI element’s API documentation. For instance, the [button element’s API documentation](http://docs.nativescript.org/ApiReference/ui/button/Button) lists its `tap` event.
+> * You can find a list of events available for each UI element on its API documentation page. For instance, the [button element’s API documentation](http://docs.nativescript.org/ApiReference/ui/button/Button) lists its `tap` event.
 > * The Angular 2 docs have a helpful [cheat sheet](https://angular.io/docs/ts/latest/guide/cheatsheet.html) that includes the various syntaxes available when building templates. Don’t worry too much about knowing how all these work at the moment; we’ll progressively introduce the most common syntaxes in this guide.
 
 With the `tap` event in place, you now have a way of tying the UI elements in your template to your TypeScript code. To make a login page actually work though, we need to introduce one other way of connecting a template to code: data binding.
@@ -100,11 +100,11 @@ In `app/app.component.ts`, find the find the first `<TextField>`, and replace it
 
 At first glance the `[(ngModel)]` syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, `[(ngModel)]="email"` is shorthand for `[text]="email" (emailChange)="email=$event"`, which binds the email element’s `text` attribute to an `email` property and adds a `change` event handler that updates the `email` property’s value whenever the user makes a change.
 
-Don’t worry too much about the details here while we’re still getting started. In your head you can think of `[(ngModel)]` as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:
+Don’t worry too much about the details of this syntax while you’re getting started. In your head you can think of `[(ngModel)]` as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:
 
 ![Android with email addresses that do match](images/chapter3/android/3.png)
 
-Before we move on, let’s make one additional change to show what else you can do with Angular 2’s data binding APIs. The Groceries app uses the same UI for the “Sign In” form and the “Sign Up” form. Therefore, when the user clicks “Sign Up”, we need to update the text of the buttons (and eventually the functionality that occurs when you tap them). Let’s see how to make that happen.
+Before we move on, let’s make one additional change to show what else you can do with Angular 2’s data binding APIs. The Groceries app uses the same UI for the “Sign In” form and the “Sign Up” form. Therefore, when the user taps “Sign Up”, we need to update the text of the buttons (and eventually the functionality that occurs when you tap them). Let’s see how to make that happen.
 
 
 <h4 class="exercise-start">
@@ -136,18 +136,18 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
-The previous examples switches each button’s’ `text` attribute from a simple string—e.g. `<Button text="Sign Up">`—to an attribute binding that is dependent on a value defined in the `AppComponent` class—e.g. `<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'">"`. Now, when the value of the `isLoggingIn` attributes changes after the user clicks the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:
+The previous examples switches each button’s’ `text` attribute from a simple string—e.g. `<Button text="Sign Up">`—to an attribute binding that is dependent on a value defined in the `AppComponent` class—e.g. `<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'">"`. Now, when the value of the `isLoggingIn` attributes changes after the user taps the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:
 
 ![Text changing on Android](images/chapter3/android/4.gif)
 ![Text changing on iOS](images/chapter3/ios/4.gif)
 
-At this point, you have a basic login screen setup with two-way data binding—which isn’t bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
+At this point, you have a basic login screen setup with two-way data binding—which isn’t bad for 20 some lines of TypeScript. (Think about how much code you’d have to write in Android Studio _and_ Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.
 
 Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.
 
 ### Structuring your app
 
-There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). Modularizing NativeScript apps, in addition, has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.
+There are many reasons to segment any application into modular units, and you can [read about the various benefits on Wikipedia](https://en.wikipedia.org/wiki/Modular_programming). Modularizing NativeScript has one additional, unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.
 
 Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.
 
@@ -159,7 +159,7 @@ To see how this works in action, let’s edit some files in the `shared` folder 
 
 Let’s start by creating a simple model object to store user data. Open `app/shared/user/user.ts` and paste in the following code:
 
-``` JavaScript
+``` TypeScript
 export class User {
   email: string;
   password: string;
@@ -170,7 +170,7 @@ This code defines a simple [TypeScript class](http://www.typescriptlang.org/Hand
 
 Next, open `app/app.component.ts`, and add the following `import` to the top of the file:
 
-``` JavaScript
+``` TypeScript
 import {User} from "./shared/user/user";
 ```
 
@@ -178,7 +178,7 @@ Here you import the `User` class that you just defined. Note the parallel betwee
 
 Next, replace the existing `AppComponent` definition with the one below, which uses the `User` class you just imported.
 
-``` JavaScript
+``` TypeScript
 export class AppComponent {
   user: User;
   isLoggingIn = true;
@@ -255,7 +255,9 @@ export class AppComponent {
 
 <div class="exercise-end"></div>
 
-> **TIP**: With Angular 2 components you have the ability to specify templates and CSS styling in two places—directly within the component, or in external files. For simple components feel free to choose either approach based on your personal preference, but once your templates/styles get to ~10 lines of code, consider using external files exclusively, as mixing non-trivial XML, CSS, and JavaScript code makes your component code less readable.
+> **TIP**:
+> * With Angular 2 components you have the ability to specify templates and CSS styling in two places—directly within the component, or in external files. For simple components feel free to choose either approach based on your personal preference, but once your templates/styles get to ~10 lines of code, consider using external files exclusively, as mixing non-trivial UI, CSS, and TypeScript code makes your component code less readable.
+> * You’re free to provide any suffix for your NativeScript template file names. This guide uses `.html` suffixes, even though NativeScript templates aren’t HTML code, because that suffix tends to provide the best syntax highlighting in common development IDEs. This guide does _not_ use `.xml` suffixes because Angular 2 syntaxes like `(tap)` and `[text]` are not valid XML.
 
 With this setup you now have a `User` class that you can share across pages in your app and even across applications. But a model object that’s four simple lines of code isn’t all that exciting. Where this approach really pays off is when you’re able to share your business logic, and the code that hits your backend systems. In Angular 2 those classes are known as services. Let’s look at them next.
 
@@ -265,7 +267,7 @@ A login screen isn’t all that useful if it doesn’t actually log users into a
 
 For the purposes of this tutorial we prebuilt a handful of backend endpoints using [Telerik Backend Services](http://www.telerik.com/platform/backend-services), and we’ll be using those endpoints to make this app functional. Let’s see how they work.
 
-> **NOTE**: You don't have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.
+> **NOTE**: You don't have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app, including common solutions such as [Firebase](http://plugins.telerik.com/nativescript/plugin/firebase) and [Couchbase](https://github.com/couchbaselabs/nativescript-couchbase). Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an Angular 2 service
@@ -351,7 +353,7 @@ This is Angular 2’s dependency injection implementation in action. Because you
 
 This begs a bigger question though: why bother with all of this? Why not run `this._userService = new UserService()` in the component’s constructor and forget the complexity of `@Injectable` and `providers`?
 
-The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular for a [more thorough discussion of the benefits of dependency injection](https://angular.io/docs/ts/latest/guide/dependency-injection.html).
+The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular’s docs for a [more thorough discussion of the benefits of dependency injection](https://angular.io/docs/ts/latest/guide/dependency-injection.html).
 
 Let’s return to our example and make the registration process actually work.
 
@@ -359,7 +361,7 @@ Let’s return to our example and make the registration process actually work.
     <b>Exercise</b>: Use an Angular 2 service
 </h4>
 
-Open `app/shared/user/user.service.ts` and paste in the following code:
+Open `app/shared/user/user.service.ts` and paste in the following code, which we’ll discuss in detail in a moment.
 
 ``` TypeScript
 import {Injectable} from "angular2/core";
@@ -424,7 +426,7 @@ The `UserService` class is using the same dependency injection technique to brin
 
 > **TIP**: Refer to [Angular 2’s docs on Http](https://angular.io/docs/ts/latest/api/http/Http-class.html) for specifics on what HTTP APIs are available.
 
-The other new bit of code is the return value of this new `register()` method. `register()` returns `this._http.post()`, which is an RxJS `Observable`. You can refer to docs for a [full tutorial on how RxJS observables work](https://angular.io/docs/ts/latest/guide/server-communication.html), but for now just know that the most common thing you’ll need to do with observables is subscribe to them, which is what the new code you added to `app.component.ts` does:
+The other new bit of code is the return value of this new `register()` method. `register()` returns `this._http.post()`, which is an RxJS `Observable`. You can refer to the Angular docs for a [full tutorial on how RxJS observables work](https://angular.io/docs/ts/latest/guide/server-communication.html), but for now just know that the most common thing you’ll need to do with observables is subscribe to them, which is what the new code you added to `app.component.ts` does:
 
 ``` TypeScript
 this._userService.register(this.user)

@@ -569,7 +569,7 @@ Button, TextField {
 			</div>
 			<div class="chapter">
 				<h2 id="application-logic">Application Logic</h2>
-<p>In this chapter you’ll learn how to add JavaScript logic to your app, how to create services that talk to backend endpoints, and how to architect an app that uses multiple pages. There’s a lot to cover, so let’s start by discussing how to handle events and data binding.</p>
+<p>In this chapter you’ll learn how to add TypeScript logic to your app, how to create services that talk to backend endpoints, and how to architect an app to share code with Angular 2 web apps. There’s a lot to cover, so let’s start by discussing how to handle events and data binding.</p>
 <h3 id="events">Events</h3>
 <p>Most user interfaces are driven by events. In NativeScript apps, those events are usually some user action, such as tapping, swiping, or rotating—and NativeScript abstracts the iOS- and Android-specific code for handling such events into a handful of easy-to-use APIs. Let’s start with the most common event you’ll use in a NativeScript app: <code>tap</code>.</p>
 <h4 class="exercise-start">
@@ -577,10 +577,10 @@ Button, TextField {
 </h4>
 
 <p>Open <code>app/app.component.ts</code>, find the existing sign in button within your component’s <code>template</code> (<code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code>), and replace it with the following code:</p>
-<pre><code class="lang-JavaScript">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
+<pre><code class="lang-TypeScript">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
 </code></pre>
 <p>Next, in the same file, replace the current <code>AppComponent</code> declaration with the one shown below:</p>
-<pre><code class="lang-JavaScript">export class AppComponent {
+<pre><code class="lang-TypeScript">export class AppComponent {
   submit() {
     console.log(&quot;hello&quot;);
   }
@@ -594,7 +594,7 @@ Button, TextField {
 <blockquote>
 <p><strong>TIP</strong>:</p>
 <ul>
-<li>In NativeScript you can find a list of events available in the appropriate UI element’s API documentation. For instance, the <a href="http://docs.nativescript.org/ApiReference/ui/button/Button">button element’s API documentation</a> lists its <code>tap</code> event.</li>
+<li>You can find a list of events available for each UI element on its API documentation page. For instance, the <a href="http://docs.nativescript.org/ApiReference/ui/button/Button">button element’s API documentation</a> lists its <code>tap</code> event.</li>
 <li>The Angular 2 docs have a helpful <a href="https://angular.io/docs/ts/latest/guide/cheatsheet.html">cheat sheet</a> that includes the various syntaxes available when building templates. Don’t worry too much about knowing how all these work at the moment; we’ll progressively introduce the most common syntaxes in this guide.</li>
 </ul>
 </blockquote>
@@ -641,9 +641,9 @@ Button, TextField {
 <div class="exercise-end"></div>
 
 <p>At first glance the <code>[(ngModel)]</code> syntax looks more than a little odd, as it’s essentially a combination of the event and attribute binding syntax that you used in earlier examples. In the case of this example, <code>[(ngModel)]=&quot;email&quot;</code> is shorthand for <code>[text]=&quot;email&quot; (emailChange)=&quot;email=$event&quot;</code>, which binds the email element’s <code>text</code> attribute to an <code>email</code> property and adds a <code>change</code> event handler that updates the <code>email</code> property’s value whenever the user makes a change.</p>
-<p>Don’t worry too much about the details here while we’re still getting started. In your head you can think of <code>[(ngModel)]</code> as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:</p>
+<p>Don’t worry too much about the details of this syntax while you’re getting started. In your head you can think of <code>[(ngModel)]</code> as the way to implement two-way data binding when you need it on form controls. To show that it works, if you again modify your app’s email address and click the “Sign In” button, you’ll see the updated value in the alert as expected:</p>
 <p><img src="images/chapter3/android/3.png" alt="Android with email addresses that do match"></p>
-<p>Before we move on, let’s make one additional change to show what else you can do with Angular 2’s data binding APIs. The Groceries app uses the same UI for the “Sign In” form and the “Sign Up” form. Therefore, when the user clicks “Sign Up”, we need to update the text of the buttons (and eventually the functionality that occurs when you tap them). Let’s see how to make that happen.</p>
+<p>Before we move on, let’s make one additional change to show what else you can do with Angular 2’s data binding APIs. The Groceries app uses the same UI for the “Sign In” form and the “Sign Up” form. Therefore, when the user taps “Sign Up”, we need to update the text of the buttons (and eventually the functionality that occurs when you tap them). Let’s see how to make that happen.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Using the ternary operator in templates
 </h4>
@@ -667,13 +667,13 @@ Button, TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The previous examples switches each button’s’ <code>text</code> attribute from a simple string—e.g. <code>&lt;Button text=&quot;Sign Up&quot;&gt;</code>—to an attribute binding that is dependent on a value defined in the <code>AppComponent</code> class—e.g. <code>&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot;&gt;&quot;</code>. Now, when the value of the <code>isLoggingIn</code> attributes changes after the user clicks the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:</p>
+<p>The previous examples switches each button’s’ <code>text</code> attribute from a simple string—e.g. <code>&lt;Button text=&quot;Sign Up&quot;&gt;</code>—to an attribute binding that is dependent on a value defined in the <code>AppComponent</code> class—e.g. <code>&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot;&gt;&quot;</code>. Now, when the value of the <code>isLoggingIn</code> attributes changes after the user taps the bottom button, Angular is smart enough to update the text of the button automatically. The result looks like this:</p>
 <p><img src="images/chapter3/android/4.gif" alt="Text changing on Android">
 <img src="images/chapter3/ios/4.gif" alt="Text changing on iOS"></p>
-<p>At this point, you have a basic login screen setup with two-way data binding—which isn’t bad for 20 some lines of code of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
+<p>At this point, you have a basic login screen setup with two-way data binding—which isn’t bad for 20 some lines of TypeScript. (Think about how much code you’d have to write in Android Studio <em>and</em> Xcode to accomplish the same task.) To this point though you’ve been placing all of your logic in a single TypeScript file, which doesn’t scale all that well for real-world applications.</p>
 <p>Before we tie this app to a backend and make this login screen fully functional, let’s take a step back and setup a structure that can scale.</p>
 <h3 id="structuring-your-app">Structuring your app</h3>
-<p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. Modularizing NativeScript apps, in addition, has one unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
+<p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. Modularizing NativeScript has one additional, unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
 <p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.</p>
 <p>To see how this works in action, let’s edit some files in the <code>shared</code> folder and set them up to be imported.</p>
 <h4 class="exercise-start">
@@ -681,18 +681,18 @@ Button, TextField {
 </h4>
 
 <p>Let’s start by creating a simple model object to store user data. Open <code>app/shared/user/user.ts</code> and paste in the following code:</p>
-<pre><code class="lang-JavaScript">export class User {
+<pre><code class="lang-TypeScript">export class User {
   email: string;
   password: string;
 }
 </code></pre>
 <p>This code defines a simple <a href="http://www.typescriptlang.org/Handbook#classes">TypeScript class</a> that does nothing more than define two properties—<code>email</code> and <code>password</code>. Note the use of <a href="http://www.typescriptlang.org/Handbook#modules-going-external">TypeScript’s <code>export</code> keyword</a>, as we’ll see why that’s important momentarily.</p>
 <p>Next, open <code>app/app.component.ts</code>, and add the following <code>import</code> to the top of the file:</p>
-<pre><code class="lang-JavaScript">import {User} from &quot;./shared/user/user&quot;;
+<pre><code class="lang-TypeScript">import {User} from &quot;./shared/user/user&quot;;
 </code></pre>
 <p>Here you import the <code>User</code> class that you just defined. Note the parallel between the <code>export</code> command used in the previous example and the <code>import</code> command used here. The reason the <code>User</code> class is available to import is because it was explicitly exported. You’ll see other examples of <code>import</code> and <code>export</code> as you go through this guide.</p>
 <p>Next, replace the existing <code>AppComponent</code> definition with the one below, which uses the <code>User</code> class you just imported.</p>
-<pre><code class="lang-JavaScript">export class AppComponent {
+<pre><code class="lang-TypeScript">export class AppComponent {
   user: User;
   isLoggingIn = true;
 
@@ -755,14 +755,18 @@ export class AppComponent {
 <div class="exercise-end"></div>
 
 <blockquote>
-<p><strong>TIP</strong>: With Angular 2 components you have the ability to specify templates and CSS styling in two places—directly within the component, or in external files. For simple components feel free to choose either approach based on your personal preference, but once your templates/styles get to ~10 lines of code, consider using external files exclusively, as mixing non-trivial XML, CSS, and JavaScript code makes your component code less readable.</p>
+<p><strong>TIP</strong>:</p>
+<ul>
+<li>With Angular 2 components you have the ability to specify templates and CSS styling in two places—directly within the component, or in external files. For simple components feel free to choose either approach based on your personal preference, but once your templates/styles get to ~10 lines of code, consider using external files exclusively, as mixing non-trivial UI, CSS, and TypeScript code makes your component code less readable.</li>
+<li>You’re free to provide any suffix for your NativeScript template file names. This guide uses <code>.html</code> suffixes, even though NativeScript templates aren’t HTML code, because that suffix tends to provide the best syntax highlighting in common development IDEs. This guide does <em>not</em> use <code>.xml</code> suffixes because Angular 2 syntaxes like <code>(tap)</code> and <code>[text]</code> are not valid XML.</li>
+</ul>
 </blockquote>
 <p>With this setup you now have a <code>User</code> class that you can share across pages in your app and even across applications. But a model object that’s four simple lines of code isn’t all that exciting. Where this approach really pays off is when you’re able to share your business logic, and the code that hits your backend systems. In Angular 2 those classes are known as services. Let’s look at them next.</p>
 <h3 id="services">Services</h3>
 <p>A login screen isn’t all that useful if it doesn’t actually log users into anything. Therefore, our next task is to allow users to create and log into accounts. We’ll build this functionality as an <a href="https://angular.io/docs/ts/latest/tutorial/toh-pt4.html">Angular 2 service</a>, which is Angular 2’s mechanism for reusable classes that operate on data.</p>
 <p>For the purposes of this tutorial we prebuilt a handful of backend endpoints using <a href="http://www.telerik.com/platform/backend-services">Telerik Backend Services</a>, and we’ll be using those endpoints to make this app functional. Let’s see how they work.</p>
 <blockquote>
-<p><strong>NOTE</strong>: You don&#39;t have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.</p>
+<p><strong>NOTE</strong>: You don&#39;t have to use Telerik Backend Services to power your app’s backend; you can use any HTTP API in a NativeScript app, including common solutions such as <a href="http://plugins.telerik.com/nativescript/plugin/firebase">Firebase</a> and <a href="https://github.com/couchbaselabs/nativescript-couchbase">Couchbase</a>. Telerik Backend Services is convenient for us to use for this tutorial because it lets us spin up HTTP endpoints quickly.</p>
 </blockquote>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an Angular 2 service
@@ -824,13 +828,13 @@ signUp() {
 </code></pre>
 <p>This is Angular 2’s dependency injection implementation in action. Because you registered <code>UserService</code> as a provider in this component’s <code>providers</code> array, when Angular sees this syntax it creates an instance of the <code>UserService</code> class, and passes that instance into the component’s constructor.</p>
 <p>This begs a bigger question though: why bother with all of this? Why not run <code>this._userService = new UserService()</code> in the component’s constructor and forget the complexity of <code>@Injectable</code> and <code>providers</code>?</p>
-<p>The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular for a <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html">more thorough discussion of the benefits of dependency injection</a>.</p>
+<p>The short answer is a dependency-injection-based approach to coding keeps your classes less coupled, and therefore more maintainable and testable as your application evolves over time. For a longer answer, head over to the Angular’s docs for a <a href="https://angular.io/docs/ts/latest/guide/dependency-injection.html">more thorough discussion of the benefits of dependency injection</a>.</p>
 <p>Let’s return to our example and make the registration process actually work.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Use an Angular 2 service
 </h4>
 
-<p>Open <code>app/shared/user/user.service.ts</code> and paste in the following code:</p>
+<p>Open <code>app/shared/user/user.service.ts</code> and paste in the following code, which we’ll discuss in detail in a moment.</p>
 <pre><code class="lang-TypeScript">import {Injectable} from &quot;angular2/core&quot;;
 import {Http, Headers, Response} from &quot;angular2/http&quot;;
 import {User} from &quot;./user&quot;;
@@ -886,7 +890,7 @@ export class UserService {
 <blockquote>
 <p><strong>TIP</strong>: Refer to <a href="https://angular.io/docs/ts/latest/api/http/Http-class.html">Angular 2’s docs on Http</a> for specifics on what HTTP APIs are available.</p>
 </blockquote>
-<p>The other new bit of code is the return value of this new <code>register()</code> method. <code>register()</code> returns <code>this._http.post()</code>, which is an RxJS <code>Observable</code>. You can refer to docs for a <a href="https://angular.io/docs/ts/latest/guide/server-communication.html">full tutorial on how RxJS observables work</a>, but for now just know that the most common thing you’ll need to do with observables is subscribe to them, which is what the new code you added to <code>app.component.ts</code> does:</p>
+<p>The other new bit of code is the return value of this new <code>register()</code> method. <code>register()</code> returns <code>this._http.post()</code>, which is an RxJS <code>Observable</code>. You can refer to the Angular docs for a <a href="https://angular.io/docs/ts/latest/guide/server-communication.html">full tutorial on how RxJS observables work</a>, but for now just know that the most common thing you’ll need to do with observables is subscribe to them, which is what the new code you added to <code>app.component.ts</code> does:</p>
 <pre><code class="lang-TypeScript">this._userService.register(this.user)
   .subscribe(
     () =&gt; {

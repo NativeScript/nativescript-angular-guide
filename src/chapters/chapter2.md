@@ -154,6 +154,8 @@ Open `app/app.component.ts` and replace the existing `@Component` with the follo
 
 > **NOTE**: Notice the back-tick character (\`) used with the `template` property. This character is used to define an [ES2015 template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), which TypeScript supports, and which allows you to write multi-line strings without using messy string concatenation.
 
+> **WARNING**: Take special care to properly close all your UI elements and **not** use self-closing declarations like `<Button text="Sign in" />`. This is related to the `Parse5DomAdapter` noted [here](https://github.com/NativeScript/nativescript-angular/blob/master/README.md#known-issues">).
+
 This code adds two new NativeScript UI elements: a [text field](http://docs.nativescript.org/ApiReference/ui/text-field/how-to.html) and a [button](http://docs.nativescript.org/ApiReference/ui/button/how-to.html). Much like HTML elements, NativeScript UI elements provide attributes to let you configure their behavior and appearance. The code you just added uses the following attributes:
 
 - `<TextField>`

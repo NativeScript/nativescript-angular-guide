@@ -30,7 +30,7 @@ declare var NSDictionary: any;
 declare var NSForegroundColorAttributeName: any;
 
 export function setHintColor(args: { view: TextField, color: Color }) {
-  var dictionary = new NSDictionary(
+  let dictionary = new NSDictionary(
     [args.color.ios],
     [NSForegroundColorAttributeName]
   );
@@ -52,14 +52,14 @@ After that, add the following function to the file’s `LoginPage` class:
 
 ``` TypeScript
 setTextFieldColors() {
-  var email = <TextField>this.page.getViewById("email");
-  var password = <TextField>this.page.getViewById("password");
+  let email = <TextField>this.page.getViewById("email");
+  let password = <TextField>this.page.getViewById("password");
 
-  var mainTextColor = new Color(this.isLoggingIn ? "black" : "#C4AFB4");
+  let mainTextColor = new Color(this.isLoggingIn ? "black" : "#C4AFB4");
   email.color = mainTextColor;
   password.color = mainTextColor;
 
-  var hintColor = new Color(this.isLoggingIn ? "#ACA6A7" : "#C4AFB4");
+  let hintColor = new Color(this.isLoggingIn ? "#ACA6A7" : "#C4AFB4");
   setHintColor({ view: email, color: hintColor });
   setHintColor({ view: password, color: hintColor });
 }
@@ -80,7 +80,7 @@ After your app refreshes with this change, you should now see a far more readabl
 Let’s back up to the contents of the `setHintColor()` function so we can discuss what’s going on here.
 
 ``` TypeScript
-var dictionary = new NSDictionary(
+let dictionary = new NSDictionary(
   [args.color.ios],
   [NSForegroundColorAttributeName]
 );
@@ -125,7 +125,7 @@ export function setHintColor(args: { view: TextField, color: Color }) {
     args.view.android.setHintTextColor(args.color.android);
   }
   if (args.view.ios) {
-    var dictionary = new NSDictionary(
+    let dictionary = new NSDictionary(
       [args.color.ios],
       [NSForegroundColorAttributeName]
     );
@@ -211,7 +211,7 @@ The Groceries backend already supports deleting, but it’s up to you to impleme
 
 ``` TypeScript
 delete(id: string) {
-  var headers = new Headers();
+  let headers = new Headers();
   headers.append("Authorization", "Bearer " + Config.token);
   headers.append("Content-Type", "application/json");
 

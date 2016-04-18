@@ -1068,12 +1068,13 @@ export class ListPage {}
 <blockquote>
 <p><strong>TIP</strong>: There are other ways to share code between native and web apps besides the <code>shared</code> folder convention Groceries uses. For an approach that places web and native code in the same codebase, that also provides some additional tooling around testing and internationalization, check out <a href="https://github.com/NathanWalker/angular2-seed-advanced">Nathan Walker’s advanced Angular 2 seed project</a>.</p>
 </blockquote>
-<p>And we’re just getting started. NativeScript provides a number of other ways to tie into native device functionality out of the box through NativeScript modules. Let’s look at how they work.</p>
+<p>Now that we’ve discussed how NativeScript apps and Angular 2 web apps are similar, let’s move onto how they’re different. When you’re building with NativeScript you have access to the entirety of iOS and Android, as well as the highly capable devices they run on—enabling you to build rich experiences that go above and beyond what the web can offer.</p>
+<p>The best part is, one NativeScript feature makes it trivial to tie into this native device functionality: NativeScript modules.</p>
 
 			</div>
 			<div class="chapter">
 				<h2 id="nativescript-modules">NativeScript modules</h2>
-<p>In this chapter you&#39;ll learn about NativeScript modules, which are the JavaScript modules in your app&#39;s <code>node_modules/tns-core-modules</code> folder. Whether you&#39;ve realized it or not, you&#39;ve already used several NativeScript modules, as all of the NativeScript UI elements are actually implemented with JavaScript code.</p>
+<p>In this chapter you&#39;ll learn about NativeScript modules, which are the TypeScript modules in your app&#39;s <code>node_modules/tns-core-modules</code> folder. Whether you&#39;ve realized it or not, you&#39;ve already used several NativeScript modules, as all of the NativeScript UI elements are actually implemented with TypeScript code.</p>
 <p>If you dig into <code>node_modules/tns-core-modules</code> you can get an idea of how these modules work. Start by finding the <code>node_modules/tns-core-modules/camera</code> folder, which includes the implementation of the camera module. It includes:</p>
 <ul>
 <li>a <code>package.json</code> file that sets the name of the module;</li>
@@ -1082,7 +1083,11 @@ export class ListPage {}
 <li>a file containing code shared by the Android and iOS implementations (<code>camera-common.js</code>)</li>
 </ul>
 <blockquote>
-<p><strong>NOTE</strong>: You can refer to the <a href="https://nodejs.org/api/modules.html#modules_folders_as_modules">Node.js documentation on folders as modules</a> for more detailed information on how NativeScript organizes its modules.</p>
+<p><strong>NOTE</strong>:</p>
+<ul>
+<li>You can refer to the <a href="https://nodejs.org/api/modules.html#modules_folders_as_modules">Node.js documentation on folders as modules</a> for more detailed information on how NativeScript organizes its modules.</li>
+<li>The “tns-core-modules” package only includes compiled JavaScript code to cut down on file size. You can find the TypeScript code for each of these modules in the `<a href="https://github.com/NativeScript/nativescript">main NativeScript GitHub repo</a>, for instance here’s the <a href="https://github.com/NativeScript/NativeScript/tree/master/camera">camera module’s source code</a>.</li>
+</ul>
 </blockquote>
 <p>The <code>*.ios.*</code> and <code>*.android.*</code> naming convention should look familiar, as it’s the exact same convention we used to include Android- and iOS-specific styling in <a href="#css">chapter 2.3</a>. NativeScript uses this same convention to implement its modules on iOS and Android. Now that you know where these modules are, let&#39;s take a closer look at what else they can do for your app, starting with a closer looks at what you can do with NativeScript’s UI elements.</p>
 <h3 id="ui-elements">UI elements</h3>
@@ -1095,13 +1100,16 @@ export class ListPage {}
 <pre><code class="lang-TypeScript">import {topmost} from &quot;ui/frame&quot;;
 import {Page} from &quot;ui/page&quot;;
 </code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: All of the imports you’ve seen to this point work because the TypeScript compiler resolves them against your project’s <code>node_modules</code> folder. For instance, <code>import {Component} from &quot;angular2/core&quot;</code> works because a <code>node_modules/angular2/core.d.ts</code> file exists. The two imports above are NativeScript module imports, and they work because your project’s <code>references.d.ts</code> file includes a reference to a TypeScript declaration file (a <code>.d.ts</code> file), that lives in <code>node_modules/tns-core-modules</code>, and which allows you to import modules from <code>node_modules/tns-core-modules</code> without any prefixes.</p>
+</blockquote>
 <p>Next, alter the same file’s existing <code>&quot;angular2/core&quot;</code> import to include the <code>OnInit</code> interface:</p>
 <pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
 </code></pre>
 <p><code>OnInit</code> is a <a href="http://www.typescriptlang.org/docs/handbook/interfaces.html#class-types">TypeScript class interface</a>. To see how it works, make the following change to the declaration of your <code>LoginPage</code> class:</p>
 <pre><code class="lang-TypeScript">export class LoginPage implements OnInit {
 </code></pre>
-<p>If you’re using an editor that supports TypeScript, you should see an error that says something like <em>“Class ‘LoginPage’ incorrectly implements interface ‘OnInit’”</em>. When you implement a TypeScript class interface, you’re telling the TypeScript compiler that you will implement any of the methods that the interface requires. In the case of <code>OnInit</code>, Angular 2 requires you to implement a single <code>ngOnInit()</code> method. To implement it, add the following code within the <code>LoginPage</code> class:</p>
+<p>If you’re using an editor that supports TypeScript, you should see an error that says something like <em>“Class ‘LoginPage’ incorrectly implements interface ‘OnInit’”</em>. When you implement a TypeScript class interface, you’re telling the TypeScript compiler that you must implement all methods that the interface requires. In the case of <code>OnInit</code>, Angular 2 requires you to implement a single <code>ngOnInit()</code> method. To implement it, add the following code within the <code>LoginPage</code> class:</p>
 <pre><code class="lang-TypeScript">ngOnInit() {
   this.page = &lt;Page&gt;topmost().currentPage;
   this.page.actionBarHidden = true;
@@ -1109,10 +1117,10 @@ import {Page} from &quot;ui/page&quot;;
 }
 </code></pre>
 <blockquote>
-<p><strong>NOTE</strong>: The <code>this.page.ios</code> in this function can go away after NativeScript 2.0 is released. The check is there because of <a href="https://github.com/NativeScript/NativeScript/issues/1788">this bug</a>.</p>
+<p><strong>NOTE</strong>: The <code>this.page.ios</code> check in this function can go away after NativeScript 2.0 is released. The check is there because of <a href="https://github.com/NativeScript/NativeScript/issues/1788">this bug</a>.</p>
 </blockquote>
 <p><code>ngOnInit</code> is one of several <a href="https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html">component lifecycle hooks</a> that Angular 2 provides. As its name implies, <code>ngOnInit</code> gets invoked when Angular initializes this component.</p>
-<p>We’ll discuss what the code within <code>ngOnInit()</code> does momentarily, but finally, to make these changes compile and run, add the following property to the <code>LoginPage</code> class. (You can put it right under the <code>user: User;</code> line.)</p>
+<p>We’ll discuss what the code within <code>ngOnInit()</code> does momentarily, but finally, to make these changes compile and run, add the following property to the <code>LoginPage</code> class. You can put it right under the <code>user: User;</code> line.</p>
 <pre><code class="lang-TypeScript">page: Page;
 </code></pre>
 <div class="exercise-end"></div>

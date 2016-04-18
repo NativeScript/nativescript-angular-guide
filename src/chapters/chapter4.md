@@ -1,6 +1,6 @@
 ## NativeScript modules
 
-In this chapter you'll learn about NativeScript modules, which are the JavaScript modules in your app's `node_modules/tns-core-modules` folder. Whether you've realized it or not, you've already used several NativeScript modules, as all of the NativeScript UI elements are actually implemented with JavaScript code.
+In this chapter you'll learn about NativeScript modules, which are the TypeScript modules in your app's `node_modules/tns-core-modules` folder. Whether you've realized it or not, you've already used several NativeScript modules, as all of the NativeScript UI elements are actually implemented with TypeScript code.
 
 If you dig into `node_modules/tns-core-modules` you can get an idea of how these modules work. Start by finding the `node_modules/tns-core-modules/camera` folder, which includes the implementation of the camera module. It includes:
 
@@ -9,7 +9,9 @@ If you dig into `node_modules/tns-core-modules` you can get an idea of how these
 - a file containing the module's iOS implementation (`camera.ios.js`);
 - a file containing code shared by the Android and iOS implementations (`camera-common.js`)
 
-> **NOTE**: You can refer to the [Node.js documentation on folders as modules](https://nodejs.org/api/modules.html#modules_folders_as_modules) for more detailed information on how NativeScript organizes its modules.
+> **NOTE**:
+> * You can refer to the [Node.js documentation on folders as modules](https://nodejs.org/api/modules.html#modules_folders_as_modules) for more detailed information on how NativeScript organizes its modules.
+> * The “tns-core-modules” package only includes compiled JavaScript code to cut down on file size. You can find the TypeScript code for each of these modules in the `[main NativeScript GitHub repo](https://github.com/NativeScript/nativescript), for instance here’s the [camera module’s source code](https://github.com/NativeScript/NativeScript/tree/master/camera).
 
 The `*.ios.*` and `*.android.*` naming convention should look familiar, as it’s the exact same convention we used to include Android- and iOS-specific styling in [chapter 2.3](#css). NativeScript uses this same convention to implement its modules on iOS and Android. Now that you know where these modules are, let's take a closer look at what else they can do for your app, starting with a closer looks at what you can do with NativeScript’s UI elements.
 
@@ -28,6 +30,8 @@ import {topmost} from "ui/frame";
 import {Page} from "ui/page";
 ```
 
+> **NOTE**: All of the imports you’ve seen to this point work because the TypeScript compiler resolves them against your project’s `node_modules` folder. For instance, `import {Component} from "angular2/core"` works because a `node_modules/angular2/core.d.ts` file exists. The two imports above are NativeScript module imports, and they work because your project’s `references.d.ts` file includes a reference to a TypeScript declaration file (a `.d.ts` file), that lives in `node_modules/tns-core-modules`, and which allows you to import modules from `node_modules/tns-core-modules` without any prefixes.
+
 Next, alter the same file’s existing `"angular2/core"` import to include the `OnInit` interface:
 
 ```TypeScript
@@ -40,7 +44,7 @@ import {Component, OnInit} from "angular2/core";
 export class LoginPage implements OnInit {
 ```
 
-If you’re using an editor that supports TypeScript, you should see an error that says something like *“Class ‘LoginPage’ incorrectly implements interface ‘OnInit’”*. When you implement a TypeScript class interface, you’re telling the TypeScript compiler that you will implement any of the methods that the interface requires. In the case of `OnInit`, Angular 2 requires you to implement a single `ngOnInit()` method. To implement it, add the following code within the `LoginPage` class:
+If you’re using an editor that supports TypeScript, you should see an error that says something like *“Class ‘LoginPage’ incorrectly implements interface ‘OnInit’”*. When you implement a TypeScript class interface, you’re telling the TypeScript compiler that you must implement all methods that the interface requires. In the case of `OnInit`, Angular 2 requires you to implement a single `ngOnInit()` method. To implement it, add the following code within the `LoginPage` class:
 
 ``` TypeScript
 ngOnInit() {
@@ -50,11 +54,11 @@ ngOnInit() {
 }
 ```
 
-> **NOTE**: The `this.page.ios` in this function can go away after NativeScript 2.0 is released. The check is there because of [this bug](https://github.com/NativeScript/NativeScript/issues/1788).
+> **NOTE**: The `this.page.ios` check in this function can go away after NativeScript 2.0 is released. The check is there because of [this bug](https://github.com/NativeScript/NativeScript/issues/1788).
 
 `ngOnInit` is one of several [component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) that Angular 2 provides. As its name implies, `ngOnInit` gets invoked when Angular initializes this component.
 
-We’ll discuss what the code within `ngOnInit()` does momentarily, but finally, to make these changes compile and run, add the following property to the `LoginPage` class. (You can put it right under the `user: User;` line.)
+We’ll discuss what the code within `ngOnInit()` does momentarily, but finally, to make these changes compile and run, add the following property to the `LoginPage` class. You can put it right under the `user: User;` line.
 
 ``` TypeScript
 page: Page;

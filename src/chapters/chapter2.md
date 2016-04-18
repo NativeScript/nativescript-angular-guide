@@ -71,13 +71,13 @@ Next, let's dig into the `app` folder, as that's where you'll be spending the ma
 Here's what these various files and folders do:
 
 - **App_Resources**: This folder contains platform-specific resources such as icons, splash screens, and configuration files. The NativeScript CLI takes care of injecting these resources into the appropriate places in the `platforms` folder when you execute `tns run`.
-- **pages**: This folder, specific to the Groceries app, contains the code to build your app's pages. Each page is made up of a TypeScript file, an optional HTML file, and an optional set of CSS files. The Groceries app starts with two folders for its two pages, a login page, and a list page
-- **shared**: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes a few classes for talking to backend services, some model objects, and a `config.ts` file used to share configuration variables like API keys. We’ll discuss the `shared` folder, as well as code sharing between native apps and web apps, in detail in section 3.2.
-- **app.css**: This file contains global styles for your app. We'll dig into app styling in [section 2.3](#css).
+- **pages**: This folder, specific to the Groceries app, contains the code to build your app's pages. Each page is made up of a TypeScript file, an optional HTML file, and an optional set of CSS files. The Groceries app starts with two folders for its two pages, a login page, and a list page.
+- **shared**: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes a few classes for talking to backend services, some model objects, and a `config.ts` file used to share configuration variables like API keys. We’ll discuss the `shared` folder, as well as code sharing between native apps and web apps, in detail in [chapter 3.2](#chapter-3.2).
+- **app.css**: This file contains global styles for your app. We'll dig into app styling in [chapter 2.3](#chapter-2.3).
 - **app.component.ts**: This primary Angular component that drives your application. Eventually this file will handle routing and application-wide configuration, however for now the file has a simple hello world example that we’ll look at momentarily.
 - **main.ts**: The starting point of Angular 2 applications—web and native.
 
-To get a sense of a NativeScript app actually starts up, let’s explore the first few files.
+To get a sense of how a NativeScript app actually starts up, let’s explore the first few files.
 
 ### Starting up
 
@@ -96,7 +96,7 @@ Here you’re using the TypeScript `import` command to bring in a function—`na
 
 The bootstrap function, regardless of whether it’s for the web or for native apps, needs to know which Angular component to start the application with. In this case, you’re passing control to a `AppComponent` component defined in `app.component.ts`.
 
-> **TIP**: In NativeScript we follow Angular 2’s own convention of naming component files with a `.component.ts` suffix.
+> **TIP**: In a NativeScript app you can follow the same code conventions you would in an Angular 2 web app. Here we’re using Angular 2’s own convention of naming component files with a `.component.ts` suffix.
 
 Next, open your app’s `app/app.component.ts` file; you should see the code below:
 
@@ -112,15 +112,15 @@ export class AppComponent {}
 
 This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.
 
-First, you again use TypeScript’s `import` command to bring in externally defined functionality—in this case, the `Component` class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.
+First, you again use TypeScript’s `import` command to bring in externally defined functionality—in this case, the `Component` class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually you’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.
 
-> **TIP**: Why [TypeScript](http://www.typescriptlang.org/)? It's strongly recommended that you use TypeScript in your Angular 2 NativeScript app, as it's a first class citizen in both NativeScript and Angular 2. In fact, both NativeScript and Angular 2 were built with TypeScript. The NativeScript CLI makes compiling your TypeScript files seamless, as each time you livesync, run or build the app, the files are recompiled from TypeScript to JavaScript. In some IDEs, such as Visual Studio Code, you might choose to hide the compiled files. A tutorial on how to do this can be found [here](https://code.visualstudio.com/Docs/languages/typescript#_hiding-derived-javascript-files).
+> **NOTE**: Why [TypeScript](http://www.typescriptlang.org/)? It’s strongly recommended that you use TypeScript in your Angular 2 NativeScript app, as it’s a first class citizen in both NativeScript and Angular 2. In fact, both NativeScript and Angular 2 were built with TypeScript. The NativeScript CLI makes compiling your TypeScript files seamless, as each time you livesync, run or build the app, the files are recompiled from TypeScript to JavaScript. In some IDEs, such as Visual Studio Code, you might choose to [hide your project’s compiled JavaScript files](https://code.visualstudio.com/Docs/languages/typescript#_hiding-derived-javascript-files) so you can focus on the TypeScript code.
 
 Notice the interesting way that the `Component` class is used—with the syntax `@Component`. This is a [TypeScript decorator](https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md), which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty `AppComponent` class. Specifically, the `@Component` decorator’s `template` property tells NativeScript how to render this component on the screen. In fact, the `<Label text="hello NativeScript"></Label>` syntax is why you saw “hello NativeScript” when you ran this app earlier.
 
 However, this syntax may look a bit odd if you come from a web development background. On the web, the `<label>` HTML element doesn’t have a `text` attribute, so why do we see it here? Let’s dive into this by looking at how NativeScript UI elements work.
 
-> **NOTE**: Curious about the `@Component` decorator’s `selector` property? The property defines how a component can be used within another component’s template. For instance a component that defines its `selector` with `selector: "foo-bar"` can be used by another component as `template: "<foo-bar></foo-bar>"`. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the `selector` property of this first component is irrelevant. We’ll use the `selector` property later in this guide though.
+> **NOTE**: Curious about the `@Component` decorator’s `selector` property? The property defines how a component can be used within another component’s template. For instance a component that defines its `selector` with `selector: "foo-bar"` can be used by another component as `template: "<foo-bar></foo-bar>"`. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the `selector` property of this first component is irrelevant.
 
 ### Adding UI elements
 

@@ -70,7 +70,7 @@
 <li><strong>JavaScript</strong>: You should know basic JavaScript concepts, such as how functions, if statements, and loops work.</li>
 <li><strong>CSS</strong>: You should know how to write simple CSS selectors, and know how to apply CSS rules as name/value pairs.</li>
 <li><strong>The terminal</strong>: You should know how to open a terminal or command-line prompt on your development machine, how to change directories, and how to execute commands.</li>
-<li><strong>A text editor or IDE</strong>: You should know the basics of your text editor or IDE of choice. You can use any text editor to build NativeScript apps, however, for the best possible experience you may want to choose an editor with built-in TypeScript support such as <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</li>
+<li><strong>A text editor or IDE</strong>: You should know the basics of your text editor or IDE of choice. You can use any text editor to build NativeScript apps, however, for the best possible experience you may want an editor with built-in TypeScript support, such as <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</li>
 </ul>
 <p>This guide will <em>not</em> assume you have any knowledge of Angular 2 or TypeScript. When background Angular 2 or TypeScript expertise will help you understand a concept, this guide will link you to the appropriate places in the <a href="https://angular.io/docs/ts/latest/">Angular</a> or <a href="http://www.typescriptlang.org/Handbook">TypeScript</a> documentation.</p>
 <p>With that out of the way, let’s get started!</p>
@@ -81,20 +81,20 @@
 				<h2 id="getting-up-and-running">Getting up and running</h2>
 <p>In this chapter you&#39;re going to start with the basics, including installing the NativeScript CLI, starting a new project, and getting your first app up and running.</p>
 <h3 id="install-nativescript-and-configure-your-environment">Install NativeScript and configure your environment</h3>
-<p>The NativeScript CLI has a few system requirements you must have in place before building NativeScript apps. As a first step, start by going through the instructions for your operating system:</p>
+<p>The NativeScript CLI has a few system requirements you must have in place before building NativeScript apps. If you’re new to native mobile development, start with the NativeScript CLI’s quick setup scripts, which automatically install NativeScript and its dependencies on your development machine:</p>
 <ul>
-<li><a href="http://docs.nativescript.org/start/ns-setup-win">Windows</a></li>
-<li><a href="http://docs.nativescript.org/start/ns-setup-os-x">OS X</a></li>
-<li><a href="http://docs.nativescript.org/start/ns-setup-linux">Linux</a></li>
+<li><a href="http://docs.nativescript.org/start/quick-setup#quick-setup">Quick setup instructions</a></li>
+</ul>
+<p>If you have existing mobile experience, or if you want to control the installation process yourself, refer to the advanced setup instructions for your operating system:</p>
+<ul>
+<li><a href="http://docs.nativescript.org/start/ns-setup-win#setup">Advanced setup: Windows</a></li>
+<li><a href="http://docs.nativescript.org/start/ns-setup-os-x#setup">Advanced setup: OS X</a></li>
+<li><a href="http://docs.nativescript.org/start/ns-setup-linux#setup">Advanced setup: Linux</a></li>
 </ul>
 <blockquote>
-<p><strong>TIP</strong>:</p>
-<ul>
-<li>Completing the installation instructions can be tricky if you’re new to mobile development. If you get stuck, or you have questions at any point while going through this guide, the <a href="http://developer.telerik.com/wp-login.php?action=slack-invitation">NativeScript Community Slack channel</a> is a great place to ask questions.</li>
-<li>If you’re overwhelmed by these requirements, you may also be interested in using NativeScript as part of the <a href="http://www.telerik.com/platform">Telerik Platform</a>. The Telerik Platform provides robust tooling for NativeScript apps, including an IDE that performs iOS and Android builds in the cloud, removing the need to complete these system requirements.</li>
-</ul>
+<p><strong>TIP</strong>: Regardless of which approach you take, setting up your machine for native development can be tricky. If you get stuck, or if you have questions at any point while going through this guide, the <a href="http://developer.telerik.com/wp-login.php?action=slack-invitation">NativeScript Community Slack channel</a> is a great place to ask questions.</p>
 </blockquote>
-<p>After completing the setup you should have two commands available from your terminal: <code>tns</code>—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and <code>nativescript</code>. The two commands are equivalent, so we&#39;ll stick with the shorter <code>tns</code>.</p>
+<p>After completing the setup you should have two commands available from your terminal or command prompt: <code>tns</code>—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and <code>nativescript</code>. The two commands are equivalent, so we&#39;ll stick with the shorter <code>tns</code>.</p>
 <p>You can verify the installation was successful by running <code>tns</code> in your terminal. You should see something like this:</p>
 <pre><code>$ tns
 # NativeScript
@@ -161,7 +161,7 @@
 <p><strong>WARNING</strong>:</p>
 <ul>
 <li>You must have at least one Android AVD (Android Virtual Device) configured for this command to work. If you get an error, try <a href="http://developer.telerik.com/featured/using-android-emulator-hybrid-mobile-apps-telerik-appbuilder/#managing-avds">setting up an AVD</a> and then run the command again.</li>
-<li>If you&#39;re using <a href="https://www.genymotion.com">Genymotion</a>, launch your Genymotion virtual device, and then run <code>tns run android</code>.</li>
+<li>If you&#39;re using <a href="https://www.genymotion.com">Genymotion</a>, launch your Genymotion virtual device first, and then run <code>tns run android</code> to deploy your app.</li>
 </ul>
 </blockquote>
 <p>If all went well, you should see your app running in an Android emulator:</p>
@@ -190,14 +190,26 @@ If you’re on a Mac, start an iOS livesync watcher by executing the following c
 tns livesync ios --emulator --watch
 ```
 -->
-<p>If you have an Android emulator running, start an Android livesync watcher by executing the following command:</p>
+<p>If you have your app running on an Android emulator, start an Android livesync watcher by executing the following command:</p>
 <pre><code>tns livesync android --emulator --watch
+</code></pre><p>If you instead have your app running on a USB-connected Android device or Genymotion virtual device, run the same command without the <code>--emulator</code> flag:</p>
+<pre><code>tns livesync android --watch
 </code></pre><p>The <code>tns livesync</code> command updates your app by transferring the updated source code to the device or simulator. By adding the <code>--watch</code> flag, the <code>livesync</code> command additionally watches the files in your NativeScript project. Whenever one of those files changes, the command detects the update, and patches your app with the updated code.</p>
 <blockquote>
 <p><strong>TIP</strong>: You can learn about how this is possible by reading more about <a href="http://developer.telerik.com/featured/nativescript-works/">how NativeScript works</a>.</p>
 </blockquote>
-<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice and change <code>&lt;Label text=&#39;hello world&#39;&gt;&lt;/Label&gt;</code> to <code>&lt;Label text=&#39;hello NativeScript&#39;&gt;&lt;/Label&gt;</code>. Save the file and you should see the app relaunch and the updated text displayed.</p>
-<p>If you’re on a Mac building for iOS, the workflow is currently a bit different, as the <code>tns livesync ios</code> command is not yet supported. (See the <a href="#chapter8.0">known issues</a> for details.) To see the updated text, type <code>Ctrl+C</code> to kill your previous <code>tns run ios</code> command, and then re-execute <code>tns run ios --emulator</code> to launch the app with your changes.</p>
+<p>To see livesync in action let’s make a small update to your app. Open your project’s <code>app/app.component.ts</code> file in your text editor of choice, and replace the file’s contents with the code below, which updates the label’s text:</p>
+<pre><code class="lang-TypeScript">import {Component} from &quot;angular2/core&quot;;
+
+@Component({
+  selector: &quot;my-app&quot;,
+  template: &quot;&lt;Label text=&#39;hello NativeScript&#39;&gt;&lt;/Label&gt;&quot;
+})
+export class AppComponent {}
+</code></pre>
+<p>Save <code>app/app.component.ts</code> and you should see the app relaunch and the updated text displayed.</p>
+<p><img src="images/chapter1/android/2.png" alt="Updated Android text"></p>
+<p>If you’re on a Mac building for iOS, the workflow is currently a bit different, as the <code>tns livesync ios</code> command is not yet supported. (See the <a href="#chapter8.0">known issues</a> for details.) To see the updated text on iOS, type <code>Ctrl+C</code> to kill your previous <code>tns run ios</code> command, and then re-execute <code>tns run ios --emulator</code> to launch the app with your changes.</p>
 <div class="exercise-end"></div> 
 
 <p>Regardless of whether you’re running on iOS or Android, or whether you’re using <code>tns livesync</code> or <code>tns run</code>, the NativeScript CLI shows the output of <code>console.log()</code> statements as your app executes, as well as stack traces when things go wrong. So if your app crashes at any time during this guide, look to the terminal for a detailed report of the problem.</p>
@@ -209,7 +221,7 @@ tns livesync ios --emulator --watch
 E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app/./views/login/login.js, line: 13, column: 4
 </code></pre><blockquote>
 <p><strong>TIP</strong>: When you&#39;re trying to debug a problem, try adding <code>console.log()</code> statements in your JavaScript code—exactly as you would in a browser-based application.</p>
-<p><strong>WARNING</strong>: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (<code>Info.plist</code>, <code>AndroidManifest.xml</code>, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use <code>Ctrl+C</code> to stop livesync, and rerun the application using the <code>tns run android</code> commands. Not to worry though, when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.</p>
+<p><strong>WARNING</strong>: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (<code>Info.plist</code>, <code>AndroidManifest.xml</code>, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use <code>Ctrl+C</code> to stop livesync, and rerun the application using the <code>tns run android</code> command. Don’t worry though; when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.</p>
 </blockquote>
 <p>Now that you&#39;ve created an app, configured your environment, and set up your app to run on iOS and Android, you&#39;re ready to start digging into the files that make up a NativeScript app.</p>
 
@@ -275,13 +287,13 @@ E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app
 </code></pre><p>Here&#39;s what these various files and folders do:</p>
 <ul>
 <li><strong>App_Resources</strong>: This folder contains platform-specific resources such as icons, splash screens, and configuration files. The NativeScript CLI takes care of injecting these resources into the appropriate places in the <code>platforms</code> folder when you execute <code>tns run</code>.</li>
-<li><strong>pages</strong>: This folder, specific to the Groceries app, contains the code to build your app&#39;s pages. Each page is made up of a TypeScript file, an optional HTML file, and an optional set of CSS files. The Groceries app starts with two folders for its two pages, a login page, and a list page</li>
-<li><strong>shared</strong>: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes a few classes for talking to backend services, some model objects, and a <code>config.ts</code> file used to share configuration variables like API keys. We’ll discuss the <code>shared</code> folder, as well as code sharing between native apps and web apps, in detail in section 3.2.</li>
-<li><strong>app.css</strong>: This file contains global styles for your app. We&#39;ll dig into app styling in <a href="#css">section 2.3</a>.</li>
+<li><strong>pages</strong>: This folder, specific to the Groceries app, contains the code to build your app&#39;s pages. Each page is made up of a TypeScript file, an optional HTML file, and an optional set of CSS files. The Groceries app starts with two folders for its two pages, a login page, and a list page.</li>
+<li><strong>shared</strong>: This folder, also specific to the Groceries app, contains any files you need to share between NativeScript apps and Angular-2-built web apps. For Groceries this includes a few classes for talking to backend services, some model objects, and a <code>config.ts</code> file used to share configuration variables like API keys. We’ll discuss the <code>shared</code> folder, as well as code sharing between native apps and web apps, in detail in <a href="#chapter-3.2">chapter 3.2</a>.</li>
+<li><strong>app.css</strong>: This file contains global styles for your app. We&#39;ll dig into app styling in <a href="#chapter-2.3">chapter 2.3</a>.</li>
 <li><strong>app.component.ts</strong>: This primary Angular component that drives your application. Eventually this file will handle routing and application-wide configuration, however for now the file has a simple hello world example that we’ll look at momentarily.</li>
 <li><strong>main.ts</strong>: The starting point of Angular 2 applications—web and native.</li>
 </ul>
-<p>To get a sense of a NativeScript app actually starts up, let’s explore the first few files.</p>
+<p>To get a sense of how a NativeScript app actually starts up, let’s explore the first few files.</p>
 <h3 id="starting-up">Starting up</h3>
 <p>The first few files you run in a NativeScript app look almost identical to <a href="https://angular.io/docs/ts/latest/quickstart.html">the first few files you run in an Angular 2 web app</a>. Let’s start with <code>main.ts</code> as that’s the first file executed. Open your <code>app.main.ts</code> file; you should see the code below:</p>
 <pre><code class="lang-JavaScript">import {nativeScriptBootstrap} from &quot;nativescript-angular/application&quot;;
@@ -295,7 +307,7 @@ nativeScriptBootstrap(AppComponent);
 </blockquote>
 <p>The bootstrap function, regardless of whether it’s for the web or for native apps, needs to know which Angular component to start the application with. In this case, you’re passing control to a <code>AppComponent</code> component defined in <code>app.component.ts</code>.</p>
 <blockquote>
-<p><strong>TIP</strong>: In NativeScript we follow Angular 2’s own convention of naming component files with a <code>.component.ts</code> suffix.</p>
+<p><strong>TIP</strong>: In a NativeScript app you can follow the same code conventions you would in an Angular 2 web app. Here we’re using Angular 2’s own convention of naming component files with a <code>.component.ts</code> suffix.</p>
 </blockquote>
 <p>Next, open your app’s <code>app/app.component.ts</code> file; you should see the code below:</p>
 <pre><code class="lang-JavaScript">import {Component} from &quot;angular2/core&quot;;
@@ -307,14 +319,14 @@ nativeScriptBootstrap(AppComponent);
 export class AppComponent {}
 </code></pre>
 <p>This file contains an Angular 2 component, which is the primary building block of Angular 2 applications, including NativeScript apps. Let’s break down what’s going on in this file.</p>
-<p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually we’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
+<p>First, you again use TypeScript’s <code>import</code> command to bring in externally defined functionality—in this case, the <code>Component</code> class from Angular 2 itself. In Angular 2 a component manages a view, or a piece of the user interface that the user sees. A component can be used to define an individual UI element, or an entire page, and eventually you’ll add a bunch of logic to these components and use them to build an entire app. But for now this component is simple for the purpose of demonstration.</p>
 <blockquote>
-<p><strong>TIP</strong>: Why <a href="http://www.typescriptlang.org/">TypeScript</a>? It&#39;s strongly recommended that you use TypeScript in your Angular 2 NativeScript app, as it&#39;s a first class citizen in both NativeScript and Angular 2. In fact, both NativeScript and Angular 2 were built with TypeScript. The NativeScript CLI makes compiling your TypeScript files seamless, as each time you livesync, run or build the app, the files are recompiled from TypeScript to JavaScript. In some IDEs, such as Visual Studio Code, you might choose to hide the compiled files. A tutorial on how to do this can be found <a href="https://code.visualstudio.com/Docs/languages/typescript#_hiding-derived-javascript-files">here</a>.</p>
+<p><strong>NOTE</strong>: Why <a href="http://www.typescriptlang.org/">TypeScript</a>? It’s strongly recommended that you use TypeScript in your Angular 2 NativeScript app, as it’s a first class citizen in both NativeScript and Angular 2. In fact, both NativeScript and Angular 2 were built with TypeScript. The NativeScript CLI makes compiling your TypeScript files seamless, as each time you livesync, run or build the app, the files are recompiled from TypeScript to JavaScript. In some IDEs, such as Visual Studio Code, you might choose to <a href="https://code.visualstudio.com/Docs/languages/typescript#_hiding-derived-javascript-files">hide your project’s compiled JavaScript files</a> so you can focus on the TypeScript code.</p>
 </blockquote>
 <p>Notice the interesting way that the <code>Component</code> class is used—with the syntax <code>@Component</code>. This is a <a href="https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Decorators.md">TypeScript decorator</a>, which allows you to annotate a TypeScript class or method with additional information. For now, you can think of it as a way of adding some metadata configuration to the currently empty <code>AppComponent</code> class. Specifically, the <code>@Component</code> decorator’s <code>template</code> property tells NativeScript how to render this component on the screen. In fact, the <code>&lt;Label text=&quot;hello NativeScript&quot;&gt;&lt;/Label&gt;</code> syntax is why you saw “hello NativeScript” when you ran this app earlier.</p>
 <p>However, this syntax may look a bit odd if you come from a web development background. On the web, the <code>&lt;label&gt;</code> HTML element doesn’t have a <code>text</code> attribute, so why do we see it here? Let’s dive into this by looking at how NativeScript UI elements work.</p>
 <blockquote>
-<p><strong>NOTE</strong>: Curious about the <code>@Component</code> decorator’s <code>selector</code> property? The property defines how a component can be used within another component’s template. For instance a component that defines its <code>selector</code> with <code>selector: &quot;foo-bar&quot;</code> can be used by another component as <code>template: &quot;&lt;foo-bar&gt;&lt;/foo-bar&gt;&quot;</code>. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the <code>selector</code> property of this first component is irrelevant. We’ll use the <code>selector</code> property later in this guide though.</p>
+<p><strong>NOTE</strong>: Curious about the <code>@Component</code> decorator’s <code>selector</code> property? The property defines how a component can be used within another component’s template. For instance a component that defines its <code>selector</code> with <code>selector: &quot;foo-bar&quot;</code> can be used by another component as <code>template: &quot;&lt;foo-bar&gt;&lt;/foo-bar&gt;&quot;</code>. NativeScript is smart enough to use your first Angular 2 component automatically; therefore, the <code>selector</code> property of this first component is irrelevant.</p>
 </blockquote>
 <h3 id="adding-ui-elements">Adding UI elements</h3>
 <p>The primary difference between building an Angular 2 app for the web and an Angular 2 app with NativeScript is in the UI elements that you use. NativeScript apps do not use a browser and do not have a DOM; therefore, elements like <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> simply do not work.</p>
@@ -379,7 +391,7 @@ export class AppComponent {}
     <b>Exercise</b>: Add a stack layout to the login screen
 </h4>
 
-<p>Open <code>app/app.component.ts</code>, and add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
+<p>Open <code>app/app.component.ts</code> and add a <code>&lt;StackLayout&gt;</code> element within your component’s <code>template</code> property. The full component should now look like this:</p>
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
@@ -396,19 +408,23 @@ export class AppComponent {}
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>The stack layout is a UI element, and as such, it has attributes just like the <code>&lt;TextField&gt;</code> and <code>&lt;Button&gt;</code> elements you used in the previous section. After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
+<p>After your app updates with this change, you&#39;ll see that your login page’s UI elements stack up:</p>
 <p><img src="images/chapter2/ios/2.png" alt="login 2">
 <img src="images/chapter2/android/2.png" alt="login 2"></p>
 <p>Although the UI elements are in the correct order, they could use some spacing and color to make the app look a bit nicer. To do that let&#39;s look at another NativeScript feature: CSS.</p>
 <blockquote>
 <p><strong>TIP</strong>:</p>
 <ul>
-<li>Refer to the NativeScript docs for a <a href="http://docs.nativescript.org/layouts">more detailed look at how NativeScript layouts work</a> and the various things you can do to configure them.</li>
+<li>Refer to the NativeScript docs for <a href="http://docs.nativescript.org/layouts">a discussion on how NativeScript layouts work</a>, and the various attributes you can use to configure them.</li>
 <li>Check out Jen Looper&#39;s article on <a href="https://www.nativescript.org/blog/demystifying-nativescript-layouts">demystifying NativeScript layouts</a> for a more thorough look at NativeScript layouts in action.</li>
 </ul>
 </blockquote>
 <h3 id="global-css">Global CSS</h3>
-<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. You can use three mechanisms to add CSS properties to UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a>, component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
+<p>NativeScript uses a <a href="http://docs.nativescript.org/styling">subset of CSS</a> to change the visual appearance of your app. Why a subset? In NativeScript you’re building native iOS and Android apps, and some CSS properties either aren’t possible to replicate with native iOS and Android APIs, or would incur too great of a performance penalty. Don’t worry though; most common CSS properties are supported, and the CSS language syntax is the same—so styling native apps in NativeScript really does feel like styling web apps.</p>
+<blockquote>
+<p><strong>TIP</strong>: The NativeScript docs have <a href="http://docs.nativescript.org/ui/styling#supported-properties">a full list of the supported CSS properties you can use</a>.</p>
+</blockquote>
+<p>You can use three mechanisms to add CSS properties to NativeScript UI components: <a href="http://docs.nativescript.org/styling#application-wide-css">application-wide CSS</a>, component-specific CSS, and an <a href="http://docs.nativescript.org/styling#inline-css">inline <code>style</code> attribute</a>. In this section we’ll cover application-wide, or global CSS, and in the next section we’ll look at how to apply CSS rules to individual components.</p>
 <blockquote>
 <p><strong>TIP</strong>: Although inline styles are great for quick testing—e.g. <code>&lt;StackLayout style=&quot;background-color: green;&quot;&gt;</code>—you should avoid them in general because the <code>style</code> attributes tend to clutter up your templates, especially if you need to apply multiple rules.</p>
 </blockquote>
@@ -428,9 +444,9 @@ TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs. NativeScript does not support all CSS properties because it is not possible to replicate some of them in native apps without causing performance issues. A <a href="http://docs.nativescript.org/styling#supported-properties">full list of the CSS properties that are supported</a> are listed in the NativeScript docs.</p>
+<p>If you&#39;ve done any web development before, the syntax should feel familiar here. You select two UI components by their tag names (Page and TextField), and then apply a handful of CSS rules as name/value pairs.</p>
 <blockquote>
-<p><strong>NOTE</strong>: In NativeScript, a single <code>&lt;Page&gt;</code> UI element wraps the <code>template</code> of every page-level Angular component, which you’ll learn about when we introduce routing later in this guide. For now, just know that a <code>&lt;Page&gt;</code> exists as the parent of your <code>AppComponent</code>’s template, and that you can target that <code>&lt;Page&gt;</code> with CSS as you would with any other UI element.</p>
+<p><strong>NOTE</strong>: In NativeScript, a single <code>&lt;Page&gt;</code> UI element wraps the <code>template</code> of every page-level Angular component, which you’ll learn about when we introduce routing later in this guide. For now, just know that a <code>&lt;Page&gt;</code> element exists as the parent of your <code>AppComponent</code>’s template, and that you can target that <code>&lt;Page&gt;</code> with CSS as you would with any other UI element.</p>
 </blockquote>
 <p>Although often you want CSS rules to apply equally to your iOS and Android app, occasionally it makes sense to apply a CSS rule to only one platform. For example, iOS text fields frequently have borders around them, but Android text fields do not. Let&#39;s look at how to make platform-specific style changes in NativeScript.</p>
 <h4 class="exercise-start">
@@ -506,10 +522,10 @@ Button, TextField {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>In Angular 2, <code>styleUrls</code> points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code>, and <code>login.css</code>, which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code> using the same naming convention we introduced in the previous section.</p>
+<p>In Angular 2, the <code>styleUrls</code> property points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code> and <code>login.css</code>—the latter of which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code>, using the same naming convention we introduced in the previous section.</p>
 <p>Why three files? Much like you divided your global files into <code>app.css</code>, <code>platform.ios.css</code>, and <code>platform.android.css</code>, this structure gives you a similar ability to place common login styling in <code>login-common.css</code>, iOS-specific login styling <code>login.ios.css</code>, and Android-specific login styling in <code>login.android.css</code>.</p>
 <p>The great thing about placing CSS rules at the component level is you can use concise CSS selectors such as <code>Button</code> and <code>TextField</code>, and not worry about those rules applying to all buttons and text fields in your application, as Angular 2 ensures those rules remain scoped to your component.</p>
-<p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface element, but at the moment there’s no UI element in your app with an <code>id</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
+<p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface elements, but at the moment there’s no UI element in your app with an <code>id</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add an <code>id</code> attribute
 </h4>
@@ -548,7 +564,7 @@ Button, TextField {
 <img src="images/chapter2/android/5.png" alt="login 5"></p>
 <p>At this point your UI looks better visually, but the app still doesn&#39;t actually do anything. Let&#39;s look at how you can use JavaScript to add some functionality.</p>
 <blockquote>
-<p><strong>TIP</strong>: The community-written <a href="http://nsimage.brosteins.com/">NativeScript Image Builder</a> can help you generate images in the appropriate resolutions for iOS and Android.</p>
+<p><strong>TIP</strong>: The community-written <a href="http://nsimage.brosteins.com/">NativeScript Image Builder</a> can help you generate images with the appropriate naming conventions and resolutions for iOS and Android.</p>
 </blockquote>
 
 			</div>

@@ -4,17 +4,19 @@ In this chapter you're going to start with the basics, including installing the 
 
 ### Install NativeScript and configure your environment
 
-The NativeScript CLI has a few system requirements you must have in place before building NativeScript apps. As a first step, start by going through the instructions for your operating system:
+The NativeScript CLI has a few system requirements you must have in place before building NativeScript apps. If you’re new to native mobile development, start with the NativeScript CLI’s quick setup scripts, which automatically install NativeScript and its dependencies on your development machine:
 
-- [Windows](http://docs.nativescript.org/start/ns-setup-win)
-- [OS X](http://docs.nativescript.org/start/ns-setup-os-x)
-- [Linux](http://docs.nativescript.org/start/ns-setup-linux)
+* [Quick setup instructions](http://docs.nativescript.org/start/quick-setup#quick-setup)
 
-> **TIP**:
-> * Completing the installation instructions can be tricky if you’re new to mobile development. If you get stuck, or you have questions at any point while going through this guide, the [NativeScript Community Slack channel](http://developer.telerik.com/wp-login.php?action=slack-invitation) is a great place to ask questions.
-> * If you’re overwhelmed by these requirements, you may also be interested in using NativeScript as part of the [Telerik Platform](http://www.telerik.com/platform). The Telerik Platform provides robust tooling for NativeScript apps, including an IDE that performs iOS and Android builds in the cloud, removing the need to complete these system requirements.
+If you have existing mobile experience, or if you want to control the installation process yourself, refer to the advanced setup instructions for your operating system:
 
-After completing the setup you should have two commands available from your terminal: `tns`—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and `nativescript`. The two commands are equivalent, so we'll stick with the shorter `tns`.
+* [Advanced setup: Windows](http://docs.nativescript.org/start/ns-setup-win#setup)
+* [Advanced setup: OS X](http://docs.nativescript.org/start/ns-setup-os-x#setup)
+* [Advanced setup: Linux](http://docs.nativescript.org/start/ns-setup-linux#setup)
+
+> **TIP**: Regardless of which approach you take, setting up your machine for native development can be tricky. If you get stuck, or if you have questions at any point while going through this guide, the [NativeScript Community Slack channel](http://developer.telerik.com/wp-login.php?action=slack-invitation) is a great place to ask questions.
+
+After completing the setup you should have two commands available from your terminal or command prompt: `tns`—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and `nativescript`. The two commands are equivalent, so we'll stick with the shorter `tns`.
 
 You can verify the installation was successful by running `tns` in your terminal. You should see something like this:
 
@@ -123,7 +125,7 @@ tns run android --emulator
 
 > **WARNING**:
 > * You must have at least one Android AVD (Android Virtual Device) configured for this command to work. If you get an error, try [setting up an AVD](http://developer.telerik.com/featured/using-android-emulator-hybrid-mobile-apps-telerik-appbuilder/#managing-avds) and then run the command again.
-> * If you're using [Genymotion](https://www.genymotion.com), launch your Genymotion virtual device, and then run `tns run android`.
+> * If you're using [Genymotion](https://www.genymotion.com), launch your Genymotion virtual device first, and then run `tns run android` to deploy your app.
 
 If all went well, you should see your app running in an Android emulator:
 
@@ -155,19 +157,39 @@ tns livesync ios --emulator --watch
 ```
 -->
 
-If you have an Android emulator running, start an Android livesync watcher by executing the following command:
+If you have your app running on an Android emulator, start an Android livesync watcher by executing the following command:
 
 ```
 tns livesync android --emulator --watch
+```
+
+If you instead have your app running on a USB-connected Android device or Genymotion virtual device, run the same command without the `--emulator` flag:
+
+```
+tns livesync android --watch
 ```
 
 The `tns livesync` command updates your app by transferring the updated source code to the device or simulator. By adding the `--watch` flag, the `livesync` command additionally watches the files in your NativeScript project. Whenever one of those files changes, the command detects the update, and patches your app with the updated code.
 
 > **TIP**: You can learn about how this is possible by reading more about [how NativeScript works](http://developer.telerik.com/featured/nativescript-works/).
 
-To see livesync in action let’s make a small update to your app. Open your project’s `app/app.component.ts` file in your text editor of choice and change `<Label text='hello world'></Label>` to `<Label text='hello NativeScript'></Label>`. Save the file and you should see the app relaunch and the updated text displayed.
+To see livesync in action let’s make a small update to your app. Open your project’s `app/app.component.ts` file in your text editor of choice, and replace the file’s contents with the code below, which updates the label’s text:
 
-If you’re on a Mac building for iOS, the workflow is currently a bit different, as the `tns livesync ios` command is not yet supported. (See the [known issues](#chapter8.0) for details.) To see the updated text, type `Ctrl+C` to kill your previous `tns run ios` command, and then re-execute `tns run ios --emulator` to launch the app with your changes.
+``` TypeScript
+import {Component} from "angular2/core";
+
+@Component({
+  selector: "my-app",
+  template: "<Label text='hello NativeScript'></Label>"
+})
+export class AppComponent {}
+```
+
+Save `app/app.component.ts` and you should see the app relaunch and the updated text displayed.
+
+![Updated Android text](images/chapter1/android/2.png)
+
+If you’re on a Mac building for iOS, the workflow is currently a bit different, as the `tns livesync ios` command is not yet supported. (See the [known issues](#chapter8.0) for details.) To see the updated text on iOS, type `Ctrl+C` to kill your previous `tns run ios` command, and then re-execute `tns run ios --emulator` to launch the app with your changes.
 
 <div class="exercise-end"></div> 
 
@@ -189,6 +211,6 @@ E/TNS.Native( 2063): File: "/data/data/org.nativescript.groceries/files/app/./vi
 
 > **TIP**: When you're trying to debug a problem, try adding `console.log()` statements in your JavaScript code—exactly as you would in a browser-based application.
 
-> **WARNING**: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (`Info.plist`, `AndroidManifest.xml`, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use `Ctrl+C` to stop livesync, and rerun the application using the `tns run android` commands. Not to worry though, when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.
+> **WARNING**: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (`Info.plist`, `AndroidManifest.xml`, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use `Ctrl+C` to stop livesync, and rerun the application using the `tns run android` command. Don’t worry though; when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.
 
 Now that you've created an app, configured your environment, and set up your app to run on iOS and Android, you're ready to start digging into the files that make up a NativeScript app.

@@ -151,6 +151,8 @@ There are many reasons to segment any application into modular units, and you ca
 
 Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you _do_ have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.
 
+> **NOTE**: To show that sharing code between native and web projects is possible, and not theoretical, feel free to peruse [our web implementation of Groceries](https://github.com/tjvantoll/Groceries), which uses the exact same `shared` folder this guide’s native implementation does.
+
 To see how this works in action, let’s edit some files in the `shared` folder and set them up to be imported.
 
 <h4 class="exercise-start">
@@ -358,7 +360,7 @@ The short answer is a dependency-injection-based approach to coding keeps your c
 > **NOTE**: If you’re looking to learn more about Angular 2’s `providers` array and dependency injection implementation, the [thoughtram blog](http://blog.thoughtram.io/) has a great 3-part series that covers the topic in more detail than this guide.
   * [Part 1—Dependency Injection](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
   * [Part 2—Host and Visibility](http://blog.thoughtram.io/angular/2015/08/20/host-and-visibility-in-angular-2-dependency-injection.html)
-  * [Part 3—Multi Providers](http://blog.thoughtram.io/angular2/2015/11/23/multi-providers-in-angular-2.html).
+  * [Part 3—Multi Providers](http://blog.thoughtram.io/angular2/2015/11/23/multi-providers-in-angular-2.html)
 
 Let’s return to our example and make the registration process actually work.
 
@@ -444,9 +446,9 @@ this._userService.register(this.user)
   );
 ```
 
-> **NOTE**: The `() => {}` syntax defines an [ES2015 arrow function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), which TypeScript supports out of the box. In this example, the arrow functions are the equivalent of writing `function() {}`.
+> **NOTE**: The `() => {}` syntax defines an [ES2015 arrow function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), which TypeScript supports out of the box. In this example, the arrow functions are the equivalent of writing `function() {}`. Arrow functions have the advantage of inheriting their context—aka `this`—from their parents. Note how the code above is able to call `this.toggleDisplay()` from an inner function, which would not work with a generic JavaScript `function() {}`.
 
-The two functions you provide are success and failure handlers. If The call to `register()` succeeds, your first alert will fire, and if the call to `register()` fails, your second alert will fire. Now that your service code is setup and ready to go, let’s create make the final few changes and create an account.
+The two functions you pass `subscribe()` are success and failure handlers. If the call to `register()` succeeds, your first alert will fire, and if the call to `register()` fails, your second alert will fire. Now that your service code is setup and ready to go, let’s create make the final few changes and create an account.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Create an account
@@ -466,7 +468,7 @@ providers: [UserService, HTTP_PROVIDERS],
 
 At this point you should be ready to create an account to verify this whole setup worked.
 
-After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password (fake credentials are fine, just make up something you can remember), and then click the orange “Sign Up” button.
+After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password—fake credentials are fine, just make up something you can remember—and then click the orange “Sign Up” button.
 
 <div class="exercise-end"></div>
 
@@ -475,7 +477,7 @@ If all went well, you should see a confirmation dialog that looks like this:
 ![Alert on Android](images/chapter3/android/6.png)
 ![Alert on iOS](images/chapter3/ios/6.png)
 
-> **TIP**:  After creating your account, you may wish to hardcore your credentials in your `AppComponent`’s `constructor` to make development faster for the rest of this guide.
+> **TIP**:  After creating your account, you may wish to hardcode your credentials in your `AppComponent`’s `constructor()` to make development faster for the rest of this guide.
 > ``` TypeScript
 constructor(private _userService: UserService) {
   this.user = new User();

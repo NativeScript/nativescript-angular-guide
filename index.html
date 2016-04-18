@@ -676,6 +676,9 @@ Button, TextField {
 <h3 id="structuring-your-app">Structuring your app</h3>
 <p>There are many reasons to segment any application into modular units, and you can <a href="https://en.wikipedia.org/wiki/Modular_programming">read about the various benefits on Wikipedia</a>. Modularizing NativeScript has one additional, unique benefit: the ability to share the code you write between Angular-2-built web apps, and Angular-2-built native apps.</p>
 <p>Even if you have no plans to create an Angular 2 web app, separating out your code is still advantageous for a number of other reasons—testability, ease of maintenance, and so forth—but if you <em>do</em> have plans to build an Angular 2 web app, having a chunk of functionality that you can reuse in your native and web apps can be an invaluable time saver.</p>
+<blockquote>
+<p><strong>NOTE</strong>: To show that sharing code between native and web projects is possible, and not theoretical, feel free to peruse <a href="https://github.com/tjvantoll/Groceries">our web implementation of Groceries</a>, which uses the exact same <code>shared</code> folder this guide’s native implementation does.</p>
+</blockquote>
 <p>To see how this works in action, let’s edit some files in the <code>shared</code> folder and set them up to be imported.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a model object
@@ -835,7 +838,7 @@ signUp() {
 <ul>
 <li><a href="http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html">Part 1—Dependency Injection</a></li>
 <li><a href="http://blog.thoughtram.io/angular/2015/08/20/host-and-visibility-in-angular-2-dependency-injection.html">Part 2—Host and Visibility</a></li>
-<li><a href="http://blog.thoughtram.io/angular2/2015/11/23/multi-providers-in-angular-2.html">Part 3—Multi Providers</a>.</li>
+<li><a href="http://blog.thoughtram.io/angular2/2015/11/23/multi-providers-in-angular-2.html">Part 3—Multi Providers</a></li>
 </ul>
 </blockquote>
 <p>Let’s return to our example and make the registration process actually work.</p>
@@ -910,9 +913,9 @@ export class UserService {
   );
 </code></pre>
 <blockquote>
-<p><strong>NOTE</strong>: The <code>() =&gt; {}</code> syntax defines an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">ES2015 arrow function</a>, which TypeScript supports out of the box. In this example, the arrow functions are the equivalent of writing <code>function() {}</code>.</p>
+<p><strong>NOTE</strong>: The <code>() =&gt; {}</code> syntax defines an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">ES2015 arrow function</a>, which TypeScript supports out of the box. In this example, the arrow functions are the equivalent of writing <code>function() {}</code>. Arrow functions have the advantage of inheriting their context—aka <code>this</code>—from their parents. Note how the code above is able to call <code>this.toggleDisplay()</code> from an inner function, which would not work with a generic JavaScript <code>function() {}</code>.</p>
 </blockquote>
-<p>The two functions you provide are success and failure handlers. If The call to <code>register()</code> succeeds, your first alert will fire, and if the call to <code>register()</code> fails, your second alert will fire. Now that your service code is setup and ready to go, let’s create make the final few changes and create an account.</p>
+<p>The two functions you pass <code>subscribe()</code> are success and failure handlers. If the call to <code>register()</code> succeeds, your first alert will fire, and if the call to <code>register()</code> fails, your second alert will fire. Now that your service code is setup and ready to go, let’s create make the final few changes and create an account.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Create an account
 </h4>
@@ -924,14 +927,14 @@ export class UserService {
 <pre><code class="lang-TypeScript">providers: [UserService, HTTP_PROVIDERS],
 </code></pre>
 <p>At this point you should be ready to create an account to verify this whole setup worked.</p>
-<p>After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password (fake credentials are fine, just make up something you can remember), and then click the orange “Sign Up” button.</p>
+<p>After the provider changes have livesync’d, click the “Sign Up” button in your app, type in an email address and password—fake credentials are fine, just make up something you can remember—and then click the orange “Sign Up” button.</p>
 <div class="exercise-end"></div>
 
 <p>If all went well, you should see a confirmation dialog that looks like this:</p>
 <p><img src="images/chapter3/android/6.png" alt="Alert on Android">
 <img src="images/chapter3/ios/6.png" alt="Alert on iOS"></p>
 <blockquote>
-<p><strong>TIP</strong>:  After creating your account, you may wish to hardcore your credentials in your <code>AppComponent</code>’s <code>constructor</code> to make development faster for the rest of this guide.</p>
+<p><strong>TIP</strong>:  After creating your account, you may wish to hardcode your credentials in your <code>AppComponent</code>’s <code>constructor()</code> to make development faster for the rest of this guide.</p>
 <pre><code class="lang-TypeScript">constructor(private _userService: UserService) {
   this.user = new User();
   this.user.email = &quot;user@nativescript.org&quot;;

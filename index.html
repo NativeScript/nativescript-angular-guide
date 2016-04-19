@@ -1341,7 +1341,7 @@ JS: STACKTRACE:
 JS: Error: DI Exception
 JS:     at NoProviderError.BaseException [as constructor] (/data/data/org.nativescript.groceries/files/app/tns_modules/angular2/src/facade/exceptions.js:16:23)
 JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/org.nativescript.groceries/files/app/tns_modules/angular2/src/core/di/exceptions.js:38:16)
-</code></pre><p>The problem here is your new <code>GroceryListService</code> uses the <code>Http</code> service, but that <code>Http</code> service is never included in your component’s <code>providers</code> array. You could add <code>HTTP_PROVIDERS</code> to this array, as you did in <code>login.component.ts</code>, but it seems a little silly to add <code>HTTP_PROVIDERS</code> to every page that you build. And as it turns out, Angular 2 providers a simpler way of handling this, by allowing you to add common providers to parent components.</p>
+</code></pre><p>The problem here is your new <code>GroceryListService</code> uses the <code>Http</code> service, but that <code>Http</code> service is never included in your component’s <code>providers</code> array. You could add <code>HTTP_PROVIDERS</code> to this array, as you did in <code>login.component.ts</code>, but it seems a little silly to add <code>HTTP_PROVIDERS</code> to every page that you build. And as it turns out, Angular 2 has a simpler way of handling this, by allowing you to add common providers to parent components.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Declaring providers
 </h4>
@@ -1366,7 +1366,7 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 <p>If you load the list page with the account you created earlier you’ll see a blank page, as your account is newly created, and therefore your grocery list is empty. If you want to see some data to verify your changes worked, try logging in with the credentials “user@nativescript.org” and “password”. You should some data that looks something like this:</p>
 <p><img src="images/chapter4/android/4.png" alt="Grocery data on Android">
 <img src="images/chapter4/ios/4.png" alt="Grocery data on iOS"></p>
-<p>At this point you have a list of data associated with each account that you display in a list view control, but a grocery list isn’t very useful if you can’t add to the list. Let’s look at how to do that next.</p>
+<p>At this point you have a list of data associated with each account, but a grocery list isn’t very useful if you can’t add new groceries to the list. Let’s look at how to do that next.</p>
 <h3 id="gridlayout">GridLayout</h3>
 <p>In order to allow users to add to their grocery lists you need to add a few additional UI controls to the list page. While you could layout these elements with a <code>&lt;StackLayout&gt;</code>, let’s look at how to create a slightly more complex layout using the <code>&lt;GridLayout&gt;</code> element.</p>
 <h4 class="exercise-start">

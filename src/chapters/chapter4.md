@@ -354,7 +354,7 @@ JS:     at NoProviderError.BaseException [as constructor] (/data/data/org.native
 JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/org.nativescript.groceries/files/app/tns_modules/angular2/src/core/di/exceptions.js:38:16)
 ```
 
-The problem here is your new `GroceryListService` uses the `Http` service, but that `Http` service is never included in your component’s `providers` array. You could add `HTTP_PROVIDERS` to this array, as you did in `login.component.ts`, but it seems a little silly to add `HTTP_PROVIDERS` to every page that you build. And as it turns out, Angular 2 providers a simpler way of handling this, by allowing you to add common providers to parent components.
+The problem here is your new `GroceryListService` uses the `Http` service, but that `Http` service is never included in your component’s `providers` array. You could add `HTTP_PROVIDERS` to this array, as you did in `login.component.ts`, but it seems a little silly to add `HTTP_PROVIDERS` to every page that you build. And as it turns out, Angular 2 has a simpler way of handling this, by allowing you to add common providers to parent components.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Declaring providers
@@ -395,7 +395,7 @@ If you load the list page with the account you created earlier you’ll see a bl
 ![Grocery data on Android](images/chapter4/android/4.png)
 ![Grocery data on iOS](images/chapter4/ios/4.png)
 
-At this point you have a list of data associated with each account that you display in a list view control, but a grocery list isn’t very useful if you can’t add to the list. Let’s look at how to do that next.
+At this point you have a list of data associated with each account, but a grocery list isn’t very useful if you can’t add new groceries to the list. Let’s look at how to do that next.
 
 ### GridLayout
 

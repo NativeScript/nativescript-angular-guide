@@ -1568,7 +1568,7 @@ import {topmost} from &quot;ui/frame&quot;;
 <img src="images/chapter4/ios/8.gif" alt="Loading animation on iOS"></p>
 <p>Now that you have functional login and list pages, let’s enhance the app’s functionality as a grocery list management tool. In the next chapters you&#39;ll add functionality such as email validation, social sharing, and more. And you’ll use one of NativeScript&#39;s most useful features to do so: npm modules.</p>
 <blockquote>
-<p><strong>TIP</strong>: There are several modules that come out of the box with your NativeScript installation that we did not have time to cover in this guide—including a <a href="https://docs.nativescript.org/ApiReference/location/HOW-TO">location service</a>, a <a href="https://docs.nativescript.org/ApiReference/file-system/HOW-TO">file-system helper</a>, a <a href="https://docs.nativescript.org/ApiReference/timer/HOW-TO">timer module</a>, a <a href="https://docs.nativescript.org/ApiReference/camera/HOW-TO">camera module</a>, and a whole lot more. Make sure to peruse the “Modules API” of the docs, or just look around <code>node_modules/tns-core-modules</code> to see all of what’s available.</p>
+<p><strong>TIP</strong>: There are several modules that come out of the box with your NativeScript installation that we did not have time to cover in this guide—including a <a href="https://docs.nativescript.org/ApiReference/location/HOW-TO">location service</a>, a <a href="https://docs.nativescript.org/ApiReference/file-system/HOW-TO">file-system helper</a>, a <a href="https://docs.nativescript.org/ApiReference/timer/HOW-TO">timer module</a>, a <a href="https://docs.nativescript.org/ApiReference/camera/HOW-TO">camera module</a>, and a whole lot more. Make sure to peruse the “Modules API” of the NativeScript documentation, or just look around your <code>node_modules/tns-core-modules</code> folder to see all of what’s available.</p>
 </blockquote>
 
 			</div>
@@ -1637,7 +1637,7 @@ export class User {
     <b>Exercise</b>: Rebuild your app
 </h4>
 
-<p>As we mentioned in chapter 1.4, although the <code>tns livesync</code> command is smart enough to reload your app for most changes you make to your app, the command cannot hot reload your app for all changes—most notably, changes to native files in <code>app/App_Resources</code>, new modules installed with <code>npm install</code>, and new NativeScript plugins.</p>
+<p>As we mentioned in chapter 1.4, although the <code>tns livesync</code> command is smart enough to reload your app for most changes you make to your app, certain changes require a full build—most notably, changes to native files in <code>app/App_Resources</code>, new modules installed with <code>npm install</code>, and new NativeScript plugins.</p>
 <p>For NativeScript to recognize this new email-validator npm module, type <code>Ctrl+C</code> in your terminal to kill the existing <code>tns livesync</code> watcher if it’s still running, and then use <code>tns run</code> to rebuild your application and deploy it to an emulator or device.</p>
 <pre><code>tns run ios --emulator
 </code></pre><p>Or</p>
@@ -1711,13 +1711,13 @@ export class User {
 <img src="images/chapter5/ios/2.gif" alt="Social sharing on iOS"></p>
 <p>Pretty cool, huh? The ability to use npm modules greatly expands the number of things you&#39;re able to do in a NativeScript app. Need to compose emails in your app? Try out the <a href="https://www.npmjs.com/package/nativescript-email">NativeScript email plugin</a>. Need to use the clipboard in your app? Try out the <a href="https://www.npmjs.com/package/nativescript-clipboard">NativeScript clipboard plugin</a>.</p>
 <p>If you&#39;re looking for NativeScript plugins start by searching both the <a href="http://plugins.telerik.com/nativescript">Telerik NativeScript Plugins Marketplace</a> and our <a href="http://plugins.nativescript.rocks">community-curated list of plugins on npm</a>. If you don&#39;t find the plugin you need, you can <a href="https://nativescript.ideas.aha.io/">request the plugin on our ideas portal</a>, or you can take a stab at <a href="https://docs.nativescript.org/plugins">creating the plugin yourself</a>.</p>
-<p>Between NativeScript modules, npm modules, and NativeScript plugins, the NativeScript framework provides a lot of functionality you can use to build your next app. However, we&#39;ve yet to talk about NativeScript&#39;s most powerful feature: the ability to directly access iOS and Android APIs in JavaScript. Let&#39;s look at how it works.</p>
+<p>Between NativeScript modules, npm modules, and NativeScript plugins, the NativeScript framework provides a lot of functionality you can use to build your next app. However, we&#39;ve yet to talk about NativeScript&#39;s most powerful feature: the ability to directly access iOS and Android APIs in TypeScript. Let&#39;s look at how it works.</p>
 
 			</div>
 			<div class="chapter">
 				<h2 id="accessing-native-apis">Accessing native APIs</h2>
-<p>The beauty of NativeScript is that you can write a native iOS or Android app in JavaScript, XML, and CSS without touching Swift, Objective-C, or Java, if you choose. But what if you want to present a different, more platform-specific UI to your users? Or if you want to access an iOS or Android API that NativeScript doesn&#39;t expose through a NativeScript module or plugin?</p>
-<p>NativeScript gives you the option to dig into native code as needed, and to do so without leaving JavaScript. To show how this works in action, let&#39;s tweak a few of the UI elements in your app using native code.</p>
+<p>The beauty of NativeScript is that you can write a native iOS or Android app in TypeScript, XML, and CSS without touching Swift, Objective-C, or Java, if you choose. But what if you want to present a different, more platform-specific UI to your users? Or if you want to access an iOS or Android API that NativeScript doesn&#39;t expose through a NativeScript module or plugin?</p>
+<p>NativeScript gives you the option to dig into native code as needed, and to do so without leaving TypeScript. To show how this works in action, let&#39;s tweak a few of the UI elements in your app using native code.</p>
 <h3 id="accessing-ios-apis">Accessing iOS APIs</h3>
 <p>You may recall from earlier chapters that the hint color on your sign up screen could use a little more contrast. Notice the unappealing black on brown color of the text in the images below (if you can see the text at all).</p>
 <p><img src="images/chapter6/android/1.png" alt="Bad contrast on Android">
@@ -1745,7 +1745,7 @@ export function setHintColor(args: { view: TextField, color: Color }) {
     args.view.hint, dictionary);
 }
 </code></pre>
-<p>This creates a function called <code>setHintColor()</code> that accepts a <code>&lt;TextField&gt;</code> and <code>Color</code>. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.</p>
+<p>This code creates a function called <code>setHintColor()</code> that accepts a <code>&lt;TextField&gt;</code> and <code>Color</code>. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.</p>
 <p>Open up <code>app/pages/login/login.component.ts</code> and add the following two imports to the top of the file:</p>
 <pre><code class="lang-TypeScript">import {setHintColor} from &quot;../../utils/hint-util&quot;;
 import {TextField} from &quot;ui/text-field&quot;;
@@ -1781,7 +1781,7 @@ args.view.ios.attributedPlaceholder = NSAttributedString.alloc().initWithStringA
 </code></pre>
 <p>By convention, NativeScript controls make their iOS and Android native implementations available via <code>ios</code> and <code>android</code> properties, respectively. In this code that means that <code>args.color.ios</code> resolves to a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIColor_Class/"><code>UIColor</code></a>, and <code>args.view.ios</code> resolves to a <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITextField_Class/"><code>UITextField</code></a>. Once you have a reference to these controls you can set native properties on them directly in TypeScript, which this code does with the <code>UITextField</code>’s <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITextField_Class/#//apple_ref/occ/instp/UITextField/attributedPlaceholder"><code>attributedPlaceholder</code> property</a>.</p>
 <p>The power with NativeScript is you can perform these customizations in TypeScript—there’s no need to jump into Xcode and write Objective-C or Swift. And this doesn’t apply just to attributes. Notice the global <code>NSDictionary</code>, <code>NSAttributedString</code>, and <code>NSForegroundColorAttributeName</code> attributes. In NativeScript, all iOS and Android APIs are globally available to use—again, directly in TypeScript code.</p>
-<p>Admittedly, this code can seem a bit arcane if you’ve never written an iOS app before, but the key here is that you’re never limited by the APIs that NativeScript provides out of the box. Most of the time you’ll be able to solve problems using the NativeScript module APIs, but if you hit a scenario your app needs that NativeScript doesn’t provide a module for, you can always hit the native APIs directly.</p>
+<p>Admittedly, this code can seem a bit arcane if you’ve never written an iOS app before, but the key here is that you’re never limited by the APIs that NativeScript provides out of the box. Most of the time you’ll be able to solve problems using the NativeScript module APIs or NativeScript plugins, but if you hit a scenario your app needs that NativeScript doesn’t provide a module for, you can always hit the native APIs directly.</p>
 <blockquote>
 <p><strong>TIP</strong>:</p>
 <ul>
@@ -1834,7 +1834,7 @@ export function setHintColor(args: { view: TextField, color: Color }) {
     <b>Exercise</b>: Making translucent status bars
 </h4>
 
-<p>Sometimes accomplishing tasks with native code is simple, as it was with setting hint text on Android, and sometimes it takes a little more work. Because setting a status bar’s appearance is slightly more involved, the code has been prepopulated in <code>app/utils/status-bar-util.ts</code>. There are a few comments the link to detailed information on the techniques used, if you’re curious about how it all works.</p>
+<p>Sometimes accomplishing tasks with native code is simple, as it was with setting hint text on Android, and sometimes it takes a little more work. Because setting a status bar’s appearance is slightly more involved, the code has been prepopulated in <code>app/utils/status-bar-util.ts</code>. There are a few comments that link to detailed information on the techniques used, if you’re curious about how it all works.</p>
 <p>Because this code changes the appearance of the status bar, we’ll want to call this method as soon as possible, so that the status bar doesn’t awkwardly update after the app has already loaded. Therefore to use this new utility, open <code>app/main.ts</code> and replace the contents of the file with the following code, which calls a new <code>setStatusBarColors()</code> before the app is bootstrapped.</p>
 <pre><code class="lang-TypeScript">import {nativeScriptBootstrap} from &quot;nativescript-angular/application&quot;;
 import {AppComponent} from &quot;./app.component&quot;;
@@ -1843,7 +1843,7 @@ import {setStatusBarColors} from &quot;./utils/status-bar-util&quot;;
 setStatusBarColors();
 nativeScriptBootstrap(AppComponent);
 </code></pre>
-<p>Finally, there are a few last CSS tweaks you to make to account for the now translucent status bars. On iOS a translucent status bar continues to take up space open, so you need to adjust the content of the page to sit on top of the status bar’s location. To do so, open <code>app/platform.ios.css</code> and paste in the following code:</p>
+<p>Finally, there are a few last CSS tweaks you to make to account for the now translucent status bars. On iOS a translucent status bar continues to take up space, so you need to adjust the content of the page to sit on top of the status bar’s location. To do so, open <code>app/platform.ios.css</code> and paste in the following code:</p>
 <pre><code class="lang-CSS">Page {
   margin-top: -20;
 }
@@ -1870,7 +1870,7 @@ nativeScriptBootstrap(AppComponent);
 </h4>
 
 <p>As cool as Groceries is, it’s currently missing one crucial feature for a grocery management app: the ability to delete groceries from the list.</p>
-<p>The Groceries backend already supports deleting, but it’s up to you to implement the feature in the app. You do get two hints though. First, this is a function you can use in the <code>GroceryListService</code> for performing the necessary HTTP call to delete a grocery:</p>
+<p>The Groceries backend already supports deleting, but it’s up to you to implement the feature in the app. You do get two hints though. First, below is a function you can use in the <code>GroceryListService</code> for performing the necessary HTTP call to delete a grocery:</p>
 <pre><code class="lang-TypeScript">delete(id: string) {
   let headers = new Headers();
   headers.append(&quot;Authorization&quot;, &quot;Bearer &quot; + Config.token);
@@ -1887,13 +1887,13 @@ nativeScriptBootstrap(AppComponent);
 <p>Second, here’s an image you can use in your template for users to tap to delete items. One note though: the image is a white “X”, so you’ll have to find a way to create a non-white background in order to see the image.</p>
 <pre><code class="lang-XML">&lt;Image src=&quot;res://delete&quot;&gt;&lt;/Image&gt;
 </code></pre>
-<p>If you get stuck the Groceries app’s <a href="https://github.com/NativeScript/sample-Groceries/tree/angular-end">“angular-end” branch</a> has a solution you can check.</p>
+<p>If you get stuck, the Groceries app’s <a href="https://github.com/NativeScript/sample-Groceries/tree/angular-end">“angular-end” branch</a> has a solution you can check.</p>
 <div class="exercise-end"></div>
 
 			</div>
 			<div class="chapter">
 				<h2 id="next-steps">Next steps</h2>
-<p>Sadly our tutorial is now complete, but your journey with NativeScript is just beginning. Let’s look at the next steps you can take to build your next app with NativeScript.</p>
+<p>Sadly our tutorial is now complete, but your journey with NativeScript is just beginning. Let’s look at the some steps you can take to build your next app with NativeScript.</p>
 <h3 id="join-the-nativescript-community">Join the NativeScript community</h3>
 <p>Regardless of what you choose to do next with NativeScript, joining the NativeScript community is a great way to keep up with the latest and greatest in the NativeScript world. Here are some ways you can get involved:</p>
 <ul>
@@ -1916,7 +1916,7 @@ nativeScriptBootstrap(AppComponent);
 <li>The NativeScript team provides a series of <a href="https://www.nativescript.org/app-samples-with-code">real-world app samples</a> that are all open source on GitHub. These samples are great to reference as you’re developing your application.</li>
 <li>The <a href="https://www.nativescript.org/resources">NativeScript resources page</a> lists further NativeScript learning material, such as training, books, and screencasts.</li>
 <li><a href="http://www.nativescriptsnacks.com/">NativeScript Snacks</a> is a collection of bite-sized video tutorials—perfect for learning how a NativeScript concept works quickly.</li>
-<li>This NativeScript documentation site has detailed guides on topics that were out of scope for this guide, including <a href="http://docs.nativescript.org/core-concepts/testing">unit testing</a>, <a href="http://docs.nativescript.org/core-concepts/debugging">debugging</a>, <a href="http://docs.nativescript.org/core-concepts/transpilers">transpiling Babel or TypeScript code</a>, and <a href="http://docs.nativescript.org/core-concepts/publishing-ios-apps">publishing to the iOS App Store</a> and <a href="http://docs.nativescript.org/core-concepts/publishing-android-apps">Google Play</a>.</li>
+<li>The NativeScript documentation site has detailed guides on topics that were out of scope for this guide, including <a href="http://docs.nativescript.org/core-concepts/testing">unit testing</a>, <a href="http://docs.nativescript.org/core-concepts/debugging">debugging</a>, <a href="http://docs.nativescript.org/core-concepts/transpilers">transpiling Babel or TypeScript code</a>, and <a href="http://docs.nativescript.org/core-concepts/publishing-ios-apps">publishing to the iOS App Store</a> and <a href="http://docs.nativescript.org/core-concepts/publishing-android-apps">Google Play</a>.</li>
 </ul>
 <h3 id="let-us-know-what-you-think">Let us know what you think</h3>
 <p>Finally, we’d love if you could take a minute to tell us what you thought about the this guide. Your feedback helps us make this tutorial better.</p>

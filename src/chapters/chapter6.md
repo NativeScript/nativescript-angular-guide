@@ -1,8 +1,8 @@
 ## Accessing native APIs
 
-The beauty of NativeScript is that you can write a native iOS or Android app in JavaScript, XML, and CSS without touching Swift, Objective-C, or Java, if you choose. But what if you want to present a different, more platform-specific UI to your users? Or if you want to access an iOS or Android API that NativeScript doesn't expose through a NativeScript module or plugin?
+The beauty of NativeScript is that you can write a native iOS or Android app in TypeScript, XML, and CSS without touching Swift, Objective-C, or Java, if you choose. But what if you want to present a different, more platform-specific UI to your users? Or if you want to access an iOS or Android API that NativeScript doesn't expose through a NativeScript module or plugin?
 
-NativeScript gives you the option to dig into native code as needed, and to do so without leaving JavaScript. To show how this works in action, let's tweak a few of the UI elements in your app using native code.
+NativeScript gives you the option to dig into native code as needed, and to do so without leaving TypeScript. To show how this works in action, let's tweak a few of the UI elements in your app using native code.
 
 ### Accessing iOS APIs
 
@@ -39,7 +39,7 @@ export function setHintColor(args: { view: TextField, color: Color }) {
 }
 ```
 
-This creates a function called `setHintColor()` that accepts a `<TextField>` and `Color`. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.
+This code creates a function called `setHintColor()` that accepts a `<TextField>` and `Color`. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.
 
 Open up `app/pages/login/login.component.ts` and add the following two imports to the top of the file:
 
@@ -92,7 +92,7 @@ By convention, NativeScript controls make their iOS and Android native implement
 
 The power with NativeScript is you can perform these customizations in TypeScript—there’s no need to jump into Xcode and write Objective-C or Swift. And this doesn’t apply just to attributes. Notice the global `NSDictionary`, `NSAttributedString`, and `NSForegroundColorAttributeName` attributes. In NativeScript, all iOS and Android APIs are globally available to use—again, directly in TypeScript code.
 
-Admittedly, this code can seem a bit arcane if you’ve never written an iOS app before, but the key here is that you’re never limited by the APIs that NativeScript provides out of the box. Most of the time you’ll be able to solve problems using the NativeScript module APIs, but if you hit a scenario your app needs that NativeScript doesn’t provide a module for, you can always hit the native APIs directly.
+Admittedly, this code can seem a bit arcane if you’ve never written an iOS app before, but the key here is that you’re never limited by the APIs that NativeScript provides out of the box. Most of the time you’ll be able to solve problems using the NativeScript module APIs or NativeScript plugins, but if you hit a scenario your app needs that NativeScript doesn’t provide a module for, you can always hit the native APIs directly.
 
 > **TIP**:
 > * NativeScript provides TypeScript declaration files (`.d.ts` files) for all iOS and Android APIs. You can download the files using the links below. One word of warning though: because the declaration files include the entirety of the iOS and Android SDKs, they’re quite large, and can slow TypeScript builds to a crawl because of their sheer size. Nevertheless, the files can be invaluable during development, as they make accessing native APIs a whole lot easier.
@@ -153,7 +153,7 @@ At the time of this writing, NativeScript does not expose a way to make transluc
     <b>Exercise</b>: Making translucent status bars
 </h4>
 
-Sometimes accomplishing tasks with native code is simple, as it was with setting hint text on Android, and sometimes it takes a little more work. Because setting a status bar’s appearance is slightly more involved, the code has been prepopulated in `app/utils/status-bar-util.ts`. There are a few comments the link to detailed information on the techniques used, if you’re curious about how it all works.
+Sometimes accomplishing tasks with native code is simple, as it was with setting hint text on Android, and sometimes it takes a little more work. Because setting a status bar’s appearance is slightly more involved, the code has been prepopulated in `app/utils/status-bar-util.ts`. There are a few comments that link to detailed information on the techniques used, if you’re curious about how it all works.
 
 Because this code changes the appearance of the status bar, we’ll want to call this method as soon as possible, so that the status bar doesn’t awkwardly update after the app has already loaded. Therefore to use this new utility, open `app/main.ts` and replace the contents of the file with the following code, which calls a new `setStatusBarColors()` before the app is bootstrapped.
 
@@ -166,7 +166,7 @@ setStatusBarColors();
 nativeScriptBootstrap(AppComponent);
 ```
 
-Finally, there are a few last CSS tweaks you to make to account for the now translucent status bars. On iOS a translucent status bar continues to take up space open, so you need to adjust the content of the page to sit on top of the status bar’s location. To do so, open `app/platform.ios.css` and paste in the following code:
+Finally, there are a few last CSS tweaks you to make to account for the now translucent status bars. On iOS a translucent status bar continues to take up space, so you need to adjust the content of the page to sit on top of the status bar’s location. To do so, open `app/platform.ios.css` and paste in the following code:
 
 ``` CSS
 Page {
@@ -207,7 +207,7 @@ Congratulations! Feel free to [share your accomplishment on Twitter](https://twi
 
 As cool as Groceries is, it’s currently missing one crucial feature for a grocery management app: the ability to delete groceries from the list.
 
-The Groceries backend already supports deleting, but it’s up to you to implement the feature in the app. You do get two hints though. First, this is a function you can use in the `GroceryListService` for performing the necessary HTTP call to delete a grocery:
+The Groceries backend already supports deleting, but it’s up to you to implement the feature in the app. You do get two hints though. First, below is a function you can use in the `GroceryListService` for performing the necessary HTTP call to delete a grocery:
 
 ``` TypeScript
 delete(id: string) {
@@ -230,6 +230,6 @@ Second, here’s an image you can use in your template for users to tap to delet
 <Image src="res://delete"></Image>
 ```
 
-If you get stuck the Groceries app’s [“angular-end” branch](https://github.com/NativeScript/sample-Groceries/tree/angular-end) has a solution you can check.
+If you get stuck, the Groceries app’s [“angular-end” branch](https://github.com/NativeScript/sample-Groceries/tree/angular-end) has a solution you can check.
 
 <div class="exercise-end"></div>

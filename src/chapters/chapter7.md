@@ -1,6 +1,6 @@
 ## Next steps
 
-Sadly our tutorial is now complete, but your journey with NativeScript is just beginning. Let’s look at the next steps you can take to build your next app with NativeScript.
+Sadly our tutorial is now complete, but your journey with NativeScript is just beginning. Let’s look at the some steps you can take to build your next app with NativeScript.
 
 ### Join the NativeScript community
 
@@ -35,7 +35,7 @@ There are a variety of NativeScript learning materials that go above and beyond 
 - The NativeScript team provides a series of [real-world app samples](https://www.nativescript.org/app-samples-with-code) that are all open source on GitHub. These samples are great to reference as you’re developing your application.
 - The [NativeScript resources page](https://www.nativescript.org/resources) lists further NativeScript learning material, such as training, books, and screencasts.
 - [NativeScript Snacks](http://www.nativescriptsnacks.com/) is a collection of bite-sized video tutorials—perfect for learning how a NativeScript concept works quickly.
-- This NativeScript documentation site has detailed guides on topics that were out of scope for this guide, including [unit testing](http://docs.nativescript.org/core-concepts/testing), [debugging](http://docs.nativescript.org/core-concepts/debugging), [transpiling Babel or TypeScript code](http://docs.nativescript.org/core-concepts/transpilers), and [publishing to the iOS App Store](http://docs.nativescript.org/core-concepts/publishing-ios-apps) and [Google Play](http://docs.nativescript.org/core-concepts/publishing-android-apps).
+- The NativeScript documentation site has detailed guides on topics that were out of scope for this guide, including [unit testing](http://docs.nativescript.org/core-concepts/testing), [debugging](http://docs.nativescript.org/core-concepts/debugging), [transpiling Babel or TypeScript code](http://docs.nativescript.org/core-concepts/transpilers), and [publishing to the iOS App Store](http://docs.nativescript.org/core-concepts/publishing-ios-apps) and [Google Play](http://docs.nativescript.org/core-concepts/publishing-android-apps).
 
 ### Let us know what you think
 

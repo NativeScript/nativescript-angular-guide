@@ -85,7 +85,7 @@ Now, if the user attempts to login or register with an invalid email address, th
     <b>Exercise</b>: Rebuild your app
 </h4>
 
-As we mentioned in chapter 1.4, although the `tns livesync` command is smart enough to reload your app for most changes you make to your app, the command cannot hot reload your app for all changes—most notably, changes to native files in `app/App_Resources`, new modules installed with `npm install`, and new NativeScript plugins.
+As we mentioned in chapter 1.4, although the `tns livesync` command is smart enough to reload your app for most changes you make to your app, certain changes require a full build—most notably, changes to native files in `app/App_Resources`, new modules installed with `npm install`, and new NativeScript plugins.
 
 For NativeScript to recognize this new email-validator npm module, type `Ctrl+C` in your terminal to kill the existing `tns livesync` watcher if it’s still running, and then use `tns run` to rebuild your application and deploy it to an emulator or device.
 
@@ -204,4 +204,4 @@ Pretty cool, huh? The ability to use npm modules greatly expands the number of t
 
 If you're looking for NativeScript plugins start by searching both the [Telerik NativeScript Plugins Marketplace](http://plugins.telerik.com/nativescript) and our [community-curated list of plugins on npm](http://plugins.nativescript.rocks). If you don't find the plugin you need, you can [request the plugin on our ideas portal](https://nativescript.ideas.aha.io/), or you can take a stab at [creating the plugin yourself](https://docs.nativescript.org/plugins).
 
-Between NativeScript modules, npm modules, and NativeScript plugins, the NativeScript framework provides a lot of functionality you can use to build your next app. However, we've yet to talk about NativeScript's most powerful feature: the ability to directly access iOS and Android APIs in JavaScript. Let's look at how it works.
+Between NativeScript modules, npm modules, and NativeScript plugins, the NativeScript framework provides a lot of functionality you can use to build your next app. However, we've yet to talk about NativeScript's most powerful feature: the ability to directly access iOS and Android APIs in TypeScript. Let's look at how it works.

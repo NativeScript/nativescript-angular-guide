@@ -140,9 +140,9 @@ Open `app/app.component.ts` and replace the existing `@Component` with the follo
 @Component({
   selector: "my-app",
   template: `
-    <TextField hint="Email Address" id="email" keyboardType="email"
+    <TextField hint="Email Address" keyboardType="email"
       autocorrect="false" autocapitalizationType="none"></TextField>
-    <TextField hint="Password" id="password" secure="true"></TextField>
+    <TextField hint="Password" secure="true"></TextField>
 
     <Button text="Sign in"></Button>
     <Button text="Sign up for Groceries"></Button>
@@ -199,9 +199,9 @@ Open `app/app.component.ts` and add a `<StackLayout>` element within your compon
   selector: "my-app",
   template: `
     <StackLayout>
-      <TextField hint="Email Address" id="email" keyboardType="email"
+      <TextField hint="Email Address" keyboardType="email"
         autocorrect="false" autocapitalizationType="none"></TextField>
-      <TextField hint="Password" id="password" secure="true"></TextField>
+      <TextField hint="Password" secure="true"></TextField>
 
       <Button text="Sign in"></Button>
       <Button text="Sign up for Groceries"></Button>
@@ -308,9 +308,9 @@ Open your `app/app.component.ts` file and add a `styleUrls` property, so that th
   selector: "my-app",
   template: `
     <StackLayout>
-      <TextField hint="Email Address" id="email" keyboardType="email"
+      <TextField hint="Email Address" keyboardType="email"
         autocorrect="false" autocapitalizationType="none"></TextField>
-      <TextField hint="Password" id="password" secure="true"></TextField>
+      <TextField hint="Password" secure="true"></TextField>
 
       <Button text="Sign in"></Button>
       <Button text="Sign up for Groceries"></Button>
@@ -338,7 +338,7 @@ Button, TextField {
   margin-right: 16;
   margin-bottom: 10;
 }
-#submit-button {
+.submit-button {
   background-color: #CB1D00;
   color: white;
   margin-top: 20;
@@ -353,21 +353,21 @@ Why three files? Much like you divided your global files into `app.css`, `platfo
 
 The great thing about placing CSS rules at the component level is you can use concise CSS selectors such as `Button` and `TextField`, and not worry about those rules applying to all buttons and text fields in your application, as Angular 2 ensures those rules remain scoped to your component.
 
-Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in `login-common.css` is `#submit-button`. Much like using CSS on the web, in NativeScript you can both `id` and `class` attributes to target specific user interface elements, but at the moment there’s no UI element in your app with an `id` of `"submit-button"`. Let’s change that.
+Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in `login-common.css` is `.submit-button`. Much like using CSS on the web, in NativeScript you can both `id` and `class` attributes to target specific user interface elements, but at the moment there’s no UI element in your app with an `class` of `"submit-button"`. Let’s change that.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: Add an `id` attribute
+    <b>Exercise</b>: Add a `class` attribute
 </h4>
 
 Open your `app/app.component.ts` file, find `<Button text="Sign in"></Button>` in your component’s `template`, and replace it with the code below:
 
 ``` XML
-<Button text="Sign in" id="submit-button"></Button>
+<Button text="Sign in" class="submit-button"></Button>
 ```
 
 <div class="exercise-end"></div>
 
-With this last `id` change in place your app is starting to look a little nicer:
+With this last `class` change in place your app is starting to look a little nicer:
 
 ![login 4](images/chapter2/ios/4.png)
 ![login 4](images/chapter2/android/4.png)

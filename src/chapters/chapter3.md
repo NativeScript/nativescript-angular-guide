@@ -13,7 +13,7 @@ Most user interfaces are driven by events. In NativeScript apps, those events ar
 Open `app/app.component.ts`, find the existing sign in button within your component’s `template` (`<Button text="Sign in"></Button>`), and replace it with the following code:
 
 ``` TypeScript
-<Button text="Sign in" id="submit-button" (tap)="submit()"></Button>
+<Button text="Sign in" class="submit-button" (tap)="submit()"></Button>
 ```
 
 Next, in the same file, replace the current `AppComponent` declaration with the one shown below:
@@ -64,7 +64,7 @@ export class AppComponent {
 Next, find the first `<TextField>` in your component’s `template` and replace it with the code below, which adds a new `text` attribute:
 
 ``` XML
-<TextField hint="Email Address" id="email" keyboardType="email" [text]="email"
+<TextField hint="Email Address" keyboardType="email" [text]="email"
   autocorrect="false" autocapitalizationType="none"></TextField>
 ```
 
@@ -92,7 +92,7 @@ To fix this, you need to switch to Angular 2’s two-way data binding syntax.
 In `app/app.component.ts`, find the first `<TextField>`, and replace it with the `<TextField>` below, which introduces a new `[(ngModel)]` attribute:
 
 ``` XML
-<TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="email"
+<TextField hint="Email Address" keyboardType="email" [(ngModel)]="email"
   autocorrect="false" autocapitalizationType="none"></TextField>
 ```
 
@@ -114,7 +114,7 @@ Before we move on, let’s make one additional change to show what else you can 
 Open `app/app.component.ts` and replace the two existing buttons with the code below:
 
 ``` XML
-<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
+<Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" class="submit-button" (tap)="submit()"></Button>
 <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
 ```
 
@@ -202,9 +202,9 @@ Instead of storing data on the `AppComponent` directly, you’re now using the `
 Your next step is to use this new model object in your template. To do that, replace the two existing `<TextField>`s with the code shown below, which updates the `[(ngModel)]` bindings to point at the new `User` object:
 
 ``` XML
-<TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="user.email"
+<TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
   autocorrect="false" autocapitalizationType="none"></TextField>
-<TextField hint="Password" id="password" secure="true" [(ngModel)]="user.password"></TextField>
+<TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
 ```
 
 As one final change, because this template is getting to be a bit complex, let’s move it into a separate file. Open `app/pages/login/login.html` and paste in the following code:
@@ -213,11 +213,11 @@ As one final change, because this template is getting to be a bit complex, let�
 <StackLayout>
   <Image src="res://logo_login" stretch="none" horizontalAlignment="center"></Image>
 
-  <TextField hint="Email Address" id="email" keyboardType="email" [(ngModel)]="user.email"
+  <TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
     autocorrect="false" autocapitalizationType="none"></TextField>
-  <TextField hint="Password" id="password" secure="true" [(ngModel)]="user.password"></TextField>
+  <TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
 
-  <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" id="submit-button" (tap)="submit()"></Button>
+  <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" class="submit-button" (tap)="submit()"></Button>
   <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
 </StackLayout>
 ```

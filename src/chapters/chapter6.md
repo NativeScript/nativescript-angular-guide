@@ -41,27 +41,42 @@ export function setHintColor(args: { view: TextField, color: Color }) {
 
 This code creates a function called `setHintColor()` that accepts a `<TextField>` and `Color`. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.
 
-Open up `app/pages/login/login.component.ts` and add the following two imports to the top of the file:
+First, open `app/pages/login/login.html` and switch the two `<TextField>`s to use the following code, which adds a local template variable to each element:
+
+``` XML
+<TextField #email hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
+  autocorrect="false" autocapitalizationType="none"></TextField>
+<TextField #password hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
+```
+
+Next, open up `app/pages/login/login.component.ts` and add the following two properties under the existing `@ViewChild("container")` line:
+
+``` TypeScript
+@ViewChild("email") email: ElementRef;
+@ViewChild("password") password: ElementRef;
+```
+
+After that, add the following two imports to the top of the file:
 
 ``` TypeScript
 import {setHintColor} from "../../utils/hint-util";
 import {TextField} from "ui/text-field";
 ```
 
-After that, add the following function to the file’s `LoginPage` class:
+Then, add the following function to the file’s `LoginPage` class:
 
 ``` TypeScript
 setTextFieldColors() {
-  let email = <TextField>this.page.getViewById("email");
-  let password = <TextField>this.page.getViewById("password");
+  let emailTextField = <TextField>this.email.nativeElement;
+  let passwordTextField = <TextField>this.password.nativeElement;
 
   let mainTextColor = new Color(this.isLoggingIn ? "black" : "#C4AFB4");
-  email.color = mainTextColor;
-  password.color = mainTextColor;
+  emailTextField.color = mainTextColor;
+  passwordTextField.color = mainTextColor;
 
   let hintColor = new Color(this.isLoggingIn ? "#ACA6A7" : "#C4AFB4");
-  setHintColor({ view: email, color: hintColor });
-  setHintColor({ view: password, color: hintColor });
+  setHintColor({ view: emailTextField, color: hintColor });
+  setHintColor({ view: passwordTextField, color: hintColor });
 }
 ```
 

@@ -340,9 +340,9 @@ export class AppComponent {}
 <pre><code class="lang-JavaScript">@Component({
   selector: &quot;my-app&quot;,
   template: `
-    &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot;
+    &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
       autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-    &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+    &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
     &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
     &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
@@ -396,9 +396,9 @@ export class AppComponent {}
   selector: &quot;my-app&quot;,
   template: `
     &lt;StackLayout&gt;
-      &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot;
+      &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
         autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-      &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+      &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
       &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
       &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
@@ -487,9 +487,9 @@ TextField {
   selector: &quot;my-app&quot;,
   template: `
     &lt;StackLayout&gt;
-      &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot;
+      &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot;
         autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-      &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
+      &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot;&gt;&lt;/TextField&gt;
 
       &lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;
       &lt;Button text=&quot;Sign up for Groceries&quot;&gt;&lt;/Button&gt;
@@ -514,7 +514,7 @@ Button, TextField {
   margin-right: 16;
   margin-bottom: 10;
 }
-#submit-button {
+.submit-button {
   background-color: #CB1D00;
   color: white;
   margin-top: 20;
@@ -525,17 +525,17 @@ Button, TextField {
 <p>In Angular 2, the <code>styleUrls</code> property points at an array of stylesheets that should be used to style a component. In this case, you’re telling Angular to use two stylesheets, <code>login-common.css</code> and <code>login.css</code>—the latter of which is actually implemented as <code>login.ios.css</code> and <code>login.android.css</code>, using the same naming convention we introduced in the previous section.</p>
 <p>Why three files? Much like you divided your global files into <code>app.css</code>, <code>platform.ios.css</code>, and <code>platform.android.css</code>, this structure gives you a similar ability to place common login styling in <code>login-common.css</code>, iOS-specific login styling <code>login.ios.css</code>, and Android-specific login styling in <code>login.android.css</code>.</p>
 <p>The great thing about placing CSS rules at the component level is you can use concise CSS selectors such as <code>Button</code> and <code>TextField</code>, and not worry about those rules applying to all buttons and text fields in your application, as Angular 2 ensures those rules remain scoped to your component.</p>
-<p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>#submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface elements, but at the moment there’s no UI element in your app with an <code>id</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
+<p>Before we see what your app looks like now, there’s one small change you need to make. Notice that the last selector used in <code>login-common.css</code> is <code>.submit-button</code>. Much like using CSS on the web, in NativeScript you can both <code>id</code> and <code>class</code> attributes to target specific user interface elements, but at the moment there’s no UI element in your app with an <code>class</code> of <code>&quot;submit-button&quot;</code>. Let’s change that.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: Add an <code>id</code> attribute
+    <b>Exercise</b>: Add a <code>class</code> attribute
 </h4>
 
 <p>Open your <code>app/app.component.ts</code> file, find <code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code> in your component’s <code>template</code>, and replace it with the code below:</p>
-<pre><code class="lang-XML">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot;&gt;&lt;/Button&gt;
+<pre><code class="lang-XML">&lt;Button text=&quot;Sign in&quot; class=&quot;submit-button&quot;&gt;&lt;/Button&gt;
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>With this last <code>id</code> change in place your app is starting to look a little nicer:</p>
+<p>With this last <code>class</code> change in place your app is starting to look a little nicer:</p>
 <p><img src="images/chapter2/ios/4.png" alt="login 4">
 <img src="images/chapter2/android/4.png" alt="login 4"></p>
 <p>As you can see, in NativeScript you have a lot of options for how you can apply CSS rules. You can apply rules globally either for both platforms in <code>app.css</code>, for iOS in <code>platform.ios.css</code>, or for Android in <code>platform.android.css</code>. And you can also apply rules at the component level, while maintaining the same flexibility to target different platforms if required.</p>
@@ -578,7 +578,7 @@ Button, TextField {
 </h4>
 
 <p>Open <code>app/app.component.ts</code>, find the existing sign in button within your component’s <code>template</code> (<code>&lt;Button text=&quot;Sign in&quot;&gt;&lt;/Button&gt;</code>), and replace it with the following code:</p>
-<pre><code class="lang-TypeScript">&lt;Button text=&quot;Sign in&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
+<pre><code class="lang-TypeScript">&lt;Button text=&quot;Sign in&quot; class=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
 </code></pre>
 <p>Next, in the same file, replace the current <code>AppComponent</code> declaration with the one shown below:</p>
 <pre><code class="lang-TypeScript">export class AppComponent {
@@ -616,7 +616,7 @@ Button, TextField {
 }
 </code></pre>
 <p>Next, find the first <code>&lt;TextField&gt;</code> in your component’s <code>template</code> and replace it with the code below, which adds a new <code>text</code> attribute:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [text]=&quot;email&quot;
+<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [text]=&quot;email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <div class="exercise-end"></div>
@@ -636,7 +636,7 @@ Button, TextField {
 </h4>
 
 <p>In <code>app/app.component.ts</code>, find the first <code>&lt;TextField&gt;</code>, and replace it with the <code>&lt;TextField&gt;</code> below, which introduces a new <code>[(ngModel)]</code> attribute:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;email&quot;
+<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <div class="exercise-end"></div>
@@ -650,7 +650,7 @@ Button, TextField {
 </h4>
 
 <p>Open <code>app/app.component.ts</code> and replace the two existing buttons with the code below:</p>
-<pre><code class="lang-XML">&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
+<pre><code class="lang-XML">&lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot; class=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
 &lt;Button [text]=&quot;isLoggingIn ? &#39;Sign up&#39; : &#39;Back to login&#39;&quot; (tap)=&quot;toggleDisplay()&quot;&gt;&lt;/Button&gt;
 </code></pre>
 <p>Next, replace the existing <code>AppComponent</code> declaration with the code below, which adds a new <code>isLoggingIn</code> property, and a new <code>toggleDisplay()</code> method:</p>
@@ -713,19 +713,19 @@ Button, TextField {
 </code></pre>
 <p>Instead of storing data on the <code>AppComponent</code> directly, you’re now using the <code>User</code> model object, which is reusable outside of this page and even outside of this application. You instantiate an instance of the <code>User</code> class in a new <code>constructor</code> function, which Angular 2 invokes when it bootstraps your application.</p>
 <p>Your next step is to use this new model object in your template. To do that, replace the two existing <code>&lt;TextField&gt;</code>s with the code shown below, which updates the <code>[(ngModel)]</code> bindings to point at the new <code>User</code> object:</p>
-<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
+<pre><code class="lang-XML">&lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
   autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-&lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
+&lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <p>As one final change, because this template is getting to be a bit complex, let’s move it into a separate file. Open <code>app/pages/login/login.html</code> and paste in the following code:</p>
 <pre><code class="lang-XML">&lt;StackLayout&gt;
   &lt;Image src=&quot;res://logo_login&quot; stretch=&quot;none&quot; horizontalAlignment=&quot;center&quot;&gt;&lt;/Image&gt;
 
-  &lt;TextField hint=&quot;Email Address&quot; id=&quot;email&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
+  &lt;TextField hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
     autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
-  &lt;TextField hint=&quot;Password&quot; id=&quot;password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
+  &lt;TextField hint=&quot;Password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
 
-  &lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot; id=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
+  &lt;Button [text]=&quot;isLoggingIn ? &#39;Sign in&#39; : &#39;Sign up&#39;&quot; class=&quot;submit-button&quot; (tap)=&quot;submit()&quot;&gt;&lt;/Button&gt;
   &lt;Button [text]=&quot;isLoggingIn ? &#39;Sign up&#39; : &#39;Back to login&#39;&quot; (tap)=&quot;toggleDisplay()&quot;&gt;&lt;/Button&gt;
 &lt;/StackLayout&gt;
 </code></pre>
@@ -1096,9 +1096,8 @@ export class ListPage {}
     <b>Exercise</b>: Customize the Page
 </h4>
 
-<p>Open <code>app/pages/login/login.component.ts</code>, and add the following two imports to the top of the file:</p>
-<pre><code class="lang-TypeScript">import {topmost} from &quot;ui/frame&quot;;
-import {Page} from &quot;ui/page&quot;;
+<p>Open <code>app/pages/login/login.component.ts</code>, and add the following import to the top of the file:</p>
+<pre><code class="lang-TypeScript">import {Page} from &quot;ui/page&quot;;
 </code></pre>
 <blockquote>
 <p><strong>NOTE</strong>: All of the imports you’ve seen to this point work because the TypeScript compiler resolves them against your project’s <code>node_modules</code> folder. For instance, <code>import {Component} from &quot;angular2/core&quot;</code> works because a <code>node_modules/angular2/core.d.ts</code> file exists. The two imports above are NativeScript module imports, and they work because your project’s <code>references.d.ts</code> file includes a reference to a TypeScript declaration file (a <code>.d.ts</code> file), that lives in <code>node_modules/tns-core-modules</code>, and which allows you to import modules from <code>node_modules/tns-core-modules</code> without any prefixes.</p>
@@ -1111,7 +1110,6 @@ import {Page} from &quot;ui/page&quot;;
 </code></pre>
 <p>If you’re using an editor that supports TypeScript, you should see an error that says something like <em>“Class ‘LoginPage’ incorrectly implements interface ‘OnInit’”</em>. When you implement a TypeScript class interface, you’re telling the TypeScript compiler that you must implement all methods that the interface requires. In the case of <code>OnInit</code>, Angular 2 requires you to implement a single <code>ngOnInit()</code> method. To implement it, add the following code within the <code>LoginPage</code> class:</p>
 <pre><code class="lang-TypeScript">ngOnInit() {
-  this.page = &lt;Page&gt;topmost().currentPage;
   this.page.actionBarHidden = true;
   this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &quot;res://bg_login&quot;;
 }
@@ -1120,18 +1118,19 @@ import {Page} from &quot;ui/page&quot;;
 <p><strong>NOTE</strong>: The <code>this.page.ios</code> check in this function can go away after NativeScript 2.0 is released. The check is there because of <a href="https://github.com/NativeScript/NativeScript/issues/1788">this bug</a>.</p>
 </blockquote>
 <p><code>ngOnInit</code> is one of several <a href="https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html">component lifecycle hooks</a> that Angular 2 provides. As its name implies, <code>ngOnInit</code> gets invoked when Angular initializes this component.</p>
-<p>We’ll discuss what the code within <code>ngOnInit()</code> does momentarily, but finally, to make these changes compile and run, add the following property to the <code>LoginPage</code> class. You can put it right under the <code>user: User;</code> line.</p>
-<pre><code class="lang-TypeScript">page: Page;
+<p>We’ll discuss what the code within <code>ngOnInit()</code> does momentarily, but finally, to make these changes compile and run, change the <code>LoginPage</code>’s existing <code>constructor()</code> declaration to use the code below.</p>
+<pre><code class="lang-TypeScript">constructor(private _router: Router, private _userService: UserService, private page: Page) {
 </code></pre>
+<blockquote>
+<p><strong>NOTE</strong>: Because the <code>Page</code> class is so commonly used in NativeScript apps, NativeScript provides this syntax as a shorthand for getting access to a component’s page.</p>
+</blockquote>
 <div class="exercise-end"></div>
 
-<p>Now that you have this code in place, let’s discuss what happens in these three lines:</p>
-<pre><code class="lang-TypeScript">this.page = &lt;Page&gt;topmost().currentPage;
-this.page.actionBarHidden = true;
+<p>Now that you have this code in place, let’s discuss what happens in these two lines:</p>
+<pre><code class="lang-TypeScript">this.page.actionBarHidden = true;
 this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &quot;res://bg_login&quot;;
 </code></pre>
-<p>This code uses the <code>topmost()</code> function from the <a href="http://docs.nativescript.org/ApiReference/ui/frame/Frame">NativeScript frame module</a>, and the <a href="http://docs.nativescript.org/ApiReference/ui/page/Page"><code>Page</code> class</a> from the <a href="http://docs.nativescript.org/ApiReference/ui/page/README">NativeScript page module</a>. The <code>topmost()</code> function gives you access to the app’s current page with its <code>currentPage</code> property, and you use that reference to set that page’s <code>actionBarHidden</code> and <code>backgroundImage</code> properties.</p>
-<p>Although you can peruse the NativeScript API documentation for a full list of these properties and what they do, if you’re using a TypeScript-friendly IDE, you can get a full list of these properties at any point.</p>
+<p>This code uses an instance of the <a href="http://docs.nativescript.org/ApiReference/ui/page/Page"><code>Page</code> class</a> from the <a href="http://docs.nativescript.org/ApiReference/ui/page/README">NativeScript page module</a>, and sets two properties on it—<code>actionBarHidden</code> and <code>backgroundImage</code>. Although you can peruse the NativeScript API documentation for a full list of these properties and what they do, if you’re using a TypeScript-friendly IDE, you can get a full list of these properties at any point.</p>
 <p><img alt="TypeScript autocomplete" class="plain" src="images/chapter4/typescript.png" style="border: 1px solid black;"></p>
 <p>If you run your app you should see that the action bar—the bar beneath the status bar that had previously displayed on Android—is now hidden, and the page uses a gorgeous new background image:</p>
 <p><img src="images/chapter4/android/1.png" alt="Background image on Android">
@@ -1151,16 +1150,25 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
     <b>Exercise</b>: Add a color animation
 </h4>
 
-<p>Open <code>app/pages/login/login.html</code> and add an <code>id</code> to the existing <code>&lt;StackLayout&gt;</code>:</p>
-<pre><code class="lang-XML">&lt;StackLayout id=&quot;container&quot;&gt;
+<p>Open <code>app/pages/login/login.html</code> and add <code>#container</code> to the existing <code>&lt;StackLayout&gt;</code>:</p>
+<pre><code class="lang-XML">&lt;StackLayout #container&gt;
 </code></pre>
-<p>Next, open <code>app/pages/login/login.component.ts</code> and add the following line at the top, which imports the <a href="http://docs.nativescript.org/ApiReference/color/Color.html"><code>Color</code> class</a> from the NativeScript color module:</p>
+<p>The “#” syntax is Angular’s way of creating <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#!#local-vars">local template variables</a>, and you’ll use this local variable to get a reference to the <code>&lt;StackLayout&gt;</code> element in TypeScript code momentarily.</p>
+<p>Next, open <code>app/pages/login/login.component.ts</code> and add the following two lines at the top, which import the <a href="http://docs.nativescript.org/ApiReference/color/Color.html"><code>Color</code> class</a> from the NativeScript color module, and the <a href="http://docs.nativescript.org/ApiReference/ui/core/view/View"><code>View</code> class</a> from the NativeScript view module.</p>
 <pre><code class="lang-TypeScript">import {Color} from &quot;color&quot;;
+import {View} from &quot;ui/core/view&quot;;
 </code></pre>
-<p>Finally, change the <code>LoginPage</code>’s <code>toggleDisplay()</code> function in the same file to use this code:</p>
+<p>After that, change the existing “angular2/core” import to include a few more classes:</p>
+<pre><code class="lang-TypeScript">import {Component, ElementRef, OnInit, ViewChild} from &quot;angular2/core&quot;;
+</code></pre>
+<p>With these new imports in place, next, add the following property to the <code>LoginPage</code> class. Place it right under the <code>isLoggingIn = true;</code> line:</p>
+<pre><code class="lang-TypeScript">@ViewChild(&quot;container&quot;) container: ElementRef;
+</code></pre>
+<p>This code uses Angular’s <a href="https://angular.io/docs/ts/latest/api/core/ViewChild-var.html"><code>@ViewChild</code> decorator</a> to create a new property that points at the <code>&lt;StackLayout&gt;</code> element. To use that property, change the <code>LoginPage</code>’s <code>toggleDisplay()</code> function in the same file to use this code:</p>
 <pre><code class="lang-TypeScript">toggleDisplay() {
   this.isLoggingIn = !this.isLoggingIn;
-  this.page.getViewById(&quot;container&quot;).animate({
+  let container = &lt;View&gt;this.container.nativeElement;
+  container.animate({
     backgroundColor: this.isLoggingIn ? new Color(&quot;white&quot;) : new Color(&quot;#301217&quot;),
     duration: 200
   });
@@ -1168,14 +1176,14 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>All NativeScript UI elements inherit from a base <a href="http://docs.nativescript.org/ApiReference/ui/core/view/View.html"><code>View</code> class</a>, which contains a number of useful methods—including the <code>getViewById()</code> and <code>animate()</code> methods used in the previous example. The <code>getViewById()</code> method, as its name implies, allows you to get a reference to a child view by its <code>id</code> attribute.</p>
-<p>One you have a reference to a UI element, you can call any of the methods that element inherits from <code>View</code>. In this case, you call the <code>&lt;StackLayout id=&quot;container&quot;&gt;</code> element’s <code>animate()</code> method to change its background color over a duration of <code>200</code>, or 2/10 of a second. The effect is a subtle color change that helps user differentiate between the “Sign In” and “Sign Up” functionality that your form provides.</p>
+<p>All NativeScript UI elements inherit from a base <a href="http://docs.nativescript.org/ApiReference/ui/core/view/View.html"><code>View</code> class</a>, which contains a number of useful methods—including the <code>animate()</code> method you used in the previous example.</p>
+<p>One you have a reference to a UI element, you can call any of the methods that element inherits from <code>View</code>. In this case, you call the <code>&lt;StackLayout #container&gt;</code> element’s <code>animate()</code> method to change its background color over a duration of <code>200</code>, or 2/10 of a second. The effect is a subtle color change that helps user differentiate between the “Sign In” and “Sign Up” functionality that your form provides.</p>
 <p><img src="images/chapter4/android/2.gif" alt="Color animation on Android">
 <img src="images/chapter4/ios/2.gif" alt="Color animation on iOS"></p>
 <blockquote>
 <p><strong>NOTE</strong>: You may notice that the text color is off with the brown background. Don’t worry about that for now; we’ll address that in chapter 6.</p>
 </blockquote>
-<p>The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using <code>getViewById()</code>, and then call that element’s <code>animate()</code> method. You may want to take a few minutes to look through our <a href="https://docs.nativescript.org/ui/animation#examples">animation samples</a> and try a few of these animations for yourself in Groceries.</p>
+<p>The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using <code>@ViewChild</code>, and then call that element’s <code>animate()</code> method. You may want to take a few minutes to look through our <a href="https://docs.nativescript.org/ui/animation#examples">animation samples</a> and try a few of these animations for yourself in Groceries.</p>
 <p>For now, let’s move on to another commonly used NativeScript UI element: the <code>&lt;ListView&gt;</code>.</p>
 <h3 id="listview">ListView</h3>
 <p>The ListView element lets you show a list of things on the screen, which is exactly what you need for showing a list of groceries. Before tying the grocery list to a backend API, let&#39;s start by seeing how to show a hardcoded list of items on the screen.</p>
@@ -1185,7 +1193,7 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 
 <p>Open <code>app/pages/list/list.html</code> and replace its contents with the following code:</p>
 <pre><code class="lang-XML">&lt;GridLayout&gt;
-  &lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; class=&quot;small-spacing&quot;&gt;
+  &lt;ListView [items]=&quot;groceryList&quot; #groceryListView class=&quot;small-spacing&quot;&gt;
     &lt;template #item=&quot;item&quot;&gt;
       &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
     &lt;/template&gt;
@@ -1201,7 +1209,8 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 }
 </code></pre>
 <p>Next, open <code>app/pages/list/list.component.ts</code> and replace its contents with the code below:</p>
-<pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
+<pre><code class="lang-TypeScript">import {Component, ElementRef, OnInit, ViewChild} from &quot;angular2/core&quot;;
+import {ListView} from &quot;ui/list-view&quot;;
 
 @Component({
   selector: &quot;list&quot;,
@@ -1210,6 +1219,7 @@ this.page.backgroundImage = this.page.ios ? &quot;res://bg_login.jpg&quot; : &qu
 })
 export class ListPage implements OnInit {
   groceryList: Array&lt;Object&gt; = [];
+  @ViewChild(&quot;groceryListView&quot;) groceryListView: ElementRef;
 
   ngOnInit() {
     this.groceryList.push({ name: &quot;Apples&quot; });
@@ -1220,18 +1230,18 @@ export class ListPage implements OnInit {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Your <code>ListPage</code> class now has a single <code>groceryList</code> property, that you fill with three objects in an <code>ngOnInit</code> handler. If you run your app and login, you should see the same list of groceries on the screen:</p>
+<p>Your <code>ListPage</code> class now has a <code>groceryList</code> property that you fill with three objects in an <code>ngOnInit</code> handler, and a <code>@ViewChild</code> reference to the <code>&lt;ListView&gt;</code> element that you’ll use later. If you run your app and login, you should see the same list of groceries on the screen:</p>
 <p><img src="images/chapter4/android/3.png" alt="List view on Android">
 <img src="images/chapter4/ios/3.png" alt="List view on iOS"></p>
 <p>How does this work? Let’s return to this chunk of code:</p>
-<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; class=&quot;small-spacing&quot;&gt;
+<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; #groceryListView class=&quot;small-spacing&quot;&gt;
   &lt;template #item=&quot;item&quot;&gt;
     &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
   &lt;/template&gt;
 &lt;/ListView&gt;
 </code></pre>
 <p>The <a href="http://docs.nativescript.org/ApiReference/ui/list-view/ListView"><code>&lt;ListView&gt;</code> UI element</a> requires an <code>items</code> property that points at an array of data—in this case, the <code>groceryList</code> array you added to your <code>ListPage</code> class. The list view element requires a child <code>&lt;template&gt;</code> element that specifies how to render each item in the <code>items</code> array.</p>
-<p>The <code>#item</code> syntax is Angular 2’s for syntax for <a href="https://angular.io/docs/ts/latest/guide/template-syntax.html#!#star-template">creating local template variables</a>. This gives you the ability to refer to each item in the array as <code>item</code> within the template. For this template, you render each item in the array with a single <code>&lt;Label&gt;</code> UI element, and because of the <code>[text]=&quot;item.name&quot;</code> binding, those labels contain the text from the <code>name</code> property of each of the items in <code>groceryList</code> TypeScript array.</p>
+<p>The <code>#item</code> syntax is again Angular 2’s for syntax for creating local template variables. This gives you the ability to refer to each item in the array as <code>item</code> within the template. For this template, you render each item in the array with a single <code>&lt;Label&gt;</code> UI element, and because of the <code>[text]=&quot;item.name&quot;</code> binding, those labels contain the text from the <code>name</code> property of each of the items in <code>groceryList</code> TypeScript array.</p>
 <p>Now that you have a hardcoded list displaying, let’s see how to swap that out with live data.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Populate the list view
@@ -1308,7 +1318,8 @@ import {GroceryListService} from &quot;../../shared/grocery/grocery-list.service
 }
 </code></pre>
 <p>The full version of your <code>app/pages/list/list.component.ts</code> file should now look like this:</p>
-<pre><code class="lang-TypeScript">import {Component, OnInit} from &quot;angular2/core&quot;;
+<pre><code class="lang-TypeScript">import {Component, ElementRef, OnInit, ViewChild} from &quot;angular2/core&quot;;
+import {ListView} from &quot;ui/list-view&quot;;
 import {Grocery} from &quot;../../shared/grocery/grocery&quot;;
 import {GroceryListService} from &quot;../../shared/grocery/grocery-list.service&quot;;
 
@@ -1377,11 +1388,11 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 <pre><code class="lang-XML">&lt;GridLayout rows=&quot;auto, *&quot;&gt;
 
   &lt;GridLayout row=&quot;0&quot; columns=&quot;*, auto&quot; class=&quot;add-bar&quot;&gt;
-    &lt;TextField id=&quot;grocery&quot; hint=&quot;Enter a grocery item&quot; col=&quot;0&quot;&gt;&lt;/TextField&gt;
+    &lt;TextField #groceryTextField hint=&quot;Enter a grocery item&quot; col=&quot;0&quot;&gt;&lt;/TextField&gt;
     &lt;Image src=&quot;res://add&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
   &lt;/GridLayout&gt;
 
-  &lt;ListView [items]=&quot;groceryList&quot; id=&quot;grocery-list&quot; row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
+  &lt;ListView [items]=&quot;groceryList&quot; #groceryListView row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
     &lt;template #item=&quot;item&quot;&gt;
       &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
     &lt;/template&gt;
@@ -1421,17 +1432,17 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 </h4>
 
 <p>Open <code>app/pages/list/list.html</code> and give the existing <code>&lt;TextField&gt;</code> a new <code>[(ngModel)]</code> attribute so that it looks like this:</p>
-<pre><code class="lang-XML">&lt;TextField id=&quot;grocery&quot; [(ngModel)]=&quot;grocery&quot; hint=&quot;Enter a grocery item&quot; col=&quot;0&quot;&gt;&lt;/TextField&gt;
+<pre><code class="lang-XML">&lt;TextField #groceryTextField [(ngModel)]=&quot;grocery&quot; hint=&quot;Enter a grocery item&quot; col=&quot;0&quot;&gt;&lt;/TextField&gt;
 </code></pre>
 <p>Next, give the same file’s image a new <code>tap</code> attribute binding, so that the full <code>&lt;Image&gt;</code> looks like this:</p>
 <pre><code class="lang-XML">&lt;Image src=&quot;res://add&quot; (tap)=&quot;add()&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
 </code></pre>
-<p>With these attributes in place, your next steps are to define a new <code>grocery</code> property and <code>add()</code> method in your <code>ListPage</code> class. To do that, open <code>app/pages/list/list.component.ts</code> and add the following property to the <code>ListPage</code> class (right below the existing <code>groceryList</code> property):</p>
+<p>With these attributes in place, your next steps are to define a new <code>grocery</code> property and <code>add()</code> method in your <code>ListPage</code> class. To do that, open <code>app/pages/list/list.component.ts</code> and add the following two properties to the <code>ListPage</code> class (right below the existing <code>groceryList</code> property):</p>
 <pre><code class="lang-TypeScript">grocery: string = &quot;&quot;;
+@ViewChild(&quot;groceryTextField&quot;) groceryTextField: ElementRef;
 </code></pre>
-<p>Next, add the following two imports to the top of the <code>list.component.ts</code> file:</p>
+<p>Next, add the following import to the top of the <code>list.component.ts</code> file:</p>
 <pre><code class="lang-TypeScript">import {TextField} from &quot;ui/text-field&quot;;
-import {topmost} from &quot;ui/frame&quot;;
 </code></pre>
 <p>Then, add the following <code>add()</code> function to the existing <code>ListPage</code> class:</p>
 <pre><code class="lang-TypeScript">add() {
@@ -1441,8 +1452,8 @@ import {topmost} from &quot;ui/frame&quot;;
   }
 
   // Dismiss the keyboard
-  let groceryTextField = &lt;TextField&gt;topmost().currentPage.getViewById(&quot;grocery&quot;);
-  groceryTextField.dismissSoftInput();
+  let textField = &lt;TextField&gt;this.groceryTextField.nativeElement;
+  textField.dismissSoftInput();
 
   this._groceryListService.add(this.grocery)
     .subscribe(
@@ -1551,8 +1562,8 @@ import {topmost} from &quot;ui/frame&quot;;
         this.groceryList.unshift(groceryObject);
       });
       this.isLoading = false;
-      let groceryList = topmost().currentPage.getViewById(&quot;grocery-list&quot;);
-      groceryList.animate({
+      let list = &lt;ListView&gt;this.groceryListView.nativeElement;
+      list.animate({
         opacity: 1,
         duration: 1000
       });
@@ -1746,22 +1757,31 @@ export function setHintColor(args: { view: TextField, color: Color }) {
 }
 </code></pre>
 <p>This code creates a function called <code>setHintColor()</code> that accepts a <code>&lt;TextField&gt;</code> and <code>Color</code>. We’ll talk about the contents of this function momentarily; first let’s look at how to use it.</p>
-<p>Open up <code>app/pages/login/login.component.ts</code> and add the following two imports to the top of the file:</p>
+<p>First, open <code>app/pages/login/login.html</code> and switch the two <code>&lt;TextField&gt;</code>s to use the following code, which adds a local template variable to each element:</p>
+<pre><code class="lang-XML">&lt;TextField #email hint=&quot;Email Address&quot; keyboardType=&quot;email&quot; [(ngModel)]=&quot;user.email&quot;
+  autocorrect=&quot;false&quot; autocapitalizationType=&quot;none&quot;&gt;&lt;/TextField&gt;
+&lt;TextField #password hint=&quot;Password&quot; secure=&quot;true&quot; [(ngModel)]=&quot;user.password&quot;&gt;&lt;/TextField&gt;
+</code></pre>
+<p>Next, open up <code>app/pages/login/login.component.ts</code> and add the following two properties under the existing <code>@ViewChild(&quot;container&quot;)</code> line:</p>
+<pre><code class="lang-TypeScript">@ViewChild(&quot;email&quot;) email: ElementRef;
+@ViewChild(&quot;password&quot;) password: ElementRef;
+</code></pre>
+<p>After that, add the following two imports to the top of the file:</p>
 <pre><code class="lang-TypeScript">import {setHintColor} from &quot;../../utils/hint-util&quot;;
 import {TextField} from &quot;ui/text-field&quot;;
 </code></pre>
-<p>After that, add the following function to the file’s <code>LoginPage</code> class:</p>
+<p>Then, add the following function to the file’s <code>LoginPage</code> class:</p>
 <pre><code class="lang-TypeScript">setTextFieldColors() {
-  let email = &lt;TextField&gt;this.page.getViewById(&quot;email&quot;);
-  let password = &lt;TextField&gt;this.page.getViewById(&quot;password&quot;);
+  let emailTextField = &lt;TextField&gt;this.email.nativeElement;
+  let passwordTextField = &lt;TextField&gt;this.password.nativeElement;
 
   let mainTextColor = new Color(this.isLoggingIn ? &quot;black&quot; : &quot;#C4AFB4&quot;);
-  email.color = mainTextColor;
-  password.color = mainTextColor;
+  emailTextField.color = mainTextColor;
+  passwordTextField.color = mainTextColor;
 
   let hintColor = new Color(this.isLoggingIn ? &quot;#ACA6A7&quot; : &quot;#C4AFB4&quot;);
-  setHintColor({ view: email, color: hintColor });
-  setHintColor({ view: password, color: hintColor });
+  setHintColor({ view: emailTextField, color: hintColor });
+  setHintColor({ view: passwordTextField, color: hintColor });
 }
 </code></pre>
 <p>Finally, add a call to the new <code>setTextFieldColors()</code> in your <code>LoginPage</code>’s existing <code>toggleDisplay()</code> method—ideally immediately after the existing <code>this.isLoggingIn = !this.isLoggingIn</code> line:</p>

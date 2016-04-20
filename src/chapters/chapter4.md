@@ -23,10 +23,9 @@ So far, you’ve only used NativeScript UI elements by including them in an Angu
     <b>Exercise</b>: Customize the Page
 </h4>
 
-Open `app/pages/login/login.component.ts`, and add the following two imports to the top of the file:
+Open `app/pages/login/login.component.ts`, and add the following import to the top of the file:
 
 ``` TypeScript
-import {topmost} from "ui/frame";
 import {Page} from "ui/page";
 ```
 
@@ -48,7 +47,6 @@ If you’re using an editor that supports TypeScript, you should see an error th
 
 ``` TypeScript
 ngOnInit() {
-  this.page = <Page>topmost().currentPage;
   this.page.actionBarHidden = true;
   this.page.backgroundImage = this.page.ios ? "res://bg_login.jpg" : "res://bg_login";
 }
@@ -58,25 +56,24 @@ ngOnInit() {
 
 `ngOnInit` is one of several [component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) that Angular 2 provides. As its name implies, `ngOnInit` gets invoked when Angular initializes this component.
 
-We’ll discuss what the code within `ngOnInit()` does momentarily, but finally, to make these changes compile and run, add the following property to the `LoginPage` class. You can put it right under the `user: User;` line.
+We’ll discuss what the code within `ngOnInit()` does momentarily, but finally, to make these changes compile and run, change the `LoginPage`’s existing `constructor()` declaration to use the code below.
 
 ``` TypeScript
-page: Page;
+constructor(private _router: Router, private _userService: UserService, private page: Page) {
 ```
+
+> **NOTE**: Because the `Page` class is so commonly used in NativeScript apps, NativeScript provides this syntax as a shorthand for getting access to a component’s page.
 
 <div class="exercise-end"></div>
 
-Now that you have this code in place, let’s discuss what happens in these three lines:
+Now that you have this code in place, let’s discuss what happens in these two lines:
 
 ``` TypeScript
-this.page = <Page>topmost().currentPage;
 this.page.actionBarHidden = true;
 this.page.backgroundImage = this.page.ios ? "res://bg_login.jpg" : "res://bg_login";
 ```
 
-This code uses the `topmost()` function from the [NativeScript frame module](http://docs.nativescript.org/ApiReference/ui/frame/Frame), and the [`Page` class](http://docs.nativescript.org/ApiReference/ui/page/Page) from the [NativeScript page module](http://docs.nativescript.org/ApiReference/ui/page/README). The `topmost()` function gives you access to the app’s current page with its `currentPage` property, and you use that reference to set that page’s `actionBarHidden` and `backgroundImage` properties.
-
-Although you can peruse the NativeScript API documentation for a full list of these properties and what they do, if you’re using a TypeScript-friendly IDE, you can get a full list of these properties at any point.
+This code uses an instance of the [`Page` class](http://docs.nativescript.org/ApiReference/ui/page/Page) from the [NativeScript page module](http://docs.nativescript.org/ApiReference/ui/page/README), and sets two properties on it—`actionBarHidden` and `backgroundImage`. Although you can peruse the NativeScript API documentation for a full list of these properties and what they do, if you’re using a TypeScript-friendly IDE, you can get a full list of these properties at any point.
 
 <img alt="TypeScript autocomplete" class="plain" src="images/chapter4/typescript.png" style="border: 1px solid black;">
 
@@ -103,24 +100,40 @@ Let’s add a simple animation so you can see how they work.
     <b>Exercise</b>: Add a color animation
 </h4>
 
-Open `app/pages/login/login.html` and add an `id` to the existing `<StackLayout>`:
+Open `app/pages/login/login.html` and add `#container` to the existing `<StackLayout>`:
 
 ``` XML
-<StackLayout id="container">
+<StackLayout #container>
 ```
 
-Next, open `app/pages/login/login.component.ts` and add the following line at the top, which imports the [`Color` class](http://docs.nativescript.org/ApiReference/color/Color.html) from the NativeScript color module:
+The “#” syntax is Angular’s way of creating [local template variables](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#local-vars), and you’ll use this local variable to get a reference to the `<StackLayout>` element in TypeScript code momentarily.
+
+Next, open `app/pages/login/login.component.ts` and add the following two lines at the top, which import the [`Color` class](http://docs.nativescript.org/ApiReference/color/Color.html) from the NativeScript color module, and the [`View` class](http://docs.nativescript.org/ApiReference/ui/core/view/View) from the NativeScript view module.
 
 ``` TypeScript
 import {Color} from "color";
+import {View} from "ui/core/view";
 ```
 
-Finally, change the `LoginPage`’s `toggleDisplay()` function in the same file to use this code:
+After that, change the existing “angular2/core” import to include a few more classes:
+
+``` TypeScript
+import {Component, ElementRef, OnInit, ViewChild} from "angular2/core";
+```
+
+With these new imports in place, next, add the following property to the `LoginPage` class. Place it right under the `isLoggingIn = true;` line:
+
+``` TypeScript
+@ViewChild("container") container: ElementRef;
+```
+
+This code uses Angular’s [`@ViewChild` decorator](https://angular.io/docs/ts/latest/api/core/ViewChild-var.html) to create a new property that points at the `<StackLayout>` element. To use that property, change the `LoginPage`’s `toggleDisplay()` function in the same file to use this code:
 
 ``` TypeScript
 toggleDisplay() {
   this.isLoggingIn = !this.isLoggingIn;
-  this.page.getViewById("container").animate({
+  let container = <View>this.container.nativeElement;
+  container.animate({
     backgroundColor: this.isLoggingIn ? new Color("white") : new Color("#301217"),
     duration: 200
   });
@@ -129,16 +142,16 @@ toggleDisplay() {
 
 <div class="exercise-end"></div>
 
-All NativeScript UI elements inherit from a base [`View` class](http://docs.nativescript.org/ApiReference/ui/core/view/View.html), which contains a number of useful methods—including the `getViewById()` and `animate()` methods used in the previous example. The `getViewById()` method, as its name implies, allows you to get a reference to a child view by its `id` attribute.
+All NativeScript UI elements inherit from a base [`View` class](http://docs.nativescript.org/ApiReference/ui/core/view/View.html), which contains a number of useful methods—including the `animate()` method you used in the previous example.
 
-One you have a reference to a UI element, you can call any of the methods that element inherits from `View`. In this case, you call the `<StackLayout id="container">` element’s `animate()` method to change its background color over a duration of `200`, or 2/10 of a second. The effect is a subtle color change that helps user differentiate between the “Sign In” and “Sign Up” functionality that your form provides.
+One you have a reference to a UI element, you can call any of the methods that element inherits from `View`. In this case, you call the `<StackLayout #container>` element’s `animate()` method to change its background color over a duration of `200`, or 2/10 of a second. The effect is a subtle color change that helps user differentiate between the “Sign In” and “Sign Up” functionality that your form provides.
 
 ![Color animation on Android](images/chapter4/android/2.gif)
 ![Color animation on iOS](images/chapter4/ios/2.gif)
 
 > **NOTE**: You may notice that the text color is off with the brown background. Don’t worry about that for now; we’ll address that in chapter 6.
 
-The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using `getViewById()`, and then call that element’s `animate()` method. You may want to take a few minutes to look through our [animation samples](https://docs.nativescript.org/ui/animation#examples) and try a few of these animations for yourself in Groceries.
+The animation module is a lot of fun to play with, and it’s easy to use too. All you need to do is get a reference to an element using `@ViewChild`, and then call that element’s `animate()` method. You may want to take a few minutes to look through our [animation samples](https://docs.nativescript.org/ui/animation#examples) and try a few of these animations for yourself in Groceries.
 
 For now, let’s move on to another commonly used NativeScript UI element: the `<ListView>`.
 
@@ -154,7 +167,7 @@ Open `app/pages/list/list.html` and replace its contents with the following code
 
 ``` XML
 <GridLayout>
-  <ListView [items]="groceryList" id="grocery-list" class="small-spacing">
+  <ListView [items]="groceryList" #groceryListView class="small-spacing">
     <template #item="item">
       <Label [text]="item.name" class="medium-spacing"></Label>
     </template>
@@ -176,7 +189,8 @@ We’ll talk about the new syntax in a moment, but first let’s define the clas
 Next, open `app/pages/list/list.component.ts` and replace its contents with the code below:
 
 ``` TypeScript
-import {Component, OnInit} from "angular2/core";
+import {Component, ElementRef, OnInit, ViewChild} from "angular2/core";
+import {ListView} from "ui/list-view";
 
 @Component({
   selector: "list",
@@ -185,6 +199,7 @@ import {Component, OnInit} from "angular2/core";
 })
 export class ListPage implements OnInit {
   groceryList: Array<Object> = [];
+  @ViewChild("groceryListView") groceryListView: ElementRef;
 
   ngOnInit() {
     this.groceryList.push({ name: "Apples" });
@@ -196,7 +211,7 @@ export class ListPage implements OnInit {
 
 <div class="exercise-end"></div>
 
-Your `ListPage` class now has a single `groceryList` property, that you fill with three objects in an `ngOnInit` handler. If you run your app and login, you should see the same list of groceries on the screen:
+Your `ListPage` class now has a `groceryList` property that you fill with three objects in an `ngOnInit` handler, and a `@ViewChild` reference to the `<ListView>` element that you’ll use later. If you run your app and login, you should see the same list of groceries on the screen:
 
 ![List view on Android](images/chapter4/android/3.png)
 ![List view on iOS](images/chapter4/ios/3.png)
@@ -204,7 +219,7 @@ Your `ListPage` class now has a single `groceryList` property, that you fill wit
 How does this work? Let’s return to this chunk of code:
 
 ``` XML
-<ListView [items]="groceryList" id="grocery-list" class="small-spacing">
+<ListView [items]="groceryList" #groceryListView class="small-spacing">
   <template #item="item">
     <Label [text]="item.name" class="medium-spacing"></Label>
   </template>
@@ -213,7 +228,7 @@ How does this work? Let’s return to this chunk of code:
 
 The [`<ListView>` UI element](http://docs.nativescript.org/ApiReference/ui/list-view/ListView) requires an `items` property that points at an array of data—in this case, the `groceryList` array you added to your `ListPage` class. The list view element requires a child `<template>` element that specifies how to render each item in the `items` array.
 
-The `#item` syntax is Angular 2’s for syntax for [creating local template variables](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#star-template). This gives you the ability to refer to each item in the array as `item` within the template. For this template, you render each item in the array with a single `<Label>` UI element, and because of the `[text]="item.name"` binding, those labels contain the text from the `name` property of each of the items in `groceryList` TypeScript array.
+The `#item` syntax is again Angular 2’s for syntax for creating local template variables. This gives you the ability to refer to each item in the array as `item` within the template. For this template, you render each item in the array with a single `<Label>` UI element, and because of the `[text]="item.name"` binding, those labels contain the text from the `name` property of each of the items in `groceryList` TypeScript array.
 
 Now that you have a hardcoded list displaying, let’s see how to swap that out with live data.
 
@@ -316,7 +331,8 @@ ngOnInit() {
 The full version of your `app/pages/list/list.component.ts` file should now look like this:
 
 ``` TypeScript
-import {Component, OnInit} from "angular2/core";
+import {Component, ElementRef, OnInit, ViewChild} from "angular2/core";
+import {ListView} from "ui/list-view";
 import {Grocery} from "../../shared/grocery/grocery";
 import {GroceryListService} from "../../shared/grocery/grocery-list.service";
 
@@ -411,11 +427,11 @@ Open `app/pages/list/list.html` and replace the contents of the file with the fo
 <GridLayout rows="auto, *">
 
   <GridLayout row="0" columns="*, auto" class="add-bar">
-    <TextField id="grocery" hint="Enter a grocery item" col="0"></TextField>
+    <TextField #groceryTextField hint="Enter a grocery item" col="0"></TextField>
     <Image src="res://add" col="1"></Image>
   </GridLayout>
 
-  <ListView [items]="groceryList" id="grocery-list" row="1" class="small-spacing">
+  <ListView [items]="groceryList" #groceryListView row="1" class="small-spacing">
     <template #item="item">
       <Label [text]="item.name" class="medium-spacing"></Label>
     </template>
@@ -466,7 +482,7 @@ Now that we have the UI ready, let’s make the add button work.
 Open `app/pages/list/list.html` and give the existing `<TextField>` a new `[(ngModel)]` attribute so that it looks like this:
 
 ``` XML
-<TextField id="grocery" [(ngModel)]="grocery" hint="Enter a grocery item" col="0"></TextField>
+<TextField #groceryTextField [(ngModel)]="grocery" hint="Enter a grocery item" col="0"></TextField>
 ```
 
 Next, give the same file’s image a new `tap` attribute binding, so that the full `<Image>` looks like this:
@@ -475,17 +491,17 @@ Next, give the same file’s image a new `tap` attribute binding, so that the fu
 <Image src="res://add" (tap)="add()" col="1"></Image>
 ```
 
-With these attributes in place, your next steps are to define a new `grocery` property and `add()` method in your `ListPage` class. To do that, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below the existing `groceryList` property):
+With these attributes in place, your next steps are to define a new `grocery` property and `add()` method in your `ListPage` class. To do that, open `app/pages/list/list.component.ts` and add the following two properties to the `ListPage` class (right below the existing `groceryList` property):
 
 ``` TypeScript
 grocery: string = "";
+@ViewChild("groceryTextField") groceryTextField: ElementRef;
 ```
 
-Next, add the following two imports to the top of the `list.component.ts` file:
+Next, add the following import to the top of the `list.component.ts` file:
 
 ``` TypeScript
 import {TextField} from "ui/text-field";
-import {topmost} from "ui/frame";
 ```
 
 Then, add the following `add()` function to the existing `ListPage` class:
@@ -498,8 +514,8 @@ add() {
   }
 
   // Dismiss the keyboard
-  let groceryTextField = <TextField>topmost().currentPage.getViewById("grocery");
-  groceryTextField.dismissSoftInput();
+  let textField = <TextField>this.groceryTextField.nativeElement;
+  textField.dismissSoftInput();
 
   this._groceryListService.add(this.grocery)
     .subscribe(
@@ -640,8 +656,8 @@ ngOnInit() {
         this.groceryList.unshift(groceryObject);
       });
       this.isLoading = false;
-      let groceryList = topmost().currentPage.getViewById("grocery-list");
-      groceryList.animate({
+      let list = <ListView>this.groceryListView.nativeElement;
+      list.animate({
         opacity: 1,
         duration: 1000
       });

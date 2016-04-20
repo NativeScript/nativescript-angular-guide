@@ -1368,7 +1368,7 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 <img src="images/chapter4/ios/4.png" alt="Grocery data on iOS"></p>
 <p>At this point you have a list of data associated with each account, but a grocery list isn’t very useful if you can’t add new groceries to the list. Let’s look at how to do that next.</p>
 <h3 id="gridlayout">GridLayout</h3>
-<p>In order to allow users to add to their grocery lists you need to add a few additional UI controls to the list page. While you could layout these elements with a <code>&lt;StackLayout&gt;</code>, let’s look at how to create a slightly more complex layout using the <code>&lt;GridLayout&gt;</code> element.</p>
+<p>In order to allow users to add to their grocery lists, you need to add a few additional UI controls to the list page. While you could use a simple <code>&lt;StackLayout&gt;</code> to stack up the controls you need, let’s look at how to create a slightly more complex layout using the <code>&lt;GridLayout&gt;</code> element.</p>
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a GridLayout
 </h4>
@@ -1400,14 +1400,14 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
   &lt;ListView row=&quot;1&quot;&gt;...&lt;/ListView&gt;
 &lt;/GridLayout&gt;
 </code></pre>
-<p>The outer grid layout’s <code>rows</code> attribute divides the screen into two rows, the first auto-sized according to its childrens&#39; height, and the other to contain *, or the remaining height of the screen. You place UI elements into these rows using the zero-based <code>row</code> attribute. You place inner grid layout in the top row with the <code>row=&quot;0&quot;</code> attribute, and the list view in the bottom row with the <code>row=&quot;1&quot;</code> attribute.</p>
+<p>The outer grid layout’s <code>rows</code> attribute divides the screen into two rows, the first auto-sized according to its childrens&#39; height, and the other to sized to take up *, or the remaining height of the screen. You place UI elements into these rows using the zero-based <code>row</code> attribute. The inner grid layout is in the top row because of its <code>row=&quot;0&quot;</code> attribute, and the list view is in the bottom row because of its <code>row=&quot;1&quot;</code> attribute.</p>
 <p>Grid layouts can also divide the screen into columns, which is what the inner grid layout does:</p>
 <pre><code class="lang-XML">&lt;GridLayout columns=&quot;*, auto&quot; class=&quot;add-bar&quot;&gt;
   &lt;TextField col=&quot;0&quot;&gt;&lt;/TextField&gt;
   &lt;Image col=&quot;1&quot;&gt;&lt;/Image&gt;
 &lt;/GridLayout&gt;
 </code></pre>
-<p>Here the <code>columns</code> attribute divides the top of the screen into two columns. The <code>col=&quot;0&quot;</code> attribute puts the text field in the first column, and the <code>col=&quot;1&quot;</code> attribute puts the plus image in the last column. Grid layouts are the most commonly used NativeScript layout, so you may wish to take a minute to play around with the <code>columns</code> and <code>rows</code> attributes to figure out how they work.</p>
+<p>Here the <code>columns</code> attribute divides the top of the screen into two columns. The <code>col=&quot;0&quot;</code> attribute puts the text field in the first column, and the <code>col=&quot;1&quot;</code> attribute puts the “+” image in the last column. Grid layouts are the most commonly used NativeScript layout, so you may wish to take a minute to play around with the <code>columns</code> and <code>rows</code> attributes to figure out how they work.</p>
 <blockquote>
 <p><strong>TIP</strong>:</p>
 <ul>
@@ -1426,10 +1426,10 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 <p>Next, give the same file’s image a new <code>tap</code> attribute binding, so that the full <code>&lt;Image&gt;</code> looks like this:</p>
 <pre><code class="lang-XML">&lt;Image src=&quot;res://add&quot; (tap)=&quot;add()&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
 </code></pre>
-<p>With these attributes in place, your next steps are to define the <code>grocery</code> property and the <code>add()</code> method. To do that, open <code>app/pages/list/list.component.ts</code> and add the following property to the <code>ListPage</code> class (right below the existing <code>groceryList</code> property):</p>
+<p>With these attributes in place, your next steps are to define a new <code>grocery</code> property and <code>add()</code> method in your <code>ListPage</code> class. To do that, open <code>app/pages/list/list.component.ts</code> and add the following property to the <code>ListPage</code> class (right below the existing <code>groceryList</code> property):</p>
 <pre><code class="lang-TypeScript">grocery: string = &quot;&quot;;
 </code></pre>
-<p>Next, add the following two inputs to the top of the <code>list.component.ts</code> file:</p>
+<p>Next, add the following two imports to the top of the <code>list.component.ts</code> file:</p>
 <pre><code class="lang-TypeScript">import {TextField} from &quot;ui/text-field&quot;;
 import {topmost} from &quot;ui/frame&quot;;
 </code></pre>

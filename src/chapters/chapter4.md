@@ -399,7 +399,7 @@ At this point you have a list of data associated with each account, but a grocer
 
 ### GridLayout
 
-In order to allow users to add to their grocery lists you need to add a few additional UI controls to the list page. While you could layout these elements with a `<StackLayout>`, let’s look at how to create a slightly more complex layout using the `<GridLayout>` element.
+In order to allow users to add to their grocery lists, you need to add a few additional UI controls to the list page. While you could use a simple `<StackLayout>` to stack up the controls you need, let’s look at how to create a slightly more complex layout using the `<GridLayout>` element.
 
 <h4 class="exercise-start">
     <b>Exercise</b>: Add a GridLayout
@@ -440,7 +440,7 @@ To break down how this layout works, let’s start with the outer structure of t
 </GridLayout>
 ```
 
-The outer grid layout’s `rows` attribute divides the screen into two rows, the first auto-sized according to its childrens' height, and the other to contain *, or the remaining height of the screen. You place UI elements into these rows using the zero-based `row` attribute. You place inner grid layout in the top row with the `row="0"` attribute, and the list view in the bottom row with the `row="1"` attribute.
+The outer grid layout’s `rows` attribute divides the screen into two rows, the first auto-sized according to its childrens' height, and the other to sized to take up *, or the remaining height of the screen. You place UI elements into these rows using the zero-based `row` attribute. The inner grid layout is in the top row because of its `row="0"` attribute, and the list view is in the bottom row because of its `row="1"` attribute.
 
 Grid layouts can also divide the screen into columns, which is what the inner grid layout does:
 
@@ -451,7 +451,7 @@ Grid layouts can also divide the screen into columns, which is what the inner gr
 </GridLayout>
 ```
 
-Here the `columns` attribute divides the top of the screen into two columns. The `col="0"` attribute puts the text field in the first column, and the `col="1"` attribute puts the plus image in the last column. Grid layouts are the most commonly used NativeScript layout, so you may wish to take a minute to play around with the `columns` and `rows` attributes to figure out how they work.
+Here the `columns` attribute divides the top of the screen into two columns. The `col="0"` attribute puts the text field in the first column, and the `col="1"` attribute puts the “+” image in the last column. Grid layouts are the most commonly used NativeScript layout, so you may wish to take a minute to play around with the `columns` and `rows` attributes to figure out how they work.
 
 > **TIP**:
 > * You can nest any of the [NativeScript layouts](http://docs.nativescript.org/ui/layout-containers.html)—not just grid layouts.
@@ -475,13 +475,13 @@ Next, give the same file’s image a new `tap` attribute binding, so that the fu
 <Image src="res://add" (tap)="add()" col="1"></Image>
 ```
 
-With these attributes in place, your next steps are to define the `grocery` property and the `add()` method. To do that, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below the existing `groceryList` property):
+With these attributes in place, your next steps are to define a new `grocery` property and `add()` method in your `ListPage` class. To do that, open `app/pages/list/list.component.ts` and add the following property to the `ListPage` class (right below the existing `groceryList` property):
 
 ``` TypeScript
 grocery: string = "";
 ```
 
-Next, add the following two inputs to the top of the `list.component.ts` file:
+Next, add the following two imports to the top of the `list.component.ts` file:
 
 ``` TypeScript
 import {TextField} from "ui/text-field";

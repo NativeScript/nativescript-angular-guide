@@ -1193,7 +1193,7 @@ import {View} from &quot;ui/core/view&quot;;
 
 <p>Open <code>app/pages/list/list.html</code> and replace its contents with the following code:</p>
 <pre><code class="lang-XML">&lt;GridLayout&gt;
-  &lt;ListView [items]=&quot;groceryList&quot; #groceryListView class=&quot;small-spacing&quot;&gt;
+  &lt;ListView [items]=&quot;groceryList&quot; class=&quot;small-spacing&quot;&gt;
     &lt;template #item=&quot;item&quot;&gt;
       &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
     &lt;/template&gt;
@@ -1210,7 +1210,6 @@ import {View} from &quot;ui/core/view&quot;;
 </code></pre>
 <p>Next, open <code>app/pages/list/list.component.ts</code> and replace its contents with the code below:</p>
 <pre><code class="lang-TypeScript">import {Component, ElementRef, OnInit, ViewChild} from &quot;angular2/core&quot;;
-import {ListView} from &quot;ui/list-view&quot;;
 
 @Component({
   selector: &quot;list&quot;,
@@ -1219,7 +1218,6 @@ import {ListView} from &quot;ui/list-view&quot;;
 })
 export class ListPage implements OnInit {
   groceryList: Array&lt;Object&gt; = [];
-  @ViewChild(&quot;groceryListView&quot;) groceryListView: ElementRef;
 
   ngOnInit() {
     this.groceryList.push({ name: &quot;Apples&quot; });
@@ -1230,11 +1228,11 @@ export class ListPage implements OnInit {
 </code></pre>
 <div class="exercise-end"></div>
 
-<p>Your <code>ListPage</code> class now has a <code>groceryList</code> property that you fill with three objects in an <code>ngOnInit</code> handler, and a <code>@ViewChild</code> reference to the <code>&lt;ListView&gt;</code> element that you’ll use later. If you run your app and login, you should see the same list of groceries on the screen:</p>
+<p>Your <code>ListPage</code> class now has a <code>groceryList</code> property that you fill with three objects in an <code>ngOnInit</code> handler. If you run your app and login, you should see the same list of groceries on the screen:</p>
 <p><img src="images/chapter4/android/3.png" alt="List view on Android">
 <img src="images/chapter4/ios/3.png" alt="List view on iOS"></p>
 <p>How does this work? Let’s return to this chunk of code:</p>
-<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; #groceryListView class=&quot;small-spacing&quot;&gt;
+<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; class=&quot;small-spacing&quot;&gt;
   &lt;template #item=&quot;item&quot;&gt;
     &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
   &lt;/template&gt;
@@ -1319,7 +1317,6 @@ import {GroceryListService} from &quot;../../shared/grocery/grocery-list.service
 </code></pre>
 <p>The full version of your <code>app/pages/list/list.component.ts</code> file should now look like this:</p>
 <pre><code class="lang-TypeScript">import {Component, ElementRef, OnInit, ViewChild} from &quot;angular2/core&quot;;
-import {ListView} from &quot;ui/list-view&quot;;
 import {Grocery} from &quot;../../shared/grocery/grocery&quot;;
 import {GroceryListService} from &quot;../../shared/grocery/grocery-list.service&quot;;
 
@@ -1392,7 +1389,7 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
     &lt;Image src=&quot;res://add&quot; col=&quot;1&quot;&gt;&lt;/Image&gt;
   &lt;/GridLayout&gt;
 
-  &lt;ListView [items]=&quot;groceryList&quot; #groceryListView row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
+  &lt;ListView [items]=&quot;groceryList&quot; row=&quot;1&quot; class=&quot;small-spacing&quot;&gt;
     &lt;template #item=&quot;item&quot;&gt;
       &lt;Label [text]=&quot;item.name&quot; class=&quot;medium-spacing&quot;&gt;&lt;/Label&gt;
     &lt;/template&gt;
@@ -1515,7 +1512,7 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 </h4>
 
 <p>Open up <code>app/pages/list/list.html</code> and paste the following line immediately before the final <code>&lt;/GridLayout&gt;</code>:</p>
-<pre><code class="lang-XML">&lt;ActivityIndicator [busy]=&quot;isLoading&quot; row=&quot;1&quot;&gt;&lt;/ActivityIndicator&gt;
+<pre><code class="lang-XML">&lt;ActivityIndicator [busy]=&quot;isLoading&quot; row=&quot;1&quot; horizontalAlignment=&quot;center&quot; verticalAlignment=&quot;center&quot;&gt;&lt;/ActivityIndicator&gt;
 </code></pre>
 <p>This binds the ActivityIndicator’s <code>busy</code> attribute to an <code>isLoading</code> property in the <code>ListPage</code> component. To define that property, open <code>app/pages/list/list.component.ts</code> and add the following line of code immediately under <code>grocery: string = &quot;&quot;</code>:</p>
 <pre><code class="lang-TypeScript">isLoading = false;
@@ -1543,17 +1540,33 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 &lt;ActivityIndicator row=&quot;1&quot;&gt;&lt;/ActivityIndicator&gt;
 </code></pre>
 </blockquote>
-<p>To finish off this chapter, let’s look at how you can use the animation module to add a final bit of polish to how the list page loads.</p>
+<p>To finish off this chapter, let’s look at how you can use another NativeScript CSS feature to add a final bit of polish to how the list page loads.</p>
+<p>In the following exercise you’ll use an animation to fade in the page’s <code>&lt;ListView&gt;</code> after your data loads. However this time, instead of getting a reference to the <code>&lt;ListView&gt;</code> UI element and calling its <code>animate()</code> method, you’ll instead use NativeScript’s CSS animations.</p>
 <h4 class="exercise-start">
-    <b>Exercise</b>: Add a fade-in animation
+    <b>Exercise</b>: Using CSS animations
 </h4>
 
-<p>In this exercise, you’ll use the animation module to animate the <code>opacity</code> of the list page’s <code>&lt;ListView&gt;</code> to add a fade-in effect. Start by opening <code>app/pages/list/list-common.css</code> and pasting in the following CSS at the top of the file:</p>
+<p> Start by opening <code>app/pages/list/list-common.css</code> and pasting in the following CSS at the top of the file:</p>
 <pre><code class="lang-CSS">ListView {
   opacity: 0;
 }
+.visible {
+  animation-name: show;
+  animation-duration: 1s;
+}
+@keyframes show {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 </code></pre>
-<p>Next, open <code>app/pages/list/list-component.ts</code> and add replace the existing <code>ngOnInit()</code> function with the following code:</p>
+<p>This code sets the starting opacity value of the <code>&lt;ListView&gt;</code> to <code>0</code> so that the control is hidden when the page loads. The code also defines a <code>visible</code> class name that changes the <code>opacity</code> of an element from <code>0</code> to <code>1</code> over one full second.</p>
+<blockquote>
+<p><strong>TIP</strong>: For background on how the CSS animations syntax works, feel free to refer to the <a href="https://github.com/NativeScript/docs/blob/master/ui/animation-css.md">NativeScript CSS animation documentation</a>, or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations">external CSS animation guides</a>.</p>
+</blockquote>
+<p>Now that you have the CSS in place, your next step is to add the previously defined <code>&quot;visible&quot;</code> class name to the <code>&lt;ListView&gt;</code> control after data has loaded. To do that, start by opening <code>app/pages/list/list-component.ts</code> and adding the following new property right below the existing <code>isLoading = false;</code> line:</p>
+<pre><code class="lang-TypeScript">listLoaded = false;
+</code></pre>
+<p>Next, in the same file, replace the existing <code>ngOnInit()</code> function with the following code, which sets the new <code>listLoaded</code> flag:</p>
 <pre><code class="lang-TypeScript">ngOnInit() {
   this.isLoading = true;
   this._groceryListService.load()
@@ -1562,19 +1575,18 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
         this.groceryList.unshift(groceryObject);
       });
       this.isLoading = false;
-      let list = &lt;ListView&gt;this.groceryListView.nativeElement;
-      list.animate({
-        opacity: 1,
-        duration: 1000
-      });
+      this.listLoaded = true;
     });
 }
 </code></pre>
+<p>Finally, open <code>app/pages/list/list.html</code> and replace the existing <code>&lt;ListView&gt;</code> tag with the following code:</p>
+<pre><code class="lang-XML">&lt;ListView [items]=&quot;groceryList&quot; row=&quot;1&quot; class=&quot;small-spacing&quot; [class.visible]=&quot;listLoaded&quot;&gt;
+</code></pre>
 <div class="exercise-end"></div>
 
-<p>A few things are happening in the code above.</p>
-<p>First, in CSS, you assign an <code>opacity</code> of <code>0</code> to the list page’s <code>&lt;ListView&gt;</code>. This hides the grocery list completely when the page loads. Next, in TypeScript, after the <code>GroceryListService</code>’s <code>load()</code> call completes, you call the list view’s <code>animate()</code> function. This changes the element&#39;s <code>opacity</code> from <code>0</code> (completely hidden) to <code>1</code> (completely visible) over one full second.</p>
-<p>The result of this code is a nice fade-in animation:</p>
+<p>The key here is the list view’s <code>[class.visible]=&quot;listLoaded&quot;</code> binding, which automatically applies the <code>visible</code> CSS class name based on the state of the <code>listLoaded</code> TypeScript property.</p>
+<p>The advantage of using CSS animations is that you avoid the need to reference specific UI elements in your TypeScript code; there was no need to create a local template variable. The CSS animation approach also help to keep your code decoupled. Your TypeScript code can focus on logic, and leave styling concerns to your CSS code.</p>
+<p>If you try out your app you should now see a nice fade-in animation:</p>
 <p><img src="images/chapter4/android/8.gif" alt="Loading animation on Android">
 <img src="images/chapter4/ios/8.gif" alt="Loading animation on iOS"></p>
 <p>Now that you have functional login and list pages, let’s enhance the app’s functionality as a grocery list management tool. In the next chapters you&#39;ll add functionality such as email validation, social sharing, and more. And you’ll use one of NativeScript&#39;s most useful features to do so: npm modules.</p>

@@ -167,7 +167,7 @@ Open `app/pages/list/list.html` and replace its contents with the following code
 
 ``` XML
 <GridLayout>
-  <ListView [items]="groceryList" #groceryListView class="small-spacing">
+  <ListView [items]="groceryList" class="small-spacing">
     <template #item="item">
       <Label [text]="item.name" class="medium-spacing"></Label>
     </template>
@@ -190,7 +190,6 @@ Next, open `app/pages/list/list.component.ts` and replace its contents with the 
 
 ``` TypeScript
 import {Component, ElementRef, OnInit, ViewChild} from "angular2/core";
-import {ListView} from "ui/list-view";
 
 @Component({
   selector: "list",
@@ -199,7 +198,6 @@ import {ListView} from "ui/list-view";
 })
 export class ListPage implements OnInit {
   groceryList: Array<Object> = [];
-  @ViewChild("groceryListView") groceryListView: ElementRef;
 
   ngOnInit() {
     this.groceryList.push({ name: "Apples" });
@@ -211,7 +209,7 @@ export class ListPage implements OnInit {
 
 <div class="exercise-end"></div>
 
-Your `ListPage` class now has a `groceryList` property that you fill with three objects in an `ngOnInit` handler, and a `@ViewChild` reference to the `<ListView>` element that you’ll use later. If you run your app and login, you should see the same list of groceries on the screen:
+Your `ListPage` class now has a `groceryList` property that you fill with three objects in an `ngOnInit` handler. If you run your app and login, you should see the same list of groceries on the screen:
 
 ![List view on Android](images/chapter4/android/3.png)
 ![List view on iOS](images/chapter4/ios/3.png)
@@ -219,7 +217,7 @@ Your `ListPage` class now has a `groceryList` property that you fill with three 
 How does this work? Let’s return to this chunk of code:
 
 ``` XML
-<ListView [items]="groceryList" #groceryListView class="small-spacing">
+<ListView [items]="groceryList" class="small-spacing">
   <template #item="item">
     <Label [text]="item.name" class="medium-spacing"></Label>
   </template>
@@ -332,7 +330,6 @@ The full version of your `app/pages/list/list.component.ts` file should now look
 
 ``` TypeScript
 import {Component, ElementRef, OnInit, ViewChild} from "angular2/core";
-import {ListView} from "ui/list-view";
 import {Grocery} from "../../shared/grocery/grocery";
 import {GroceryListService} from "../../shared/grocery/grocery-list.service";
 
@@ -431,7 +428,7 @@ Open `app/pages/list/list.html` and replace the contents of the file with the fo
     <Image src="res://add" col="1"></Image>
   </GridLayout>
 
-  <ListView [items]="groceryList" #groceryListView row="1" class="small-spacing">
+  <ListView [items]="groceryList" row="1" class="small-spacing">
     <template #item="item">
       <Label [text]="item.name" class="medium-spacing"></Label>
     </template>
@@ -594,7 +591,7 @@ In NativeScript apps you can use the [ActivityIndicator](http://docs.nativescrip
 Open up `app/pages/list/list.html` and paste the following line immediately before the final `</GridLayout>`:
 
 ``` XML
-<ActivityIndicator [busy]="isLoading" row="1"></ActivityIndicator>
+<ActivityIndicator [busy]="isLoading" row="1" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 ```
 
 This binds the ActivityIndicator’s `busy` attribute to an `isLoading` property in the `ListPage` component. To define that property, open `app/pages/list/list.component.ts` and add the following line of code immediately under `grocery: string = ""`:
@@ -631,21 +628,41 @@ When you first visit the list page, you should now see the following loading ind
 > <ActivityIndicator row="1"></ActivityIndicator>
 > ```
 
-To finish off this chapter, let’s look at how you can use the animation module to add a final bit of polish to how the list page loads.
+To finish off this chapter, let’s look at how you can use another NativeScript CSS feature to add a final bit of polish to how the list page loads.
+
+In the following exercise you’ll use an animation to fade in the page’s `<ListView>` after your data loads. However this time, instead of getting a reference to the `<ListView>` UI element and calling its `animate()` method, you’ll instead use NativeScript’s CSS animations.
 
 <h4 class="exercise-start">
-    <b>Exercise</b>: Add a fade-in animation
+    <b>Exercise</b>: Using CSS animations
 </h4>
 
-In this exercise, you’ll use the animation module to animate the `opacity` of the list page’s `<ListView>` to add a fade-in effect. Start by opening `app/pages/list/list-common.css` and pasting in the following CSS at the top of the file:
+ Start by opening `app/pages/list/list-common.css` and pasting in the following CSS at the top of the file:
 
 ``` CSS
 ListView {
   opacity: 0;
 }
+.visible {
+  animation-name: show;
+  animation-duration: 1s;
+}
+@keyframes show {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 ```
 
-Next, open `app/pages/list/list-component.ts` and add replace the existing `ngOnInit()` function with the following code:
+This code sets the starting opacity value of the `<ListView>` to `0` so that the control is hidden when the page loads. The code also defines a `visible` class name that changes the `opacity` of an element from `0` to `1` over one full second.
+
+> **TIP**: For background on how the CSS animations syntax works, feel free to refer to the [NativeScript CSS animation documentation](https://github.com/NativeScript/docs/blob/master/ui/animation-css.md), or [external CSS animation guides](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations).
+
+Now that you have the CSS in place, your next step is to add the previously defined `"visible"` class name to the `<ListView>` control after data has loaded. To do that, start by opening `app/pages/list/list-component.ts` and adding the following new property right below the existing `isLoading = false;` line:
+
+``` TypeScript
+listLoaded = false;
+```
+
+Next, in the same file, replace the existing `ngOnInit()` function with the following code, which sets the new `listLoaded` flag:
 
 ``` TypeScript
 ngOnInit() {
@@ -656,22 +673,24 @@ ngOnInit() {
         this.groceryList.unshift(groceryObject);
       });
       this.isLoading = false;
-      let list = <ListView>this.groceryListView.nativeElement;
-      list.animate({
-        opacity: 1,
-        duration: 1000
-      });
+      this.listLoaded = true;
     });
 }
 ```
 
+Finally, open `app/pages/list/list.html` and replace the existing `<ListView>` tag with the following code:
+
+``` XML
+<ListView [items]="groceryList" row="1" class="small-spacing" [class.visible]="listLoaded">
+```
+
 <div class="exercise-end"></div>
 
-A few things are happening in the code above.
+The key here is the list view’s `[class.visible]="listLoaded"` binding, which automatically applies the `visible` CSS class name based on the state of the `listLoaded` TypeScript property.
 
-First, in CSS, you assign an `opacity` of `0` to the list page’s `<ListView>`. This hides the grocery list completely when the page loads. Next, in TypeScript, after the `GroceryListService`’s `load()` call completes, you call the list view’s `animate()` function. This changes the element's `opacity` from `0` (completely hidden) to `1` (completely visible) over one full second.
+The advantage of using CSS animations is that you avoid the need to reference specific UI elements in your TypeScript code; there was no need to create a local template variable. The CSS animation approach also help to keep your code decoupled. Your TypeScript code can focus on logic, and leave styling concerns to your CSS code.
 
-The result of this code is a nice fade-in animation:
+If you try out your app you should now see a nice fade-in animation:
 
 ![Loading animation on Android](images/chapter4/android/8.gif)
 ![Loading animation on iOS](images/chapter4/ios/8.gif)

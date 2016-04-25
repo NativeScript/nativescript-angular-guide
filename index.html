@@ -86,17 +86,13 @@
     <b>Exercise</b>: Setup NativeScript
 </h4>
 
-<ul>
-<li><strong>Step 1</strong>: Install Node.js.</li>
-</ul>
+<p><strong>Step 1: Install Node.js</strong></p>
 <p>The NativeScript CLI is built on Node.js, and as such you need to have Node.js installed to use NativeScript.</p>
 <p>You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing <code>node --version</code>. If you get an error, head to the <a href="https://nodejs.org/">https://nodejs.org/</a> and download and install the latest “LTS” distribution for your development machine.</p>
 <blockquote>
 <p><strong>TIP</strong>: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you should be good to go. If, by chance, you’re running an unsupported version, the <code>tns doctor</code> command we’ll run momentarily will flag the problem so you can upgrade.</p>
 </blockquote>
-<ul>
-<li><strong>Step 2</strong>: Install the NativeScript CLI</li>
-</ul>
+<p><strong>Step 2: Install the NativeScript CLI</strong></p>
 <p>Open your terminal or command prompt and execute the following command to install the NativeScript CLI from npm, which is Node.js’ package manager:</p>
 <pre><code>npm install -g nativescript
 </code></pre><p>After completing the setup you should have two commands available from your terminal or command prompt: <code>tns</code>—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and <code>nativescript</code>. The two commands are equivalent, so we&#39;ll stick with the shorter <code>tns</code>.</p>
@@ -110,33 +106,25 @@
 │ General │ $ tns &lt;Command&gt; [Command Parameters] [--command &lt;Options&gt;]          │
 │ Alias   │ $ nativescript &lt;Command&gt; [Command Parameters] [--command &lt;Options&gt;] │
 └─────────┴─────────────────────────────────────────────────────────────────────┘
-</code></pre><ul>
-<li><strong>Step 3</strong>: Install iOS and Android requirements</li>
-</ul>
-<p>When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to have the system requirements for each platform you intend to build for on your development machine.</p>
-<p>NativeScript provides two options for installing these requirements—quick setup scripts for developers new to mobile development, and advanced setup scripts for experienced mobile developers, as well as developers that want complete control over the installation process.</p>
-<ul>
-<li><strong>Step 3—Option A</strong>: Run quick setup scripts</li>
-</ul>
-<p>If you’re new to mobile development, and you’re on Windows or OS X, the NativeScript quick setup scripts are a great way to get up and running for NativeScript development.</p>
-<p>If you’re on Windows, copy and paste the script below into your command prompt and press Enter:</p>
-<pre><code>@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString(&#39;https://raw.githubusercontent.com/NativeScript/nativescript-cli/production/setup/native-script.ps1&#39;))&quot;
-</code></pre><p>During installation you may need to accept a User Account Control prompt to grant the script administrative privileges. Also, be aware that the script downloads and installs some big dependencies—so it’s common for the script to take a while to complete.</p>
-<p>If you’re on a Mac, copy and paste the script below into your terminal and press Enter:</p>
-<pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/NativeScript/nativescript-cli/production/setup/native-script.rb)&quot;
-</code></pre><p>Much like the Windows script, the OS X script needs administrative access to run some commands using <code>sudo</code>; therefore, you may need to provide your password several times during execution. The OS X script also may take some time to complete, as it’s installing the dependencies for both iOS and Android development.</p>
-<ul>
-<li><strong>Step 3—Option B</strong>: Complete the advanced setup</li>
-</ul>
-<p>If you have existing mobile experience, or if you want to control the installation process yourself, refer to one of the advanced setup guide below, which walk you through manually setting up your environment for NativeScript development.</p>
+</code></pre><p><strong>Step 3: Install iOS and Android requirements</strong></p>
+<p>When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to setup each platform you intend to build for on your development machine. To ease the pain of installing all of these requirements manually, the NativeScript CLI provides quick-start scripts for Windows and OS X that handle the necessary setup for you automatically. Let’s look at how they work.</p>
+<blockquote>
+<p><strong>NOTE</strong>: If you have existing mobile experience, if you’re on Linux, or if you want to control the installation process yourself, refer to one of the advanced setup guide below, which walk you through manually setting up your environment for NativeScript development.</p>
 <ul>
 <li><a href="http://docs.nativescript.org/start/ns-setup-win#setup">Advanced setup: Windows</a></li>
 <li><a href="http://docs.nativescript.org/start/ns-setup-os-x#setup">Advanced setup: OS X</a></li>
 <li><a href="http://docs.nativescript.org/start/ns-setup-linux#setup">Advanced setup: Linux</a></li>
 </ul>
-<ul>
-<li><strong>Step 4</strong>: Verify the setup</li>
-</ul>
+</blockquote>
+<p><u>Windows</u></p>
+<p>If you’re on Windows, copy and paste the script below into your command prompt and press Enter:</p>
+<pre><code>@powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex ((new-object net.webclient).DownloadString(&#39;https://raw.githubusercontent.com/NativeScript/nativescript-cli/production/setup/native-script.ps1&#39;))&quot;
+</code></pre><p>During installation you may need to accept a User Account Control prompt to grant the script administrative privileges. Also, be aware that the script downloads and installs some big dependencies—so it’s common for the script to take a while to complete.</p>
+<p><u>OS X</u></p>
+<p>If you’re on a Mac, copy and paste the script below into your terminal and press Enter:</p>
+<pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/NativeScript/nativescript-cli/production/setup/native-script.rb)&quot;
+</code></pre><p>Much like the Windows script, the OS X script needs administrative access to run some commands using <code>sudo</code>; therefore, you may need to provide your password several times during execution. The OS X script also may take some time to complete, as it’s installing the dependencies for both iOS and Android development.</p>
+<p><strong>Step 4: Verify the setup</strong></p>
 <p>Once you’ve finished installing NativeScript and its dependencies, run the <code>tns doctor</code> command, which will check for any issues with your installation.</p>
 <pre><code>tns doctor
 </code></pre><p>If you see “No issues were detected” you’re good to go!</p>

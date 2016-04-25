@@ -10,7 +10,7 @@ The NativeScript CLI has a few system requirements you must have in place before
     <b>Exercise</b>: Setup NativeScript
 </h4>
 
-* **Step 1**: Install Node.js.
+**Step 1: Install Node.js**
 
 The NativeScript CLI is built on Node.js, and as such you need to have Node.js installed to use NativeScript.
 
@@ -18,7 +18,7 @@ You can check whether you have Node.js setup by opening a terminal or command pr
 
 > **TIP**: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you should be good to go. If, by chance, you’re running an unsupported version, the `tns doctor` command we’ll run momentarily will flag the problem so you can upgrade.
 
-* **Step 2**: Install the NativeScript CLI
+**Step 2: Install the NativeScript CLI**
 
 Open your terminal or command prompt and execute the following command to install the NativeScript CLI from npm, which is Node.js’ package manager:
 
@@ -42,15 +42,16 @@ $ tns
 └─────────┴─────────────────────────────────────────────────────────────────────┘
 ```
 
-* **Step 3**: Install iOS and Android requirements
+**Step 3: Install iOS and Android requirements**
 
-When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to have the system requirements for each platform you intend to build for on your development machine.
+When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to setup each platform you intend to build for on your development machine. To ease the pain of installing all of these requirements manually, the NativeScript CLI provides quick-start scripts for Windows and OS X that handle the necessary setup for you automatically. Let’s look at how they work.
 
-NativeScript provides two options for installing these requirements—quick setup scripts for developers new to mobile development, and advanced setup scripts for experienced mobile developers, as well as developers that want complete control over the installation process.
+> **NOTE**: If you have existing mobile experience, if you’re on Linux, or if you want to control the installation process yourself, refer to one of the advanced setup guide below, which walk you through manually setting up your environment for NativeScript development.
+> * [Advanced setup: Windows](http://docs.nativescript.org/start/ns-setup-win#setup)
+> * [Advanced setup: OS X](http://docs.nativescript.org/start/ns-setup-os-x#setup)
+> * [Advanced setup: Linux](http://docs.nativescript.org/start/ns-setup-linux#setup)
 
-* **Step 3—Option A**: Run quick setup scripts
-
-If you’re new to mobile development, and you’re on Windows or OS X, the NativeScript quick setup scripts are a great way to get up and running for NativeScript development.
+<u>Windows</u>
 
 If you’re on Windows, copy and paste the script below into your command prompt and press Enter:
 
@@ -60,6 +61,8 @@ If you’re on Windows, copy and paste the script below into your command prompt
 
 During installation you may need to accept a User Account Control prompt to grant the script administrative privileges. Also, be aware that the script downloads and installs some big dependencies—so it’s common for the script to take a while to complete.
 
+<u>OS X</u>
+
 If you’re on a Mac, copy and paste the script below into your terminal and press Enter:
 
 ```
@@ -68,16 +71,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/NativeScript/nativescrip
 
 Much like the Windows script, the OS X script needs administrative access to run some commands using `sudo`; therefore, you may need to provide your password several times during execution. The OS X script also may take some time to complete, as it’s installing the dependencies for both iOS and Android development.
 
-* **Step 3—Option B**: Complete the advanced setup
-
-If you have existing mobile experience, or if you want to control the installation process yourself, refer to one of the advanced setup guide below, which walk you through manually setting up your environment for NativeScript development.
-
-* [Advanced setup: Windows](http://docs.nativescript.org/start/ns-setup-win#setup)
-* [Advanced setup: OS X](http://docs.nativescript.org/start/ns-setup-os-x#setup)
-* [Advanced setup: Linux](http://docs.nativescript.org/start/ns-setup-linux#setup)
-
-
-* **Step 4**: Verify the setup
+**Step 4: Verify the setup**
 
 Once you’ve finished installing NativeScript and its dependencies, run the `tns doctor` command, which will check for any issues with your installation.
 

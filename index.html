@@ -79,7 +79,7 @@
 			<hr>
 			<div class="chapter">
 				<h2 id="getting-up-and-running">Getting up and running</h2>
-<p>In this chapter you&#39;re going to start with the basics, including installing the NativeScript CLI, starting a new project, and getting your first app up and running.</p>
+<p>In this chapter you&#39;re going to start with the basics, including installing the NativeScript command-line interface, starting a new project, and getting your first app up and running.</p>
 <h3 id="install-nativescript-and-configure-your-environment">Install NativeScript and configure your environment</h3>
 <p>The NativeScript CLI has a few system requirements you must have in place before building NativeScript apps. Let’s look at the steps you’ll need to take to get up and running.</p>
 <h4 class="exercise-start">
@@ -90,14 +90,14 @@
 <li><strong>Step 1</strong>: Install Node.js.</li>
 </ul>
 <p>The NativeScript CLI is built on Node.js, and as such you need to have Node.js installed to use NativeScript.</p>
-<p>You can check whether you have Node.js installed by opening your terminal or command prompt and executing <code>node --version</code>. If you get an error, head to the <a href="https://nodejs.org/">https://nodejs.org/</a> and download and install the latest “LTS” distribution for your development machine.</p>
+<p>You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing <code>node --version</code>. If you get an error, head to the <a href="https://nodejs.org/">https://nodejs.org/</a> and download and install the latest “LTS” distribution for your development machine.</p>
 <blockquote>
-<p><strong>TIP</strong>: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you’re likely good to go. If, by chance, you are running an unsupported version, the <code>tns doctor</code> command we’ll run momentarily will flag the problem so you can upgrade.</p>
+<p><strong>TIP</strong>: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you should be good to go. If, by chance, you’re running an unsupported version, the <code>tns doctor</code> command we’ll run momentarily will flag the problem so you can upgrade.</p>
 </blockquote>
 <ul>
 <li><strong>Step 2</strong>: Install the NativeScript CLI</li>
 </ul>
-<p>Open your terminal or command prompt and execute the following command to install the NativeScript CLI from npm:</p>
+<p>Open your terminal or command prompt and execute the following command to install the NativeScript CLI from npm, which is Node.js’ package manager:</p>
 <pre><code>npm install -g nativescript
 </code></pre><p>After completing the setup you should have two commands available from your terminal or command prompt: <code>tns</code>—which is short for <b>T</b>elerik <b>N</b>ative<b>S</b>cript—and <code>nativescript</code>. The two commands are equivalent, so we&#39;ll stick with the shorter <code>tns</code>.</p>
 <p>You can verify the installation was successful by running <code>tns</code> in your terminal. You should see something like this:</p>
@@ -113,7 +113,7 @@
 </code></pre><ul>
 <li><strong>Step 3</strong>: Install iOS and Android requirements</li>
 </ul>
-<p>When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to have the system requirements needed to build for each platform you intend to build for on your development machine.</p>
+<p>When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to have the system requirements for each platform you intend to build for on your development machine.</p>
 <p>NativeScript provides two options for installing these requirements—quick setup scripts for developers new to mobile development, and advanced setup scripts for experienced mobile developers, as well as developers that want complete control over the installation process.</p>
 <ul>
 <li><strong>Step 3—Option A</strong>: Run quick setup scripts</li>

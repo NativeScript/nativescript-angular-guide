@@ -1,6 +1,6 @@
 ## Getting up and running
 
-In this chapter you're going to start with the basics, including installing the NativeScript CLI, starting a new project, and getting your first app up and running.
+In this chapter you're going to start with the basics, including installing the NativeScript command-line interface, starting a new project, and getting your first app up and running.
 
 ### Install NativeScript and configure your environment
 
@@ -14,13 +14,13 @@ The NativeScript CLI has a few system requirements you must have in place before
 
 The NativeScript CLI is built on Node.js, and as such you need to have Node.js installed to use NativeScript.
 
-You can check whether you have Node.js installed by opening your terminal or command prompt and executing `node --version`. If you get an error, head to the https://nodejs.org/ and download and install the latest “LTS” distribution for your development machine.
+You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing `node --version`. If you get an error, head to the https://nodejs.org/ and download and install the latest “LTS” distribution for your development machine.
 
-> **TIP**: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you’re likely good to go. If, by chance, you are running an unsupported version, the `tns doctor` command we’ll run momentarily will flag the problem so you can upgrade.
+> **TIP**: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you should be good to go. If, by chance, you’re running an unsupported version, the `tns doctor` command we’ll run momentarily will flag the problem so you can upgrade.
 
 * **Step 2**: Install the NativeScript CLI
 
-Open your terminal or command prompt and execute the following command to install the NativeScript CLI from npm:
+Open your terminal or command prompt and execute the following command to install the NativeScript CLI from npm, which is Node.js’ package manager:
 
 ```
 npm install -g nativescript
@@ -44,7 +44,7 @@ $ tns
 
 * **Step 3**: Install iOS and Android requirements
 
-When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to have the system requirements needed to build for each platform you intend to build for on your development machine.
+When you build with NativeScript you’re building truly native iOS and Android apps, and as such, you need to have the system requirements for each platform you intend to build for on your development machine.
 
 NativeScript provides two options for installing these requirements—quick setup scripts for developers new to mobile development, and advanced setup scripts for experienced mobile developers, as well as developers that want complete control over the installation process.
 

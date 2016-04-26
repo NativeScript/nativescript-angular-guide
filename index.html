@@ -1540,7 +1540,7 @@ JS:     at NoProviderError.AbstractProviderError [as constructor] (/data/data/or
 </h4>
 
 <p>Open up <code>app/pages/list/list.html</code> and paste the following line immediately before the final <code>&lt;/GridLayout&gt;</code>:</p>
-<pre><code class="lang-XML">&lt;ActivityIndicator [busy]=&quot;isLoading&quot; row=&quot;1&quot; horizontalAlignment=&quot;center&quot; verticalAlignment=&quot;center&quot;&gt;&lt;/ActivityIndicator&gt;
+<pre><code class="lang-XML">&lt;ActivityIndicator [busy]=&quot;isLoading&quot; [visibility]=&quot;isLoading ? &#39;visible&#39; : &#39;collapse&#39;&quot; row=&quot;1&quot; horizontalAlignment=&quot;center&quot; verticalAlignment=&quot;center&quot;&gt;&lt;/ActivityIndicator&gt;
 </code></pre>
 <p>This binds the ActivityIndicator’s <code>busy</code> attribute to an <code>isLoading</code> property in the <code>ListPage</code> component. To define that property, open <code>app/pages/list/list.component.ts</code> and add the following line of code immediately under <code>grocery: string = &quot;&quot;</code>:</p>
 <pre><code class="lang-TypeScript">isLoading = false;

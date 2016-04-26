@@ -591,7 +591,7 @@ In NativeScript apps you can use the [ActivityIndicator](http://docs.nativescrip
 Open up `app/pages/list/list.html` and paste the following line immediately before the final `</GridLayout>`:
 
 ``` XML
-<ActivityIndicator [busy]="isLoading" row="1" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+<ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 ```
 
 This binds the ActivityIndicator’s `busy` attribute to an `isLoading` property in the `ListPage` component. To define that property, open `app/pages/list/list.component.ts` and add the following line of code immediately under `grocery: string = ""`:

@@ -2,7 +2,7 @@
 
 Welcome to the NativeScript & Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.
 
-> **IMPORTANT**: NativeScript’s Angular integration is in beta. Refer to [this guide’s appendix](#chapter8.0) for a list of known issues that may affect you while going through this tutorial.
+> **IMPORTANT**: NativeScript’s Angular integration is in beta. If you run into any issues completing this guide, please log those issues on our [nativescript-angular GitHub repo](https://github.com/NativeScript/nativescript-angular/issues).
 
 ### What is NativeScript? What is Angular 2?
 

@@ -14,7 +14,7 @@ The NativeScript CLI has a few system requirements you must have in place before
 
 The NativeScript CLI is built on Node.js, and as such you need to have Node.js installed to use NativeScript.
 
-You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing `node --version`. If you get an error, head to the https://nodejs.org/ and download and install the latest “LTS” distribution for your development machine.
+You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing `node --version`. If you get an error, head to the https://nodejs.org/ and download and install the latest “LTS” (long-term support) distribution for your development machine.
 
 > **TIP**: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you should be good to go. If, by chance, you’re running an unsupported version, the `tns doctor` command we’ll run momentarily will flag the problem so you can upgrade.
 
@@ -204,13 +204,11 @@ At this point, you have the NativeScript CLI downloaded and installed, as well a
 
 If your previous `tns run ios` or `tns run android` task is still running, type `Ctrl+C` in your terminal to kill it.
 
-<!--
 If you’re on a Mac, start an iOS livesync watcher by executing the following command:
 
 ```
 tns livesync ios --emulator --watch
 ```
--->
 
 If you have your app running on an Android emulator, start an Android livesync watcher by executing the following command:
 
@@ -242,9 +240,8 @@ export class AppComponent {}
 
 Save `app/app.component.ts` and you should see the app relaunch and the updated text displayed.
 
+![Updated iOS text](images/chapter1/ios/2.png)
 ![Updated Android text](images/chapter1/android/2.png)
-
-If you’re on a Mac building for iOS, the workflow is currently a bit different, as the `tns livesync ios` command is not yet supported. (See the [known issues](#chapter8.0) for details.) To see the updated text on iOS, type `Ctrl+C` to kill your previous `tns run ios` command, and then re-execute `tns run ios --emulator` to launch the app with your changes.
 
 <div class="exercise-end"></div> 
 
@@ -266,6 +263,6 @@ E/TNS.Native( 2063): File: "/data/data/org.nativescript.groceries/files/app/./vi
 
 > **TIP**: When you're trying to debug a problem, try adding `console.log()` statements in your JavaScript code—exactly as you would in a browser-based application.
 
-> **WARNING**: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (`Info.plist`, `AndroidManifest.xml`, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use `Ctrl+C` to stop livesync, and rerun the application using the `tns run android` command. Don’t worry though; when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.
+> **WARNING**: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (`Info.plist`, `AndroidManifest.xml`, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use `Ctrl+C` to stop livesync, and rerun the application using the `tns run ios` or `tns run android` commands. Don’t worry though; when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.
 
 Now that you've created an app, configured your environment, and set up your app to run on iOS and Android, you're ready to start digging into the files that make up a NativeScript app.

@@ -30,7 +30,7 @@
 				<h2 id="building-apps-with-nativescript-and-angular-2">Building Apps with NativeScript and Angular 2</h2>
 <p>Welcome to the NativeScript &amp; Angular 2 getting started guide 📚. In this hands-on tutorial, you’ll build a cross-platform iOS and Android app from scratch.</p>
 <blockquote>
-<p><strong>IMPORTANT</strong>: NativeScript’s Angular integration is in beta. Refer to <a href="#chapter8.0">this guide’s appendix</a> for a list of known issues that may affect you while going through this tutorial.</p>
+<p><strong>IMPORTANT</strong>: NativeScript’s Angular integration is in beta. If you run into any issues completing this guide, please log those issues on our <a href="https://github.com/NativeScript/nativescript-angular/issues">nativescript-angular GitHub repo</a>.</p>
 </blockquote>
 <h3 id="what-is-nativescript-what-is-angular-2-">What is NativeScript? What is Angular 2?</h3>
 <div class="intro-box">
@@ -88,7 +88,7 @@
 
 <p><strong>Step 1: Install Node.js</strong></p>
 <p>The NativeScript CLI is built on Node.js, and as such you need to have Node.js installed to use NativeScript.</p>
-<p>You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing <code>node --version</code>. If you get an error, head to the <a href="https://nodejs.org/">https://nodejs.org/</a> and download and install the latest “LTS” distribution for your development machine.</p>
+<p>You can check whether you have Node.js setup by opening a terminal or command prompt on your development machine and executing <code>node --version</code>. If you get an error, head to the <a href="https://nodejs.org/">https://nodejs.org/</a> and download and install the latest “LTS” (long-term support) distribution for your development machine.</p>
 <blockquote>
 <p><strong>TIP</strong>: The NativeScript CLI supports a wide variety of Node.js versions, so if you already have Node.js installed you should be good to go. If, by chance, you’re running an unsupported version, the <code>tns doctor</code> command we’ll run momentarily will flag the problem so you can upgrade.</p>
 </blockquote>
@@ -211,14 +211,9 @@
 </h4>
 
 <p>If your previous <code>tns run ios</code> or <code>tns run android</code> task is still running, type <code>Ctrl+C</code> in your terminal to kill it.</p>
-<!--
-If you’re on a Mac, start an iOS livesync watcher by executing the following command:
-
-```
-tns livesync ios --emulator --watch
-```
--->
-<p>If you have your app running on an Android emulator, start an Android livesync watcher by executing the following command:</p>
+<p>If you’re on a Mac, start an iOS livesync watcher by executing the following command:</p>
+<pre><code>tns livesync ios --emulator --watch
+</code></pre><p>If you have your app running on an Android emulator, start an Android livesync watcher by executing the following command:</p>
 <pre><code>tns livesync android --emulator --watch
 </code></pre><p>If you instead have your app running on a USB-connected Android device or Genymotion virtual device, run the same command without the <code>--emulator</code> flag:</p>
 <pre><code>tns livesync android --watch
@@ -236,8 +231,8 @@ tns livesync ios --emulator --watch
 export class AppComponent {}
 </code></pre>
 <p>Save <code>app/app.component.ts</code> and you should see the app relaunch and the updated text displayed.</p>
-<p><img src="images/chapter1/android/2.png" alt="Updated Android text"></p>
-<p>If you’re on a Mac building for iOS, the workflow is currently a bit different, as the <code>tns livesync ios</code> command is not yet supported. (See the <a href="#chapter8.0">known issues</a> for details.) To see the updated text on iOS, type <code>Ctrl+C</code> to kill your previous <code>tns run ios</code> command, and then re-execute <code>tns run ios --emulator</code> to launch the app with your changes.</p>
+<p><img src="images/chapter1/ios/2.png" alt="Updated iOS text">
+<img src="images/chapter1/android/2.png" alt="Updated Android text"></p>
 <div class="exercise-end"></div> 
 
 <p>Regardless of whether you’re running on iOS or Android, or whether you’re using <code>tns livesync</code> or <code>tns run</code>, the NativeScript CLI shows the output of <code>console.log()</code> statements as your app executes, as well as stack traces when things go wrong. So if your app crashes at any time during this guide, look to the terminal for a detailed report of the problem.</p>
@@ -249,7 +244,7 @@ export class AppComponent {}
 E/TNS.Native( 2063): File: &quot;/data/data/org.nativescript.groceries/files/app/./views/login/login.js, line: 13, column: 4
 </code></pre><blockquote>
 <p><strong>TIP</strong>: When you&#39;re trying to debug a problem, try adding <code>console.log()</code> statements in your JavaScript code—exactly as you would in a browser-based application.</p>
-<p><strong>WARNING</strong>: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (<code>Info.plist</code>, <code>AndroidManifest.xml</code>, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use <code>Ctrl+C</code> to stop livesync, and rerun the application using the <code>tns run android</code> command. Don’t worry though; when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.</p>
+<p><strong>WARNING</strong>: Not all changes can be livesync’d in a NativeScript app. For instance, livesync cannot patch native configuration file changes (<code>Info.plist</code>, <code>AndroidManifest.xml</code>, and so forth), new plugin installations, and any other change that requires a full compilation of the application. In those cases, you’ll want to use <code>Ctrl+C</code> to stop livesync, and rerun the application using the <code>tns run ios</code> or <code>tns run android</code> commands. Don’t worry though; when situations that require a full compilation come up in this guide, these instructions will be explicitly listed.</p>
 </blockquote>
 <p>Now that you&#39;ve created an app, configured your environment, and set up your app to run on iOS and Android, you&#39;re ready to start digging into the files that make up a NativeScript app.</p>
 
@@ -1981,17 +1976,6 @@ nativeScriptBootstrap(AppComponent);
 <h3 id="let-us-know-what-you-think">Let us know what you think</h3>
 <p>Finally, we’d love if you could take a minute to tell us what you thought about the this guide. Your feedback helps us make this tutorial better.</p>
 <iframe src="https://docs.google.com/forms/d/1r0q8YJ7yzXcDClfu29FTFITvU1_x-2MdGjZBMPrSXCw/viewform?embedded=true" width="760" height="1300" style="max-width: 100%;" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-
-			</div>
-			<div class="chapter">
-				<h2 id="appendix">Appendix</h2>
-<h3 id="known-issues">Known issues</h3>
-<p>As NativeScript’s Angular integration is still in beta, there are a few outstanding issues you may hit while completing this guide. Here are the major ones:</p>
-<ul>
-<li><strong>1</strong>) You may get a “Service exited due to signal: Killed: 9” error when deploying an app to an iOS simulator. If you hit this issue, <a href="https://github.com/NativeScript/nativescript-angular/issues/101">refer to the GitHub issue</a> for details on the problem and workarounds.</li>
-<li><strong>2</strong>) The <code>tns livesync</code> command currently does not work on iOS apps. Because of this, for now, you must run <code>tns run ios --emulator</code> after each change you make to your app in order to see the changes rendered. <a href="https://github.com/NativeScript/nativescript-angular/issues/167">Follow this problem’s GitHub issue</a> for updates.</li>
-</ul>
-<p>You can refer to the <a href="https://github.com/NativeScript/nativescript-angular/issues">nativescript-angular</a> repo on GitHub for a <a href="https://github.com/NativeScript/nativescript-angular/issues">full list of issues</a>, and to <a href="https://github.com/NativeScript/nativescript-angular/issues/new">report any problems you have</a>.</p>
 
 			</div>
 		</div>
